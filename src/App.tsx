@@ -1,8 +1,14 @@
+import { CssBaseline } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
+import AppRoot from "./layout/AppRoot";
+
 function App() {
   return (
-    <>
-      <p>Hello World</p>
-    </>
+    <CssBaseline>
+      <BrowserRouter>
+        <AppRoot />
+      </BrowserRouter>
+    </CssBaseline>
   );
 }
 
