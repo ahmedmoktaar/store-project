@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Link as MUILink, LinkProps as MUILinkProps } from "@mui/material";
 import styles from "../../styles";
 
@@ -17,19 +17,21 @@ interface Props extends MUILinkProps {
 // ---------------
 // main component
 // ---------------
-const Link: React.FC<Props> = (props) => {
+const ActiveLink: React.FC<Props> = (props) => {
   return (
     <MUILink
-      component={RouterLink}
+      component={NavLink}
       {...props}
       sx={{
         color: `${colors.white}`,
         textDecoration: "none",
-        "&:hover": {
-          opacity: 0.7,
+        opacity: 0.6,
+        "&.active": {
+          opacity: 1,
         },
-        "&:active": {
-          opacity: 0.9,
+        " :hover": {
+          opacity: 1,
+          backgroundColor: `${colors.lightBlue}`,
         },
       }}
     >
@@ -38,4 +40,4 @@ const Link: React.FC<Props> = (props) => {
   );
 };
 
-export default Link;
+export default ActiveLink;

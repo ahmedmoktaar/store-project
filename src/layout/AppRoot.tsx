@@ -19,6 +19,6 @@ export default AppRoot;
 const Holder = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: auto 20em;
+  grid-template-rows: auto 16em;
   ${fonts.regular}
 `;

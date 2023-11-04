@@ -1,6 +1,6 @@
 import NavSeller from "../../../components/NavSeller";
 
-const AddItem: React.FC = () => {
+const TrackItems: React.FC = () => {
   return (
     <div>
       <NavSeller />
@@ -8,4 +8,4 @@ const AddItem: React.FC = () => {
   );
 };
 
-export default AddItem;
+export default TrackItems;

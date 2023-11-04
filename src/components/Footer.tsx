@@ -5,7 +5,7 @@ import Link from "./shared/Link";
 import SVG from "../assets/SVG";
 
 // ----------------
-// style varibales
+// style variables
 // ----------------
 const { colors, fonts } = styles;
 
@@ -22,17 +22,24 @@ const Footer: React.FC = () => {
         Back To Top
       </Link>
 
-      <div className="Nav-Links-contianer">
-        <h5>Buy</h5>
-        <h5>Sell</h5>
-        <div className="payment-icons">
-          <h5>PAYMENT METHODS</h5>
+      <div className="Nav-Links-container">
+        <ul className="pages-link-container">
+          <li id="header">Links</li>
+          <li>
+            <Link to="/">Home Page</Link>
+          </li>
+          <li>
+            <Link to="/additem">Sell With Us</Link>
+          </li>
+        </ul>
+        <div className="payment-icons-container">
+          <p id="header">Payment Methods</p>
           <SVG.cash />
           <SVG.masterCard />
           <SVG.visa />
         </div>
         <div className="social-media-links">
-          <h5>Contact Us</h5>
+          <p id="header">Contact Us</p>
           <div>
             <Link to="https://www.facebook.com/">
               <SVG.facebook />
@@ -65,33 +72,33 @@ const Holder = styled.div`
   grid-template-rows: 1fr 5fr 2fr;
   background-color: ${colors.Blue};
   color: ${colors.white};
-  align-content: space-between;
-
-  h5 {
-    ${fonts.light}
-    margin-bottom: 0.8em;
-  }
+  text-align: center;
 
   #button-Back-to-Top {
     background-color: ${colors.lightBlue};
-    color: ${colors.white};
     text-align: center;
     padding: 0.75em;
-    opacity: 0.75;
     font-size: 0.9em;
-    :hover {
-      opacity: 1;
-    }
   }
 
-  .Nav-Links-contianer {
-    display: flex;
-    justify-content: space-around;
-    .social-media-links {
-      text-align: center;
+  .Nav-Links-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    #header {
+      ${fonts.bold}
+      margin-bottom: 0.7em;
     }
-    .payment-icons {
-      text-align: center;
+    .pages-link-container {
+      li {
+        list-style: none;
+      }
+      a {
+        display: inline-block;
+        font-size: 0.9em;
+        ${fonts.light}
+      }
+    }
+    .payment-icons-container {
       svg {
         margin: 0.2em;
       }
@@ -100,7 +107,5 @@ const Holder = styled.div`
 
   .Copyright {
     font-size: 0.75em;
-    text-align: center;
-    margin-bottom: 1em;
   }
 `;
