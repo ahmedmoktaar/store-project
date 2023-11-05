@@ -27,13 +27,13 @@ const index = {
         r="44.899"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#fd5" />
-        <stop offset=".328" stop-color="#ff543f" />
-        <stop offset=".348" stop-color="#fc5245" />
-        <stop offset=".504" stop-color="#e64771" />
-        <stop offset=".643" stop-color="#d53e91" />
-        <stop offset=".761" stop-color="#cc39a4" />
-        <stop offset=".841" stop-color="#c837ab" />
+        <stop offset="0" stopColor="#fd5" />
+        <stop offset=".328" stopColor="#ff543f" />
+        <stop offset=".348" stopColor="#fc5245" />
+        <stop offset=".504" stopColor="#e64771" />
+        <stop offset=".643" stopColor="#d53e91" />
+        <stop offset=".761" stopColor="#cc39a4" />
+        <stop offset=".841" stopColor="#c837ab" />
       </radialGradient>
       <path
         fill="url(#yOrnnhliCrdS2gy~4tD8ma)"
@@ -47,8 +47,8 @@ const index = {
         gradientTransform="matrix(1 0 0 .6663 0 1.849)"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#4168c9" />
-        <stop offset=".999" stop-color="#4168c9" stop-opacity="0" />
+        <stop offset="0" stopColor="#4168c9" />
+        <stop offset=".999" stopColor="#4168c9" stopOpacity="0" />
       </radialGradient>
       <path
         fill="url(#yOrnnhliCrdS2gy~4tD8mb)"
@@ -71,14 +71,14 @@ const index = {
       viewBox="0 0 48 48"
       width="40px"
       height="40px"
-      clip-rule="evenodd"
+      clipRule="evenodd"
       baseProfile="basic"
     >
       <path
         fill="#212121"
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28	c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       />
       <path
         fill="#fff"
@@ -119,7 +119,7 @@ const index = {
       viewBox="0 0 16 16"
     >
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
       />
       <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z" />
