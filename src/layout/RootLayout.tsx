@@ -1,20 +1,20 @@
 import styled from "@emotion/styled";
-import Footer from "../components/Footer";
-import AppRoutes from "../routes/AppRoutes";
 import styles from "../styles";
+import Footer from "../components/Footer";
+import { Outlet } from "react-router-dom";
 
 const { fonts } = styles;
 
-const AppRoot = () => {
+const RootLayout = () => {
   return (
     <Holder>
-      <AppRoutes />
+      <Outlet />
       <Footer />
     </Holder>
   );
 };
 
-export default AppRoot;
+export default RootLayout;
 
 const Holder = styled.div`
   height: 100vh;

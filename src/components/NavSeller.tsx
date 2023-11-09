@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import ActiveLink from "./shared/ActiveLink";
+import ActiveLink from "./shared/Link/ActiveLink";
 import styles from "../styles";
 
 // ----------------
@@ -7,6 +7,9 @@ import styles from "../styles";
 // ----------------
 const { colors } = styles;
 
+// ---------------
+// main component
+// ---------------
 const NavSeller = () => {
   return (
     <Holder>
@@ -16,6 +19,9 @@ const NavSeller = () => {
   );
 };
 
+// ----------------
+// STYLED COMPONENT
+// ----------------
 const Holder = styled.nav`
   background-color: ${colors.Blue};
   padding: 0.8em 2em;

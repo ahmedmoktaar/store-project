@@ -14,8 +14,9 @@ const Password: React.FC = () => {
 
   return (
     <FormControl variant="outlined" fullWidth>
-      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+      <InputLabel htmlFor="password">Password</InputLabel>
       <OutlinedInput
+        id="password"
         type={showPassword ? "text" : "password"}
         endAdornment={
           <InputAdornment position="end">

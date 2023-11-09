@@ -1,13 +1,14 @@
 import { CssBaseline } from "@mui/material";
-import { BrowserRouter } from "react-router-dom";
-import AppRoot from "./layout/AppRoot";
+import { Provider } from "react-redux";
+import Store from "./redux/Store/index";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
   return (
     <CssBaseline>
-      <BrowserRouter>
-        <AppRoot />
-      </BrowserRouter>
+        <Provider store={Store}>
+          <AppRoutes />
+        </Provider>
     </CssBaseline>
   );
 }

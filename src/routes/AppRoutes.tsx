@@ -1,20 +1,42 @@
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import NotFound from "../pages/NotFound";
 import AddItem from "../pages/seller/AddItem";
 import TrackItems from "../pages/seller/TrackItems";
-import LoginPage from "../pages/LoginPage";
+import SignInPage from "../pages/SignInPage";
+import SignUp from "../pages/seller/SignUp";
+import RootLayout from "../layout/RootLayout";
 
+// ----------------------
+// routes construction
+// ----------------------
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route element={<RootLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<NotFound />} />
+        <Route path="/additem" element={<AddItem />} />
+        <Route path="/trackitems" element={<TrackItems />} />
+      </Route>
+      <Route>
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Route>
+    </>
+  )
+);
+
+// ------------------
+// main component
+// ------------------
 const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="*" element={<NotFound />} />
-      <Route path="/additem" element={<AddItem />} />
-      <Route path="/trackitems" element={<TrackItems />} />
-      <Route path="/login" element={<LoginPage />} />
-    </Routes>
-  );
+  return <RouterProvider router={router} />
 };
 
 export default AppRoutes;
