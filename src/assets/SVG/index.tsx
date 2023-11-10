@@ -6,12 +6,12 @@ const index = {
       viewBox="0 0 128 128"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="SVGRepo_bgCarrier" stroke-width="0" />
+      <g id="SVGRepo_bgCarrier" strokeWidth="0" />
 
       <g
         id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
 
       <g id="SVGRepo_iconCarrier">
@@ -19,8 +19,8 @@ const index = {
           d="M26.96 39.45c-.75-5.68-2.02-15.69-1.18-21.2s3.04-10.59 7.63-12.6c3.97-1.73 8.92.1 11.78 4.38c1.63 2.44 2.56 5.45 3.35 8.43c1.35 5.12 2.64 12.12 3.29 17.39"
           fill="none"
           stroke="#00796b"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
         ></path>
         <path
           fill="#26a69a"
@@ -46,8 +46,8 @@ const index = {
           d="M43.95 38.45C43.2 32.78 35.39 11 50.34 8.22c11.3-2.1 16.29 21.97 16.95 27.25"
           fill="none"
           stroke="#61de9f"
-          stroke-width="3"
-          stroke-miterlimit="10"
+          strokeWidth="3"
+          strokeMiterlimit="10"
         ></path>
         <path
           d="M45.81 40.03c-.87-2.93-1.78-8.85-1.82-9.11l2.96-.45c.01.06 1.07 6.1 2.23 8.93l-3.37.63z"
@@ -66,8 +66,8 @@ const index = {
             d="M73.07 57.05s-3.78-20.07 8.81-18.74c6.85.72 6.57 16.65 6.57 16.65"
             fill="none"
             stroke="#d7578a"
-            stroke-width="3"
-            stroke-miterlimit="10"
+            strokeWidth="3"
+            strokeMiterlimit="10"
           ></path>
           <path
             fill="#d7578a"
@@ -97,8 +97,8 @@ const index = {
             d="M84.88 64.91c-.58-4.36-6.52-22.74 4.68-24.29c8.75-1.21 12.52 16.89 13.03 20.94"
             fill="none"
             stroke="#ff9f9f"
-            stroke-width="3"
-            stroke-miterlimit="10"
+            strokeWidth="3"
+            strokeMiterlimit="10"
           ></path>
         </g>
         <path

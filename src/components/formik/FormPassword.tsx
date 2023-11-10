@@ -6,17 +6,34 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  OutlinedInputProps as MUIOutlinedInputProps,
+  FormHelperText,
 } from "@mui/material";
+import { useField } from "formik";
 import { useState } from "react";
 
-const Password: React.FC = () => {
+// ------------------
+// props type
+// ------------------
+type OutlinedInputProps = MUIOutlinedInputProps & {
+  name: string;
+};
+
+// ------------------
+// main component
+// ------------------
+const FormPassword: React.FC<OutlinedInputProps> = ({ name, ...props }) => {
+  const [field, meta] = useField(name);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <FormControl variant="outlined" fullWidth>
-      <InputLabel htmlFor="password">Password</InputLabel>
+    <FormControl
+      variant="outlined"
+      fullWidth
+      error={!!meta.error && meta.touched}
+    >
+      <InputLabel>Password</InputLabel>
       <OutlinedInput
-        id="password"
         type={showPassword ? "text" : "password"}
         endAdornment={
           <InputAdornment position="end">
@@ -30,9 +47,14 @@ const Password: React.FC = () => {
           </InputAdornment>
         }
         label="Password"
+        {...field}
+        {...props}
       />
+      <FormHelperText error={!!meta.error && meta.touched}>
+        {meta.error && meta.touched ? meta.error : null}
+      </FormHelperText>
     </FormControl>
   );
 };
 
-export default Password;
+export default FormPassword;
