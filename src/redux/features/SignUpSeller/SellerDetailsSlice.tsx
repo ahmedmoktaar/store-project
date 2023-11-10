@@ -5,6 +5,7 @@ import {
 } from "../../../components/GlobalVariables";
 
 const initialState = SignUpInitialValues;
+
 const sellerDetailsSlice = createSlice({
   name: "sellerDetails",
   initialState,

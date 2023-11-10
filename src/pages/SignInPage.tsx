@@ -6,11 +6,13 @@ import { Typography } from "@mui/material";
 import MuiButton from "../components/shared/MuiButton";
 import Logo from "../components/shared/Logo";
 import Link from "../components/shared/Link/Link";
-import { useSelector } from "../redux/Store/hooks";
+import { useDispatch, useSelector } from "../redux/Store/hooks";
 import FormTextField from "../components/formik/FormTextField";
 import FormPassword from "../components/formik/FormPassword";
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { login } from "../redux/features/UserState/UserStateSlice";
+import NotFound from "./NotFound";
 
 // -------------------
 // style variables
@@ -30,10 +32,11 @@ interface loginValues {
 // ------------------
 const LoginPage: React.FC = () => {
   // --------------------
-  // reduex seller data
+  // reduex data
   // --------------------
   const sellerDetails = useSelector((state) => state.sellerDetails);
-
+  const isLoggedIn = useSelector((state) => state.isloggedin.userState);
+  const dispatch = useDispatch();
   // --------------------
   // useNavigate Hook
   // --------------------
@@ -69,41 +72,51 @@ const LoginPage: React.FC = () => {
   const onSubmit = (values: loginValues) => {
     values.email === sellerDetails.email &&
     values.password === sellerDetails.password
-      ? navigateTo("/additem")
+      ? (dispatch(login()), navigateTo("/additem"))
       : null;
   };
 
   return (
     <Holder>
       <Logo />
+      {isLoggedIn ? (
+        <div className="not-found">
+          <NotFound />
+        </div>
+      ) : (
+        <>
+          <div className="lock-icon">
+            <LockOutlinedIcon fontSize="large" />
+          </div>
+          <Typography className="signin-label" variant="h5" component="h1">
+            Sign in
+          </Typography>
 
-      <div className="lock-icon">
-        <LockOutlinedIcon fontSize="large" />
-      </div>
-      <Typography className="signin-label" variant="h5" component="h1">
-        Sign in
-      </Typography>
+          <Formik
+            initialValues={initalValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
+            validateOnChange={false}
+            validateOnBlur={false}
+          >
+            <Form>
+              <FormTextField label="Email" name="email" />
+              <FormPassword name="password" />
+              <MuiButton type="submit" className="signin-button">
+                SIGN IN
+              </MuiButton>
+            </Form>
+          </Formik>
 
-      <Formik
-        initialValues={initalValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
-        validateOnChange={false}
-        validateOnBlur={false}
-      >
-        <Form>
-          <FormTextField label="Email" name="email" />
-          <FormPassword name="password" />
-          <MuiButton type="submit" className="signin-button">
-            SIGN IN
-          </MuiButton>
-        </Form>
-      </Formik>
+          <Link to="/signup" className="signup-link">
+            Don't have an account? Sign Up
+          </Link>
 
-      <Link to="/signup" className="signup-link">
-        Don't have an account? Sign Up
-      </Link>
-      <div className="Copyright">Copyright © 2023. All Rights Reserved.</div>
+          <div className="copyright">
+            Copyright © 2023. All Rights Reserved.
+          </div>
+        </>
+      )}
     </Holder>
   );
 };
@@ -145,10 +158,15 @@ const Holder = styled.div`
   .signup-link {
     font-size: 0.75em;
   }
-  .Copyright {
+  .copyright {
     font-size: 0.6em;
     position: absolute;
     bottom: 5em;
     align-self: center;
+  }
+  .not-found {
+    position: absolute;
+    top: 35%;
+    left: 35%;
   }
 `;
