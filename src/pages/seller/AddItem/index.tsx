@@ -1,11 +1,5 @@
-import NavSeller from "../../../components/NavSeller";
-
 const AddItem: React.FC = () => {
-  return (
-    <div>
-      <NavSeller />
-    </div>
-  );
+  return <div>AddItem </div>;
 };
 
 export default AddItem;

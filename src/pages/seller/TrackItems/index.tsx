@@ -1,11 +1,5 @@
-import NavSeller from "../../../components/NavSeller";
-
 const TrackItems: React.FC = () => {
-  return (
-    <div>
-      <NavSeller />
-    </div>
-  );
+  return <div>TrackItems </div>;
 };
 
 export default TrackItems;
