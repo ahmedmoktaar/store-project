@@ -5,6 +5,7 @@ const colors = {
   orange: "#ffbc69",
   darkOrange: "#ffa51d",
   yellow: "#ffd915",
+  green: "#43A047",
   white: "#ffffff",
 };
 

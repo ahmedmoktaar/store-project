@@ -9,16 +9,20 @@ import SVG from "../assets/SVG";
 // ----------------
 const { colors, fonts } = styles;
 
+// ---------------------------------------
+// handleClick for back to Top button
+// ---------------------------------------
+const handelClick = (
+  event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+) => (event.preventDefault(), window.scrollTo({ top: 0, behavior: "smooth" }));
+
 // ---------------
 // main component
 // ---------------
 const Footer: React.FC = () => {
   return (
     <Holder>
-      <NavLink
-        id="button-Back-to-Top"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      >
+      <NavLink id="button-Back-to-Top" onClick={handelClick}>
         Back To Top
       </NavLink>
 

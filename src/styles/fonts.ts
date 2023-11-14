@@ -1,16 +1,19 @@
 import { css } from "@emotion/react";
 const fonts = {
   light: css`
-    font-family: "Roboto Light", Tahoma, Verdana, sans-serif;
+    font-family: "OpenSans Light", Tahoma, Verdana, sans-serif;
   `,
   regular: css`
-    font-family: "Roboto Regular", Tahoma, Verdana, sans-serif;
+    font-family: "OpenSans Regular", Tahoma, Verdana, sans-serif;
   `,
   medium: css`
-    font-family: "Roboto Medium", Tahoma, Verdana, sans-serif;
+    font-family: "OpenSans Medium", Tahoma, Verdana, sans-serif;
   `,
   bold: css`
-    font-family: "Roboto Bold", Tahoma, Verdana, sans-serif;
+    font-family: "OpenSans Bold", Tahoma, Verdana, sans-serif;
+  `,
+  semiBold: css`
+    font-family: "OpenSans SemiBold", Tahoma, Verdana, sans-serif;
   `,
 };
 

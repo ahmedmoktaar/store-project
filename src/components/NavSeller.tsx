@@ -24,7 +24,8 @@ const NavSeller = () => {
 // ----------------
 const Holder = styled.nav`
   background-color: ${colors.Blue};
-  padding: 0.8em 2em;
+  font-size: 1.3em;
+  padding: 0.9em 2em;
   a {
     padding: 1em;
   }
