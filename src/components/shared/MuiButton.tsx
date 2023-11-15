@@ -2,7 +2,7 @@ import { Button, ButtonProps } from "@mui/material";
 
 const MuiButton: React.FC<ButtonProps> = (props) => {
   return (
-    <Button variant="contained" fullWidth {...props}>
+    <Button variant="contained"  {...props}>
       {props.children}
     </Button>
   );

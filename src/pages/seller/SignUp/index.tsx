@@ -1,20 +1,20 @@
-import { Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
+import { Typography } from "@mui/material";
 import * as yup from "yup";
+import { Form, Formik } from "formik";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
 import {
   SignUpInitialValues,
-  SignUpValues,
-} from "../../../components/GlobalVariables";
+  SellerDetails,
+} from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
-import { addSellerDetails } from "../../../redux/features/SignUpSeller/SellerDetailsSlice";
+import { addSellerDetails } from "../../../redux/features/SellerDetails/SellerDetailsSlice";
 import MuiButton from "../../../components/shared/MuiButton";
-import styled from "@emotion/styled";
 import Logo from "../../../components/shared/Logo";
-import { Typography } from "@mui/material";
 import Link from "../../../components/shared/Link/Link";
 import styles from "../../../styles";
-import { useNavigate } from "react-router-dom";
 import NotFound from "../../NotFound";
 
 // ----------------
@@ -55,7 +55,7 @@ const SignUp: React.FC = () => {
     website: yup.string().url(),
   });
 
-  const onSubmit = (values: SignUpValues) => {
+  const onSubmit = (values: SellerDetails) => {
     dispatch(addSellerDetails(values));
     navigate("/signin");
   };
@@ -92,6 +92,7 @@ const SignUp: React.FC = () => {
               </MuiButton>
             </Form>
           </Formik>
+          
           <div className="additional-info">
             <p>
               Already have an account? <Link to="/signin">Sign in</Link>

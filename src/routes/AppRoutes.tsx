@@ -8,7 +8,7 @@ import HomePage from "../pages/HomePage";
 import NotFound from "../pages/NotFound";
 import AddItem from "../pages/seller/AddItem";
 import TrackItems from "../pages/seller/TrackItems";
-import SignInPage from "../pages/SignInPage";
+import SignIn from "../pages/SignIn";
 import SignUp from "../pages/seller/SignUp";
 import RootLayout from "../layout/RootLayout";
 import SellerLayout from "../layout/SellerLayout";
@@ -28,7 +28,7 @@ const router = createBrowserRouter(
         <Route path="/trackitems" element={<TrackItems />} />
       </Route>
       <Route>
-        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
       </Route>
     </>

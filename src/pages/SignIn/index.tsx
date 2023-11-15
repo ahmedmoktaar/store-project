@@ -1,18 +1,18 @@
-import styled from "@emotion/styled";
-import * as yup from "yup";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import styles from "../styles";
-import { Typography } from "@mui/material";
-import MuiButton from "../components/shared/MuiButton";
-import Logo from "../components/shared/Logo";
-import Link from "../components/shared/Link/Link";
-import { useDispatch, useSelector } from "../redux/Store/hooks";
-import FormTextField from "../components/formik/FormTextField";
-import FormPassword from "../components/formik/FormPassword";
-import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/features/UserState/UserStateSlice";
-import NotFound from "./NotFound";
+import styled from "@emotion/styled";
+import { Typography } from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import * as yup from "yup";
+import { Form, Formik } from "formik";
+import styles from "../../styles";
+import MuiButton from "../../components/shared/MuiButton";
+import Logo from "../../components/shared/Logo";
+import Link from "../../components/shared/Link/Link";
+import { useDispatch, useSelector } from "../../redux/Store/hooks";
+import FormTextField from "../../components/formik/FormTextField";
+import FormPassword from "../../components/formik/FormPassword";
+import { login } from "../../redux/features/UserState/UserStateSlice";
+import NotFound from "../NotFound";
 
 // -------------------
 // style variables
@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
   // --------------------
   // formik variables
   // --------------------
-  const initalValues: loginValues = {
+  const initialValues: loginValues = {
     email: "",
     password: "",
   };
@@ -54,26 +54,19 @@ const LoginPage: React.FC = () => {
     email: yup
       .string()
       .required("Required")
-      .test(
-        "email-check",
-        "Incorrect email",
-        (value) => value === sellerDetails.email
-      ),
+      .test("email-check", "Incorrect email", (value) => {
+       return sellerDetails.some((sellerdetail) => value === sellerdetail.email);
+      }),
     password: yup
       .string()
       .required("Required")
-      .test(
-        "password-check",
-        "Incorrect password",
-        (value) => value === sellerDetails.password
-      ),
+      .test("password-check", "Incorrect password", (value) => {
+        return sellerDetails.some((sellerdetail) => value === sellerdetail.password);
+      }),
   });
 
-  const onSubmit = (values: loginValues) => {
-    values.email === sellerDetails.email &&
-    values.password === sellerDetails.password
-      ? (dispatch(login()), navigateTo("/additem"))
-      : null;
+  const onSubmit = () => {
+    dispatch(login()), navigateTo("/additem");
   };
 
   return (
@@ -93,7 +86,7 @@ const LoginPage: React.FC = () => {
           </Typography>
 
           <Formik
-            initialValues={initalValues}
+            initialValues={initialValues}
             onSubmit={onSubmit}
             validationSchema={validationSchema}
             validateOnChange={false}

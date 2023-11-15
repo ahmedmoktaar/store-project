@@ -11,7 +11,7 @@ type TextFieldProps = MUITextFieldProps & {
 // ------------------
 // main component
 // ------------------
-const TextForm: React.FC<TextFieldProps> = ({name, ...props}) => {
+const TextForm: React.FC<TextFieldProps> = ({ name, ...props }) => {
   const [field, meta] = useField(name);
 
   return (
@@ -25,4 +25,5 @@ const TextForm: React.FC<TextFieldProps> = ({name, ...props}) => {
     />
   );
 };
+
 export default TextForm;
