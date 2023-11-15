@@ -1,18 +1,17 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import * as yup from "yup";
 import { Form, Formik } from "formik";
-import styles from "../../styles";
-import MuiButton from "../../components/shared/MuiButton";
-import Logo from "../../components/shared/Logo";
-import Link from "../../components/shared/Link/Link";
-import { useDispatch, useSelector } from "../../redux/Store/hooks";
-import FormTextField from "../../components/formik/FormTextField";
-import FormPassword from "../../components/formik/FormPassword";
-import { login } from "../../redux/features/UserState/UserStateSlice";
-import NotFound from "../NotFound";
+import styles from "../../../styles";
+import MuiButton from "../../../components/shared/MuiButton";
+import Logo from "../../../components/shared/Logo";
+import Link from "../../../components/shared/Link/Link";
+import { useDispatch, useSelector } from "../../../redux/Store/hooks";
+import FormTextField from "../../../components/formik/FormTextField";
+import FormPassword from "../../../components/formik/FormPassword";
+import { login } from "../../../redux/features/UserState/UserStateSlice";
 
 // -------------------
 // style variables
@@ -30,7 +29,7 @@ interface loginValues {
 // ------------------
 // main component
 // ------------------
-const LoginPage: React.FC = () => {
+const SignInSeller: React.FC = () => {
   // --------------------
   // reduex data
   // --------------------
@@ -55,13 +54,17 @@ const LoginPage: React.FC = () => {
       .string()
       .required("Required")
       .test("email-check", "Incorrect email", (value) => {
-       return sellerDetails.some((sellerdetail) => value === sellerdetail.email);
+        return sellerDetails.some(
+          (sellerdetail) => value === sellerdetail.email
+        );
       }),
     password: yup
       .string()
       .required("Required")
       .test("password-check", "Incorrect password", (value) => {
-        return sellerDetails.some((sellerdetail) => value === sellerdetail.password);
+        return sellerDetails.some(
+          (sellerdetail) => value === sellerdetail.password
+        );
       }),
   });
 
@@ -70,51 +73,51 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Holder>
-      <Logo />
+    <>
       {isLoggedIn ? (
-        <div className="not-found">
-          <NotFound />
-        </div>
+        <Navigate to="/" replace={true} />
       ) : (
-        <>
-          <div className="lock-icon">
-            <LockOutlinedIcon fontSize="large" />
-          </div>
-          <Typography className="signin-label" variant="h5" component="h1">
-            Sign in
-          </Typography>
+        <Holder>
+          <Logo />
+          <>
+            <div className="lock-icon">
+              <LockOutlinedIcon fontSize="large" />
+            </div>
+            <Typography className="signin-label" variant="h5" component="h1">
+              Sign in
+            </Typography>
 
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-            validateOnChange={false}
-            validateOnBlur={false}
-          >
-            <Form>
-              <FormTextField label="Email" name="email" />
-              <FormPassword name="password" />
-              <MuiButton type="submit" className="signin-button">
-                SIGN IN
-              </MuiButton>
-            </Form>
-          </Formik>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+              validateOnChange={false}
+              validateOnBlur={false}
+            >
+              <Form>
+                <FormTextField label="Email" name="email" />
+                <FormPassword name="password" />
+                <MuiButton type="submit" className="signin-button">
+                  SIGN IN
+                </MuiButton>
+              </Form>
+            </Formik>
 
-          <Link to="/signup" className="signup-link">
-            Don't have an account? Sign Up
-          </Link>
+            <Link to="/signupseller" className="signup-link">
+              Don't have an account? Sign Up
+            </Link>
 
-          <div className="copyright">
-            Copyright © 2023. All Rights Reserved.
-          </div>
-        </>
+            <div className="copyright">
+              Copyright © 2023. All Rights Reserved.
+            </div>
+          </>
+        </Holder>
       )}
-    </Holder>
+    </>
   );
 };
 
-export default LoginPage;
+export default SignInSeller;
 
 // -------------------
 // STYLED COMPONENT

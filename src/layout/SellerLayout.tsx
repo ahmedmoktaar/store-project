@@ -1,18 +1,32 @@
 import styled from "@emotion/styled";
+import { Navigate, Outlet } from "react-router-dom";
 import styles from "../styles";
-import { Outlet } from "react-router-dom";
 import NavSeller from "../components/NavSeller";
 import Footer from "../components/Footer";
+import Logo from "../components/shared/Logo";
+import { useSelector } from "../redux/Store/hooks";
 
 const { fonts } = styles;
 
 const SellerLayout = () => {
+  const isLoggedIn = useSelector((state) => state.isloggedin.userState);
+
   return (
-    <Holder>
-      <NavSeller />
-      <Outlet />
-      <Footer />
-    </Holder>
+    <>
+      {isLoggedIn ? (
+        <Holder>
+          <Logo />
+          <>
+            <NavSeller />
+            <Outlet />
+          </>
+
+          <Footer />
+        </Holder>
+      ) : (
+        <Navigate to="/signinseller" replace={true} />
+      )}
+    </>
   );
 };
 

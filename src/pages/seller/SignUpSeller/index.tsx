@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import * as yup from "yup";
@@ -15,7 +15,6 @@ import MuiButton from "../../../components/shared/MuiButton";
 import Logo from "../../../components/shared/Logo";
 import Link from "../../../components/shared/Link/Link";
 import styles from "../../../styles";
-import NotFound from "../../NotFound";
 
 // ----------------
 // style variables
@@ -25,12 +24,12 @@ const { colors, fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const SignUp: React.FC = () => {
+const SignUpSeller: React.FC = () => {
   // ------------------
   // hooks
   // ------------------
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigateTo = useNavigate();
   const isLoggedIn = useSelector((state) => state.isloggedin.userState);
 
   // --------------------
@@ -57,18 +56,16 @@ const SignUp: React.FC = () => {
 
   const onSubmit = (values: SellerDetails) => {
     dispatch(addSellerDetails(values));
-    navigate("/signin");
+    navigateTo("/signinseller");
   };
 
   return (
-    <Holder>
-      <Logo />
+    <>
       {isLoggedIn ? (
-        <div className="not-found">
-          <NotFound />
-        </div>
+        <Navigate to="/" replace={true} />
       ) : (
-        <>
+        <Holder>
+          <Logo />
           <Typography className="signup-label" variant="h4" component="h1">
             Create account
           </Typography>
@@ -92,23 +89,23 @@ const SignUp: React.FC = () => {
               </MuiButton>
             </Form>
           </Formik>
-          
+
           <div className="additional-info">
             <p>
-              Already have an account? <Link to="/signin">Sign in</Link>
+              Already have an account? <Link to="/signinseller">Sign in</Link>
             </p>
             <p>
               For further support, you may visit the Help Center or contact our
               customer service team.
             </p>
           </div>
-        </>
+        </Holder>
       )}
-    </Holder>
+    </>
   );
 };
 
-export default SignUp;
+export default SignUpSeller;
 
 // -------------------
 // STYLED COMPONENT

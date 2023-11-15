@@ -15,6 +15,9 @@ const NavSeller = () => {
     <Holder>
       <ActiveLink to="/additem">Add New Item</ActiveLink>
       <ActiveLink to="/trackitems">Track Your Item</ActiveLink>
+      <ActiveLink className="home-page" to="/">
+        Go To Home Page
+      </ActiveLink>
     </Holder>
   );
 };
@@ -28,6 +31,19 @@ const Holder = styled.nav`
   padding: 0.9em 2em;
   a {
     padding: 1em;
+    &:first-of-type{
+      margin-left: 5em;
+    }
+  }
+  .home-page {
+    position: absolute;
+    font-size: 0.8em;
+    padding: 0.5em;
+    margin: 1em 4em;
+    right: 0;
+    top: 0;
+    opacity: 1;
+    color: ${colors.orange};
   }
 `;
 

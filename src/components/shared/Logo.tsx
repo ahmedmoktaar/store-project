@@ -1,5 +1,5 @@
-import SVG from "../../assets/SVG";
 import styled from "@emotion/styled";
+import SVG from "../../assets/SVG";
 import styles from "../../styles";
 import Link from "./Link/Link";
 
@@ -17,7 +17,6 @@ const Logo = () => {
       <Link to="/">
         <SVG.logo />
       </Link>
-      <div>Shopping Store</div>
     </Holder>
   );
 };
@@ -29,8 +28,8 @@ export default Logo;
 // ----------------
 const Holder = styled.div`
   position: absolute;
-  left: 2em;
-  top: 1em;
+  left: 1.5em;
+  top: 0.5em;
   text-align: center;
   color: ${colors.darkBlue};
   ${fonts.light}

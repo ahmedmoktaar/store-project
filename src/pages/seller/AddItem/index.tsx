@@ -32,7 +32,7 @@ const AddItem: React.FC = () => {
   // ----------------
   // hooks
   // ----------------
-  const Navigate = useNavigate();
+  const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
   // ----------------
@@ -48,7 +48,7 @@ const AddItem: React.FC = () => {
     features: yup.string().required("Required"),
     description: yup.string().required("Required"),
     gender: yup.string().required("Required"),
-    media: yup.string().required("Required"),
+    media: yup.array().required("Required"),
     amountInStock: yup.string().required("Required"),
     deliveryTime: yup.string().required("Required"),
   });
@@ -77,7 +77,7 @@ const AddItem: React.FC = () => {
       default:
         null;
     }
-    Navigate("/trackitems");
+    navigateTo("/trackitems");
   };
 
   return (

@@ -49,9 +49,7 @@ const FormUploadFiles: React.FC<props> = ({ name, label, ...props }) => {
       const selectedFileList = target.files;
       setImgFileLists((prev) => {
         const newList = prev ? [...prev, selectedFileList] : [selectedFileList];
-        form.setValue(
-          newList.reduce((sum, innerFileList) => sum + innerFileList.length, 0)
-        );
+        form.setValue(newList);
         return newList;
       });
     }

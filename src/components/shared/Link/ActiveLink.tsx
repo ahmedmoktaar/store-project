@@ -20,16 +20,16 @@ interface Props extends MUILinkProps {
 const ActiveLink: React.FC<Props> = (props) => {
   return (
     <MUILink
-    sx={{
-      color: `${colors.white}`,
-      textDecoration: "none",
-        opacity: 0.5,
+      sx={{
+        color: `${colors.white}`,
+        textDecoration: "none",
+        opacity: 0.4,
         "&.active": {
           opacity: 1,
+          backgroundColor: `${colors.lightBlue}`,
         },
         " :hover": {
           opacity: 1,
-          backgroundColor: `${colors.lightBlue}`,
         },
       }}
       component={NavLink}
