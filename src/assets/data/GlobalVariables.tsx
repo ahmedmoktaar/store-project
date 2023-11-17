@@ -52,7 +52,8 @@ export interface ItemValues {
   features: string;
   description: string;
   gender: string;
-  media: string;
+  mainPic: FileList[]| null;
+  media: FileList[]| null;
   amountInStock: string;
   deliveryTime: string;
 }
@@ -70,7 +71,8 @@ export const itemInitialValues: ItemValues = {
   features: "",
   description: "",
   gender: "",
-  media: "",
+  mainPic: null,
+  media: null,
   amountInStock: "",
   deliveryTime: "",
 };

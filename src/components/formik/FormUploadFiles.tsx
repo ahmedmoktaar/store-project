@@ -12,6 +12,7 @@ import styles from "../../styles";
 interface props {
   name: string;
   label: string;
+  multiple: boolean;
 }
 
 // -------------------
@@ -37,7 +38,7 @@ const VisuallyHiddenInput = MUIstyled("input")({
 // ------------------
 // main component
 // ------------------
-const FormUploadFiles: React.FC<props> = ({ name, label, ...props }) => {
+const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) => {
   const [, meta, form] = useField(name);
 
   // --------------------
@@ -48,7 +49,7 @@ const FormUploadFiles: React.FC<props> = ({ name, label, ...props }) => {
     if (target.files) {
       const selectedFileList = target.files;
       setImgFileLists((prev) => {
-        const newList = prev ? [...prev, selectedFileList] : [selectedFileList];
+        const newList = prev && multiple ? [...prev, selectedFileList] : [selectedFileList];
         form.setValue(newList);
         return newList;
       });
@@ -67,8 +68,9 @@ const FormUploadFiles: React.FC<props> = ({ name, label, ...props }) => {
         Upload file
         <VisuallyHiddenInput
           type="file"
+          accept="image/*"
+          multiple={multiple}
           id={name}
-          multiple
           {...props}
           onChange={handelChange}
         />
@@ -77,7 +79,7 @@ const FormUploadFiles: React.FC<props> = ({ name, label, ...props }) => {
         </FormHelperText>
       </Button>
       <div className="imgList-wrapper">
-        {imgFileLists
+        {imgFileLists && multiple
           ? imgFileLists.map((imgFileList, index) => (
               <span key={index}>
                 {Array.from(imgFileList).map((file, innerIndex) => (
@@ -90,7 +92,19 @@ const FormUploadFiles: React.FC<props> = ({ name, label, ...props }) => {
                 ))}
               </span>
             ))
-          : null}
+          : imgFileLists ? 
+          (
+            <span>
+              {Array.from(imgFileLists[0]).map((file, innerIndex) => (
+                <img
+                  key={innerIndex}
+                  src={URL.createObjectURL(file)}
+                  width={"150px"}
+                  alt={`Image ${innerIndex}`}
+                />
+              ))}
+            </span>
+          ):null}
       </div>
     </Holder>
   );

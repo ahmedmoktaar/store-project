@@ -48,7 +48,52 @@ const AddItem: React.FC = () => {
     features: yup.string().required("Required"),
     description: yup.string().required("Required"),
     gender: yup.string().required("Required"),
-    media: yup.array().required("Required"),
+    mainPic: yup
+      .array()
+      .of(
+        yup
+          .mixed()
+          .required("Required")
+          .test("fileListType", "Invalid file list type", (value) => {
+            return value instanceof FileList;
+          })
+          .test("fileType", "Invalid file type", (value) => {
+            if (!(value instanceof FileList)) return false;
+            const fileList = Array.from(value);
+            return fileList.every((file) => {
+              const fileName = file.name.toLowerCase();
+              const fileExtension = fileName.split(".").pop();
+              return (
+                fileExtension !== undefined &&
+                ["jpg", "jpeg", "png"].includes(fileExtension)
+              );
+            });
+          })
+      )
+      .required("At least one file required"),
+    media: yup
+      .array()
+      .of(
+        yup
+          .mixed()
+          .required("Required")
+          .test("fileListType", "Invalid file list type", (value) => {
+            return value instanceof FileList;
+          })
+          .test("fileType", "Invalid file type", (value) => {
+            if (!(value instanceof FileList)) return false;
+            const fileList = Array.from(value);
+            return fileList.every((file) => {
+              const fileName = file.name.toLowerCase();
+              const fileExtension = fileName.split(".").pop();
+              return (
+                fileExtension !== undefined &&
+                ["jpg", "jpeg", "png"].includes(fileExtension)
+              );
+            });
+          })
+      )
+      .required("At least one file required"),
     amountInStock: yup.string().required("Required"),
     deliveryTime: yup.string().required("Required"),
   });
@@ -129,7 +174,8 @@ const AddItem: React.FC = () => {
             type="number"
           />
           <TextFormLabeled name="deliveryTime" label="Delivery Time" />
-          <FormUploadFiles name="media" label="Pictures" />
+          <FormUploadFiles name="mainPic" label="Pictures" multiple={false} />
+          <FormUploadFiles name="media" label="Pictures" multiple />
 
           <div className="buttons">
             <MuiButton type="reset" color="error">
