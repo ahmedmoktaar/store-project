@@ -35,7 +35,7 @@ const VisuallyHiddenInput = MUIstyled("input")({
   width: 1,
 });
 
-// ------------------
+// ------------------ 
 // main component
 // ------------------
 const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) => {
@@ -74,10 +74,10 @@ const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) =>
           {...props}
           onChange={handelChange}
         />
-        <FormHelperText error={!!meta.error && meta.touched}>
+      </Button>
+        <FormHelperText error={!!meta.error && meta.touched} className="error-message">
           {meta.error && meta.touched ? meta.error : null}
         </FormHelperText>
-      </Button>
       <div className="imgList-wrapper">
         {imgFileLists && multiple
           ? imgFileLists.map((imgFileList, index) => (
@@ -86,8 +86,8 @@ const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) =>
                   <img
                     key={innerIndex}
                     src={URL.createObjectURL(file)}
-                    width={"150px"}
                     alt={`Image ${innerIndex}`}
+                    className="single-img"
                   />
                 ))}
               </span>
@@ -99,8 +99,8 @@ const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) =>
                 <img
                   key={innerIndex}
                   src={URL.createObjectURL(file)}
-                  width={"150px"}
                   alt={`Image ${innerIndex}`}
+                  className="single-img"
                 />
               ))}
             </span>
@@ -119,7 +119,8 @@ const Holder = styled.div`
   display: grid;
   grid-template-columns: 11em 30em;
   align-items: center;
-  gap: 1.5em;
+  gap: 0.5em 1.5em;
+  
   label:first-of-type {
     font-size: 1.2em;
     ${fonts.bold}
@@ -127,10 +128,14 @@ const Holder = styled.div`
       content: " :";
     }
   }
+  .error-message{
+    grid-column: 2 /3 ;
+  }
   .imgList-wrapper {
-    grid-column: span 2;
+    grid-column: 2 /3;
     img {
       padding: 0.1em;
+      width: 100px;
     }
   }
 `;

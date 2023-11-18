@@ -1,47 +1,80 @@
 import styled from "@emotion/styled";
 import { useSelector } from "../redux/Store/hooks";
 import ImageRendering from "./shared/ImageRendering";
+import styles from "../styles";
 
+// ------------------
+// props type
+// ------------------
 type Category = {
   category: "babyboy" | "babygirl" | "boy" | "girl" | "man" | "woman";
 };
 
+// -------------------
+// style variables
+// -------------------
+const { fonts, colors } = styles;
+
+// ------------------
+// main component
+// ------------------
 const ItemStatueSeller: React.FC<Category> = ({ category }) => {
   const items = useSelector((state) => state[category]);
 
   return (
-    <Holder>
+    <>
       {items.map((item) =>
         item.mainPic && item.media ? (
-          <li>
-            <span>{item.name}</span>
-            <span>{item.price}</span>
-            <span>{item.size}</span>
-            <ImageRendering images={item.mainPic} multiple={false}/>
-            <ImageRendering images={item.media} multiple={true}/>
-            <span>{item.gender}</span>
-            <span>{item.features}</span>
-            <span>{item.discount}</span>
-            <span>{item.description}</span>
-            <span>{item.deliveryTime}</span>
-            <span>{item.colors}</span>
-            <span>{item.brand}</span>
-            <span>{item.amountInStock}</span>
-          </li>
+          <Holder>
+            <li>
+              <ImageRendering images={item.mainPic} multiple={false} />
+            </li>
+            <li>
+              <span>Name: </span> {item.name}
+            </li>
+            <li>
+              <span>Brand: </span> {item.brand}
+            </li>
+            <li>
+              <span>Colors: </span> {item.colors}
+            </li>
+            <li>
+              <span>Sizes: </span> {item.sizes}
+            </li>
+            <li>
+              <span>Gender: </span> {item.gender}
+            </li>
+            <li>
+              <span>Price: </span> {item.price}
+            </li>
+            <li>
+              <span>No. in Stock: </span> {item.amountInStock}
+            </li>
+            <li>
+              <span>Delivery Time: </span> {item.deliveryTime}
+            </li>
+          </Holder>
         ) : null
       )}
-    </Holder>
+    </>
   );
 };
 
 export default ItemStatueSeller;
 
-const Holder = styled.div`
+// -------------------
+// STYLED COMPONENT
+// -------------------
+const Holder = styled.ul`
   border: 2px solid #000000;
-  .img-wrapper {
-    width: 10em;
-    img {
-      width: inherit;
-    }
+  list-style: none;
+  padding: 0.5em;
+  ${fonts.bold}
+  li {
+    color: ${colors.darkBlue};
+  }
+  span {
+    color: ${colors.lightBlue};
+    ${fonts.semiBold}
   }
 `;

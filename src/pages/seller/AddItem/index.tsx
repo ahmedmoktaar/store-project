@@ -42,7 +42,6 @@ const AddItem: React.FC = () => {
     name: yup.string().required("Required"),
     brand: yup.string().required("Required"),
     price: yup.string().required("Required"),
-    discount: yup.string().required("Required"),
     colors: yup.string().required("Required"),
     size: yup.string().required("Required"),
     features: yup.string().required("Required"),
@@ -143,16 +142,6 @@ const AddItem: React.FC = () => {
             type="number"
             name="price"
             label="Price"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
-            }}
-          />
-          <TextFormLabeled
-            type="number"
-            name="discount"
-            label="Discount Price"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>

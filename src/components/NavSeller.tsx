@@ -44,6 +44,9 @@ const Holder = styled.nav`
     top: 0;
     opacity: 1;
     color: ${colors.orange};
+    :hover{
+      background-color: ${colors.lightBlue};;
+    }
   }
 `;
 

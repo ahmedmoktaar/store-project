@@ -1,12 +1,18 @@
+// ------------------
+// props type
+// ------------------
 interface props {
   images: FileList[];
   multiple: boolean;
 }
 
+// ------------------
+// main component
+// ------------------
 const ImageRendering: React.FC<props> = ({ images, multiple }) => {
   const imgArray = Array.from(images);
   return (
-    <span>
+    <div>
       {multiple ? (
         imgArray.map((imgFileList, index) => (
           <span key={index}>
@@ -32,7 +38,7 @@ const ImageRendering: React.FC<props> = ({ images, multiple }) => {
           ))}
         </span>
       )}
-    </span>
+    </div>
   );
 };
 

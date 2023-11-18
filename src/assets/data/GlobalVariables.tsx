@@ -46,9 +46,8 @@ export interface ItemValues {
   name: string;
   brand: string;
   price: string;
-  discount: string;
   colors: string;
-  size: string;
+  sizes: string;
   features: string;
   description: string;
   gender: string;
@@ -65,9 +64,8 @@ export const itemInitialValues: ItemValues = {
   name: "",
   brand: "",
   price: "",
-  discount: "",
   colors: "",
-  size: "",
+  sizes: "",
   features: "",
   description: "",
   gender: "",
