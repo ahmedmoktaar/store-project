@@ -25,6 +25,8 @@ const NavLink: React.FC<Props> = (props) => {
         textDecoration: "none",
         "&:hover": {
           opacity: 0.7,
+          color: `${colors.darkOrange}`,
+          textDecoration: "underline",
         },
         "&:active": {
           opacity: 0.9,

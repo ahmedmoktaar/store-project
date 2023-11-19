@@ -6,8 +6,14 @@ import Footer from "../components/Footer";
 import Logo from "../components/shared/Logo";
 import { useSelector } from "../redux/Store/hooks";
 
+// ----------------
+// style variables
+// ----------------
 const { fonts } = styles;
 
+// ---------------
+// main component
+// ---------------
 const SellerLayout = () => {
   const isLoggedIn = useSelector((state) => state.isloggedin.userState);
 
@@ -32,6 +38,9 @@ const SellerLayout = () => {
 
 export default SellerLayout;
 
+// ----------------
+// STYLED COMPONENT
+// ----------------
 const Holder = styled.div`
   height: 100vh;
   display: grid;

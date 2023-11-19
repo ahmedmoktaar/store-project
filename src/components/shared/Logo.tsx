@@ -28,9 +28,15 @@ export default Logo;
 // ----------------
 const Holder = styled.div`
   position: absolute;
-  left: 1.5em;
+  left: 3em;
   top: 0.5em;
   text-align: center;
   color: ${colors.darkBlue};
   ${fonts.light}
+  border: 1px solid transparent;
+  padding: 0.5em;
+
+  :hover {
+    border: 1px solid white;
+  }
 `;

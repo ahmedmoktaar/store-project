@@ -26,12 +26,12 @@ const NavSeller = () => {
 // STYLED COMPONENT
 // ----------------
 const Holder = styled.nav`
-  background-color: ${colors.Blue};
+  background-color: ${colors.darkBlue};
   font-size: 1.3em;
   padding: 0.9em 2em;
   a {
     padding: 1em;
-    &:first-of-type{
+    &:first-of-type {
       margin-left: 5em;
     }
   }
@@ -44,8 +44,8 @@ const Holder = styled.nav`
     top: 0;
     opacity: 1;
     color: ${colors.orange};
-    :hover{
-      background-color: ${colors.lightBlue};;
+    :hover {
+      background-color: ${colors.lightBlue};
     }
   }
 `;
