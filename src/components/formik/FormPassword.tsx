@@ -21,7 +21,11 @@ type OutlinedInputProps = MUIOutlinedInputProps & {
 // ------------------
 // main component
 // ------------------
-const FormPassword: React.FC<OutlinedInputProps> = ({ name, ...props }) => {
+const FormPassword: React.FC<OutlinedInputProps> = ({
+  name,
+  label,
+  ...props
+}) => {
   const [field, meta] = useField(name);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -31,7 +35,7 @@ const FormPassword: React.FC<OutlinedInputProps> = ({ name, ...props }) => {
       fullWidth
       error={!!meta.error && meta.touched}
     >
-      <InputLabel>Password</InputLabel>
+      <InputLabel>{label}</InputLabel>
       <OutlinedInput
         type={showPassword ? "text" : "password"}
         endAdornment={
@@ -45,7 +49,7 @@ const FormPassword: React.FC<OutlinedInputProps> = ({ name, ...props }) => {
             </IconButton>
           </InputAdornment>
         }
-        label="Password"
+        label={label}
         {...field}
         {...props}
       />

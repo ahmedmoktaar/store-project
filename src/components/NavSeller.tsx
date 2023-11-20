@@ -5,7 +5,7 @@ import styles from "../styles";
 // ----------------
 // style variables
 // ----------------
-const { colors } = styles;
+const { colors, fonts } = styles;
 
 // ---------------
 // main component
@@ -27,26 +27,24 @@ const NavSeller = () => {
 // ----------------
 const Holder = styled.nav`
   background-color: ${colors.darkBlue};
-  font-size: 1.3em;
-  padding: 0.9em 2em;
+  padding: 1.8em;
+  ${fonts.medium}
+  font-size: 1.1em;
   a {
-    padding: 1em;
+    padding: 0.5em;
     &:first-of-type {
-      margin-left: 5em;
+      margin-left: 8em;
+      margin-right: 1em;
     }
   }
+
   .home-page {
     position: absolute;
-    font-size: 0.8em;
-    padding: 0.5em;
-    margin: 1em 4em;
+    margin: 1.4em 4em;
     right: 0;
     top: 0;
     opacity: 1;
     color: ${colors.orange};
-    :hover {
-      background-color: ${colors.lightBlue};
-    }
   }
 `;
 

@@ -6,16 +6,16 @@ import {
 
 const initialState = AdminDetails;
 
-const sellerDetailsSlice = createSlice({
-  name: "sellerDetails",
+const customerDetailsSlice = createSlice({
+  name: "customerDetails",
   initialState,
   reducers: {
-    addSellerDetails: (state, action: PayloadAction<SignUpValues>) => {
+    addCustomerDetails: (state, action: PayloadAction<SignUpValues>) => {
       const actionPayLoad = action.payload;
       state.push(actionPayLoad);
     },
   },
 });
 
-export default sellerDetailsSlice.reducer;
-export const { addSellerDetails } = sellerDetailsSlice.actions;
+export default customerDetailsSlice.reducer;
+export const { addCustomerDetails } = customerDetailsSlice.actions;

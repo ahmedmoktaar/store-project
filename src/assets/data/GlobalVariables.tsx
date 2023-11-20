@@ -1,41 +1,41 @@
 //-------------------------------------------------
 // Sellers values type
 //-------------------------------------------------
-export interface SellerDetails {
+export interface SignUpValues {
   firstName: string;
   lastName?: string;
   email: string;
   password: string;
   confirmPassword: string;
-  paypal: string;
-  website?: string;
+  paypal?: string;
+  socialMedia?: string;
 }
 
 //-------------------------------------------------
 // Sign up initial values
 //-------------------------------------------------
-export const SignUpInitialValues: SellerDetails = {
+export const SignUpInitialValues: SignUpValues = {
   firstName: "",
   lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
   paypal: "",
-  website: "",
+  socialMedia: "",
 };
 
 //-------------------------------------------------
 // Admin details as a seller + initial value for seller
 //-------------------------------------------------
-export const AdminDetails: SellerDetails[] = [
+export const AdminDetails: SignUpValues[] = [
   {
     firstName: "admin",
     lastName: "",
     email: "admin@example.com",
     password: "123456zZ#",
     confirmPassword: "123456zZ#",
-    paypal: "none",
-    website: "",
+    paypal: "",
+    socialMedia: "",
   },
 ];
 
@@ -74,3 +74,11 @@ export const itemInitialValues: ItemValues = {
   amountInStock: "",
   deliveryTime: "",
 };
+
+//-------------------------------------------------
+// User State initial values
+//-------------------------------------------------
+const customerDetails = SignUpInitialValues
+const sellerDetails = SignUpInitialValues
+export const CustomerStateInitialValue = { customerState: false, customerDetails };
+export const SellerStateInitialValue = { sellerState: false, sellerDetails };

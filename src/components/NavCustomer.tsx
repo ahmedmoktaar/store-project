@@ -1,10 +1,14 @@
 import styled from "@emotion/styled";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import {
+  ShoppingCartOutlined,
+  AccountCircleOutlined,
+} from "@mui/icons-material";
 import SearchBar from "./SearchBar";
 import styles from "../styles";
 import ActiveLink from "./shared/Link/ActiveLink";
 import MuiButton from "./shared/MuiButton";
 import NavLink from "./shared/Link/NavLink";
+import { useSelector } from "../redux/Store/hooks";
 
 // ----------------
 // style variables
@@ -15,6 +19,14 @@ const { colors, fonts } = styles;
 // main component
 // ---------------
 const NavCustomer = () => {
+  // ---------------
+  // hooks
+  // ---------------
+  const LoggedIn = useSelector((state) => state.customerLoggedIn.customerState);
+  const customerName = useSelector(
+    (state) => state.customerLoggedIn.customerDetails.firstName
+  );
+
   return (
     <Holder>
       <div className="categories">
@@ -29,8 +41,16 @@ const NavCustomer = () => {
         <SearchBar />
       </div>
 
-      <NavLink to="/signincustomer"> Login / Register </NavLink>
-      <ShoppingCartOutlinedIcon />
+      {LoggedIn ? (
+        <NavLink to="/profile" className="user-wrapper">
+          <AccountCircleOutlined />
+          <span>{customerName}</span>
+        </NavLink>
+      ) : (
+        <NavLink to="/signincustomer"> Login / Register </NavLink>
+      )}
+
+      <ShoppingCartOutlined />
       <MuiButton className="checkout-button">CHECKOUT</MuiButton>
       <NavLink className="sell" to="/additem">
         SELL
@@ -58,11 +78,29 @@ const Holder = styled.div`
     a {
       gap: 0.8em;
       padding: 0.8em;
-      text-decoration: none;
       border: 1px solid ${colors.darkBlue};
       :hover {
         border: 1px solid #ffffff;
       }
+    }
+  }
+
+  .user-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2em;
+    text-decoration: none;
+    color: ${colors.yellow};
+    svg {
+      font-size: 2em;
+    }
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 8em;
+      font-size: 0.8em;
+      text-align: center;
     }
   }
 

@@ -24,13 +24,14 @@ const ActiveLink: React.FC<Props> = (props) => {
         color: `${colors.white}`,
         textDecoration: "none",
         opacity: 0.6,
+        border: `1px solid ${colors.darkBlue}`,
         "&.active": {
           opacity: 1,
           backgroundColor: `${colors.lightBlue}`,
         },
         " :hover": {
           opacity: 1,
-          textDecoration: "underline",
+          border: `1px solid ${colors.white}`,
         },
       }}
       component={NavLink}

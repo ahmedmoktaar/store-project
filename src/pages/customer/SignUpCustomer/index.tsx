@@ -10,7 +10,7 @@ import {
   SignUpValues,
 } from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
-import { addSellerDetails } from "../../../redux/features/SellerDetails/SellerDetailsSlice";
+import { addCustomerDetails } from "../../../redux/features/CustomerDetails/CustomerDetailsSlice";
 import MuiButton from "../../../components/shared/MuiButton";
 import Logo from "../../../components/shared/Logo";
 import Link from "../../../components/shared/Link/Link";
@@ -24,13 +24,13 @@ const { colors, fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const SignUpSeller: React.FC = () => {
+const SignUpCustomer: React.FC = () => {
   // ------------------
   // hooks
   // ------------------
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
-  const LoggedIn = useSelector((state) => state.sellerLoggedIn.sellerState);
+  const LoggedIn = useSelector((state) => state.customerLoggedIn.customerState);
 
   // --------------------
   // formik variables
@@ -50,25 +50,26 @@ const SignUpSeller: React.FC = () => {
       .string()
       .required("Please Enter your password")
       .oneOf([yup.ref("password")], "Passwords must match"),
-    paypal: yup.string().required("Please enter your PayPal email or username"),
+    paypal: yup.string(),
     socialMedia: yup.string(),
   });
 
   const onSubmit = (values: SignUpValues) => {
-    dispatch(addSellerDetails(values));
-    navigateTo("/signinseller");
+    dispatch(addCustomerDetails(values));
+    navigateTo("/signincustomer");
   };
 
   return (
     <>
       {LoggedIn ? (
-        <Navigate to="/" replace={true} />
+        <Navigate to="/profile" replace={true} />
       ) : (
         <Holder>
           <Logo />
           <Typography className="signup-label" variant="h4" component="h1">
             Create account
           </Typography>
+
           <Formik
             initialValues={SignUpInitialValues}
             validationSchema={validationSchema}
@@ -82,7 +83,7 @@ const SignUpSeller: React.FC = () => {
               <FormTextField name="email" label="Email *" />
               <FormPassword name="password" label="Password *" />
               <FormPassword name="confirmPassword" label="Password *" />
-              <FormTextField name="paypal" label="PayPal Details *" />
+              <FormTextField name="paypal" label="PayPal Details" />
               <FormTextField name="socialMedia" label="Social Media Links" />
               <MuiButton type="submit" className="submit-button">
                 submit
@@ -92,7 +93,7 @@ const SignUpSeller: React.FC = () => {
 
           <div className="additional-info">
             <p>
-              Already have an account? <Link to="/signinseller">Sign in</Link>
+              Already have an account? <Link to="/signincustomer">Sign in</Link>
             </p>
             <p>
               For further support, you may visit the Help Center or contact our
@@ -105,7 +106,7 @@ const SignUpSeller: React.FC = () => {
   );
 };
 
-export default SignUpSeller;
+export default SignUpCustomer;
 
 // -------------------
 // STYLED COMPONENT
@@ -115,6 +116,7 @@ const Holder = styled.div`
   width: 20em;
   text-align: center;
   font-size: 1.1em;
+
   .form-wrapper {
     margin-top: 1.5em;
     display: grid;
@@ -124,6 +126,7 @@ const Holder = styled.div`
       gap: 0.8em;
     }
   }
+
   .submit-button {
     background-color: ${colors.orange};
     color: ${colors.Blue};
@@ -132,6 +135,7 @@ const Holder = styled.div`
       background-color: ${colors.darkOrange};
     }
   }
+
   .additional-info {
     p:first-of-type {
       font-size: 0.9em;

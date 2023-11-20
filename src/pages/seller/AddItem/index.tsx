@@ -43,7 +43,7 @@ const AddItem: React.FC = () => {
     brand: yup.string().required("Required"),
     price: yup.string().required("Required"),
     colors: yup.string().required("Required"),
-    size: yup.string().required("Required"),
+    sizes: yup.string().required("Required"),
     features: yup.string().required("Required"),
     description: yup.string().required("Required"),
     gender: yup.string().required("Required"),
@@ -138,6 +138,7 @@ const AddItem: React.FC = () => {
             label="Brand Name"
             options={brandsList}
           />
+
           <TextFormLabeled
             type="number"
             name="price"
@@ -153,7 +154,7 @@ const AddItem: React.FC = () => {
             label="Colors Available"
             options={colorsList}
           />
-          <FormSelect name="size" label="Sizes Available" options={sizeList} />
+          <FormSelect name="sizes" label="Sizes Available" options={sizeList} />
           <TextFormLabeled multiline name="features" label="Features" />
           <TextFormLabeled multiline name="description" label="Description" />
           <FormRadio name="gender" label="Gender" options={genderList} />
@@ -163,7 +164,11 @@ const AddItem: React.FC = () => {
             type="number"
           />
           <TextFormLabeled name="deliveryTime" label="Delivery Time" />
-          <FormUploadFiles name="mainPic" label="Pictures" multiple={false} />
+          <FormUploadFiles
+            name="mainPic"
+            label="Main Picture"
+            multiple={false}
+          />
           <FormUploadFiles name="media" label="Pictures" multiple />
 
           <div className="buttons">

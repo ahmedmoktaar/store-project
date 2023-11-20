@@ -12,6 +12,8 @@ import SignInSeller from "../pages/seller/SignInSeller";
 import SignUpSeller from "../pages/seller/SignUpSeller";
 import RootLayout from "../layout/RootLayout";
 import SellerLayout from "../layout/SellerLayout";
+import SignInCustomer from "../pages/customer/SignInCustomer";
+import SignUpCustomer from "../pages/customer/SignUpCustomer";
 
 // ----------------------
 // routes construction
@@ -30,6 +32,8 @@ const router = createBrowserRouter(
       <Route>
         <Route path="/signinseller" element={<SignInSeller />} />
         <Route path="/signupseller" element={<SignUpSeller />} />
+        <Route path="/signincustomer" element={<SignInCustomer />} />
+        <Route path="/signupcustomer" element={<SignUpCustomer />} />
       </Route>
     </>
   )

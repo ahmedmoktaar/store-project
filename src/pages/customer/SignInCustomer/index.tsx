@@ -11,7 +11,7 @@ import Link from "../../../components/shared/Link/Link";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
-import { login } from "../../../redux/features/SellerState/SellerStateSlice";
+import { login } from "../../../redux/features/CustomerState/CustomerStateSlice";
 import { SignUpInitialValues } from "../../../assets/data/GlobalVariables";
 
 // -------------------
@@ -30,28 +30,28 @@ interface loginValues {
 // ------------------
 // main component
 // ------------------
-const SignInSeller: React.FC = () => {
+const SignInCustomer: React.FC = () => {
   // --------------------
   // reduex data
   // --------------------
-  const sellerDetails = useSelector((state) => state.sellerDetails);
-  const LoggedIn = useSelector((state) => state.sellerLoggedIn.sellerState);
+  const customerDetails = useSelector((state) => state.customerDetails);
+  const LoggedIn = useSelector((state) => state.customerLoggedIn.customerState);
   const dispatch = useDispatch();
 
   // --------------------
-  // return seller details
+  // return customer details
   // --------------------
-  const loggedInSellerDetails = (value: loginValues) => {
-    const validSeller = sellerDetails.find(
-      (sellerDetail) =>
-        value.email === sellerDetail.email &&
-        value.password === sellerDetail.password
+  const LoggedInUserDetails = (value: loginValues) => {
+    const validUser = customerDetails.find(
+      (customerDetail) =>
+        value.email === customerDetail.email &&
+        value.password === customerDetail.password
     );
 
-    if (validSeller) {
-      return { sellerState: true, sellerDetails: validSeller };
+    if (validUser) {
+      return { customerState: true, customerDetails: validUser };
     } else {
-      return { sellerState: true, sellerDetails: SignUpInitialValues };
+      return { customerState: true, customerDetails: SignUpInitialValues };
     }
   };
 
@@ -73,28 +73,28 @@ const SignInSeller: React.FC = () => {
       .string()
       .required("Required")
       .test("email-check", "Incorrect email", (value) => {
-        return sellerDetails.some(
-          (sellerdetail) => value === sellerdetail.email
+        return customerDetails.some(
+          (customerDetail) => value === customerDetail.email
         );
       }),
     password: yup
       .string()
       .required("Required")
       .test("password-check", "Incorrect password", (value) => {
-        return sellerDetails.some(
-          (sellerdetail) => value === sellerdetail.password
+        return customerDetails.some(
+          (customerDetail) => value === customerDetail.password
         );
       }),
   });
 
-  const onSubmit = (value:loginValues) => {
-    dispatch(login(loggedInSellerDetails(value))), navigateTo("/additem");
+  const onSubmit = (value: loginValues) => {
+    dispatch(login(LoggedInUserDetails(value))), navigateTo("/");
   };
 
   return (
     <>
       {LoggedIn ? (
-        <Navigate to="/" replace={true} />
+        <Navigate to="/profile" replace={true} />
       ) : (
         <Holder>
           <Logo />
@@ -122,7 +122,7 @@ const SignInSeller: React.FC = () => {
               </Form>
             </Formik>
 
-            <Link to="/signupseller" className="signup-link">
+            <Link to="/signupcustomer" className="signup-link">
               Don't have an account? Sign Up
             </Link>
 
@@ -136,7 +136,7 @@ const SignInSeller: React.FC = () => {
   );
 };
 
-export default SignInSeller;
+export default SignInCustomer;
 
 // -------------------
 // STYLED COMPONENT
@@ -148,11 +148,13 @@ const Holder = styled.div`
   flex-direction: column;
   gap: 0.6em;
   width: 16em;
+
   form {
     div:first-of-type {
       margin-bottom: 0.6em;
     }
   }
+
   .lock-icon {
     background-color: ${colors.orange};
     width: 2.5em;
@@ -163,16 +165,20 @@ const Holder = styled.div`
     justify-content: center;
     align-items: center;
   }
+
   .signin-label {
     margin-bottom: 1em;
     align-self: center;
   }
+
   .signin-button {
     margin-top: 2em;
   }
+
   .signup-link {
     font-size: 0.75em;
   }
+
   .copyright {
     font-size: 0.6em;
     position: absolute;

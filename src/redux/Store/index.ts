@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import sellerDetailsReducer from "../features/SellerDetails/SellerDetailsSlice";
-import userStateReducer from "../features/UserState/UserStateSlice";
+import customerDetailsReducer from "../features/CustomerDetails/CustomerDetailsSlice";
+import customerStateReducer from "../features/CustomerState/CustomerStateSlice";
+import sellerStateReducer from "../features/SellerState/SellerStateSlice";
 import BabyBoyReducer from "../features/ItemDetails/BabyBoySlice";
 import BabyGirlReducer from "../features/ItemDetails/BabyGirlSlice";
 import GirlReducer from "../features/ItemDetails/GirlSlice";
@@ -10,8 +12,10 @@ import WomanReducer from "../features/ItemDetails/WomanSlice";
 
 const Store = configureStore({
   reducer: {
+    customerLoggedIn: customerStateReducer,
+    sellerLoggedIn: sellerStateReducer,
+    customerDetails: customerDetailsReducer,
     sellerDetails: sellerDetailsReducer,
-    isloggedin: userStateReducer,
     babyboy: BabyBoyReducer,
     babygirl: BabyGirlReducer,
     boy: BoyReducer,

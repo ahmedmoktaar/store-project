@@ -15,11 +15,11 @@ const { fonts } = styles;
 // main component
 // ---------------
 const SellerLayout = () => {
-  const isLoggedIn = useSelector((state) => state.isloggedin.userState);
+  const LoggedIn = useSelector((state) => state.sellerLoggedIn.sellerState);
 
   return (
     <>
-      {isLoggedIn ? (
+      {LoggedIn ? (
         <Holder>
           <Logo />
           <>

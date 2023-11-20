@@ -29,12 +29,11 @@ export default Logo;
 const Holder = styled.div`
   position: absolute;
   left: 3em;
-  top: 0.5em;
+  top: 0.8em;
   text-align: center;
   color: ${colors.darkBlue};
   ${fonts.light}
   border: 1px solid transparent;
-  padding: 0.5em;
 
   :hover {
     border: 1px solid white;
