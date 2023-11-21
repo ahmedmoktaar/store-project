@@ -13,7 +13,7 @@ import styles from "../../styles";
 // ------------------
 type TextFieldProps = MUITextFieldProps & {
   name: string;
-  options: { label: string; value: string }[];
+  options: { label: string; gender: string }[];
 };
 
 // -------------------
@@ -35,21 +35,26 @@ const FormAutoComplete: React.FC<TextFieldProps> = ({
     <Holder>
       <InputLabel id={name}>{label}</InputLabel>
       <Autocomplete
-        freeSolo
         blurOnSelect
         clearOnEscape
         disablePortal
         handleHomeEndKeys
         id={name}
         options={options}
-        onChange={(_e, value) => form.setValue(value?.value)}
-        value={field.value ? field.value : ""}
+        onChange={(_e, value) => form.setValue(value.label)}
+        value={field.value ? field.value : null}
+        groupBy={(option) => option.gender}
+        isOptionEqualToValue={(option, value) => option.label === value}
+        renderOption={(props, option) => (
+          <li {...props} {...field} key={option.key}>
+            {option.label}
+          </li>
+        )}
         renderInput={(params) => (
           <TextField
             variant="outlined"
             {...props}
             {...params}
-            {...field}
             error={!!meta.error && meta.touched}
             helperText={meta.error && meta.touched ? meta.error : undefined}
             placeholder="Required"

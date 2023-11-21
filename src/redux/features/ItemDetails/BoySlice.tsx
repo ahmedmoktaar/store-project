@@ -8,7 +8,7 @@ const initialState = [itemInitialValues];
 
 const boySlice = createSlice({
   initialState,
-  name: "boy",
+  name: "boys",
   reducers: {
     boyAdd: (state, action: PayloadAction<ItemValues>) => {
       const actionPayLoad = action.payload;

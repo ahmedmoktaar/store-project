@@ -1,7 +1,7 @@
 import { SyntheticEvent, useState } from "react";
 import { Autocomplete, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import clothingTypesList from "../assets/data/clothesTypesList";
+import {clothesCategoriesList} from "../assets/data/GlobalVariables";
 
 // ----------------
 // main component
@@ -41,7 +41,7 @@ const SearchBar = () => {
         onClose={() => setOpen(false)}
         inputValue={inputValue}
         onInputChange={handleInputChange}
-        options={clothingTypesList}
+        options={clothesCategoriesList}
         groupBy={(option) => option.gender}
         getOptionLabel={(option) => option.label}
         size="small"

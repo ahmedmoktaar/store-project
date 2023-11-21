@@ -15,7 +15,7 @@ import styles from "../../styles";
 // ------------------
 type TextFieldProps = MUITextFieldProps & {
   name: string;
-  options: { label: string; value: string }[];
+  options: string[];
 };
 
 // -------------------
@@ -49,13 +49,12 @@ const FormSelect: React.FC<TextFieldProps> = ({
         id={name}
         options={options}
         onChange={(_e, values) =>
-          form.setValue(values.map((item) => item.value).join(" - "))
+          form.setValue(values.map((item) => item).join(" - "))
         }
         limitTags={2}
         disableCloseOnSelect
         handleHomeEndKeys
         disablePortal
-        getOptionLabel={(option) => option.label}
         renderOption={(props, option, { selected }) => (
           <li {...props}>
             <Checkbox
@@ -64,7 +63,7 @@ const FormSelect: React.FC<TextFieldProps> = ({
               style={{ marginRight: 8 }}
               checked={selected}
             />
-            {option.label}
+            {option}
           </li>
         )}
         renderInput={(params) => (

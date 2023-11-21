@@ -14,7 +14,7 @@ import styles from "../../styles";
 // ------------------
 type TextFieldProps = MUITextFieldProps & {
   name: string;
-  options: { label: string; value: string }[];
+  options: string[];
 };
 
 // -------------------
@@ -39,16 +39,16 @@ const FormRadio: React.FC<TextFieldProps> = ({
       <Autocomplete
         fullWidth
         id={name}
-        options={options}
-        onChange={(_e, values) => form.setValue(values?.value)}
         disablePortal
         blurOnSelect
         clearOnEscape
-        getOptionLabel={(option) => option.label}
-        renderOption={(props, option, { selected }) => (
-          <li {...props}>
-            <Radio style={{ marginRight: 8 }} checked={selected} />
-            {option.label}
+        options={options}
+        onChange={(_e, values) => form.setValue(values)}
+        value={field.value ? field.value : null}
+        renderOption={(props, option, { selected, index }) => (
+          <li key={index} {...props}>
+            <Radio style={{ marginRight: 8 }} checked={selected} {...field} />
+            {option}
           </li>
         )}
         renderInput={(params) => (
@@ -59,7 +59,6 @@ const FormRadio: React.FC<TextFieldProps> = ({
             helperText={meta.error && meta.touched ? meta.error : undefined}
             {...props}
             {...params}
-            {...field}
           />
         )}
       />

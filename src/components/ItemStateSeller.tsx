@@ -7,7 +7,7 @@ import styles from "../styles";
 // props type
 // ------------------
 type Category = {
-  category: "babyboy" | "babygirl" | "boy" | "girl" | "man" | "woman";
+  category: "baby" | "boys" | "girls" | "men" | "women";
 };
 
 // -------------------
@@ -23,11 +23,11 @@ const ItemStatueSeller: React.FC<Category> = ({ category }) => {
 
   return (
     <>
-      {items.map((item) =>
+      {items.map((item,index) =>
         item.mainPic && item.media ? (
-          <Holder>
+          <Holder key={index}>
             <li>
-              <ImageRendering images={item.mainPic} multiple={false} />
+              <ImageRendering key={index} images={item.mainPic} multiple={false} />
             </li>
             <li>
               <span>Name: </span> {item.name}

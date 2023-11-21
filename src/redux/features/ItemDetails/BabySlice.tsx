@@ -6,17 +6,17 @@ import {
 
 const initialState = [itemInitialValues];
 
-const babyBoySlice = createSlice({
+const babySlice = createSlice({
   initialState,
-  name: "babyBoy",
+  name: "baby",
   reducers: {
-    babyBoyAdd: (state, action: PayloadAction<ItemValues>) => {
+    babyAdd: (state, action: PayloadAction<ItemValues>) => {
       const actionPayLoad = action.payload;
       state.push(actionPayLoad);
     },
   },
 });
 
-export default babyBoySlice.reducer;
+export default babySlice.reducer;
 
-export const { babyBoyAdd } = babyBoySlice.actions;
+export const { babyAdd } = babySlice.actions;

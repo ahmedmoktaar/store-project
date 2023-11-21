@@ -5,21 +5,21 @@ import * as yup from "yup";
 import { Form, Formik } from "formik";
 import TextFormLabeled from "../../../components/formik/FormTextFieldLabeled";
 import FormAutoComplete from "../../../components/formik/FormAutoComplete";
-import colorsList from "../../../assets/data/colorsList";
-import brandsList from "../../../assets/data/brandsList";
 import FormSelect from "../../../components/formik/FormSelect";
-import sizeList from "../../../assets/data/sizeList";
-import genderList from "../../../assets/data/genderList";
 import MuiButton from "../../../components/shared/MuiButton";
 import FormUploadFiles from "../../../components/formik/FormUploadFiles";
 import FormRadio from "../../../components/formik/FormRadio";
 import {
   ItemValues,
+  colorsList,
+  sizeList,
+  brandsList,
   itemInitialValues,
+  genderList,
+  clothesCategoriesList,
 } from "../../../assets/data/GlobalVariables";
 import { useDispatch } from "../../../redux/Store/hooks";
-import { babyBoyAdd } from "../../../redux/features/ItemDetails/BabyBoySlice";
-import { babyGirlAdd } from "../../../redux/features/ItemDetails/BabyGirlSlice";
+import { babyAdd } from "../../../redux/features/ItemDetails/BabySlice";
 import { boyAdd } from "../../../redux/features/ItemDetails/BoySlice";
 import { girlAdd } from "../../../redux/features/ItemDetails/GirlSlice";
 import { manAdd } from "../../../redux/features/ItemDetails/ManSlice";
@@ -41,10 +41,13 @@ const AddItem: React.FC = () => {
   const validationSchema = yup.object({
     name: yup.string().required("Required"),
     brand: yup.string().required("Required"),
-    price: yup.string().required("Required"),
+    price: yup
+      .number()
+      .moreThan(-1, "Can't be negative number")
+      .required("Required"),
     colors: yup.string().required("Required"),
     sizes: yup.string().required("Required"),
-    features: yup.string().required("Required"),
+    categories: yup.string().required("Required"),
     description: yup.string().required("Required"),
     gender: yup.string().required("Required"),
     mainPic: yup
@@ -93,17 +96,17 @@ const AddItem: React.FC = () => {
           })
       )
       .required("At least one file required"),
-    amountInStock: yup.string().required("Required"),
+    amountInStock: yup
+      .number()
+      .moreThan(-1, "Can't be negative number")
+      .required("Required"),
     deliveryTime: yup.string().required("Required"),
   });
 
   const onSubmit = (values: ItemValues) => {
     switch (values.gender) {
-      case "Baby Boy":
-        dispatch(babyBoyAdd(values));
-        break;
-      case "Baby Girl":
-        dispatch(babyGirlAdd(values));
+      case "Baby":
+        dispatch(babyAdd(values));
         break;
       case "Boy":
         dispatch(boyAdd(values));
@@ -133,12 +136,7 @@ const AddItem: React.FC = () => {
       >
         <Form className="form-wrapper">
           <TextFormLabeled name="name" label="Product Name" />
-          <FormAutoComplete
-            name="brand"
-            label="Brand Name"
-            options={brandsList}
-          />
-
+          <FormRadio name="brand" label="Brand Name" options={brandsList} />
           <TextFormLabeled
             type="number"
             name="price"
@@ -155,7 +153,11 @@ const AddItem: React.FC = () => {
             options={colorsList}
           />
           <FormSelect name="sizes" label="Sizes Available" options={sizeList} />
-          <TextFormLabeled multiline name="features" label="Features" />
+          <FormAutoComplete
+            name="categories"
+            label="Categories"
+            options={clothesCategoriesList}
+          />
           <TextFormLabeled multiline name="description" label="Description" />
           <FormRadio name="gender" label="Gender" options={genderList} />
           <TextFormLabeled

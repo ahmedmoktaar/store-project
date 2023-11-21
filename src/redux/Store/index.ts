@@ -3,8 +3,7 @@ import sellerDetailsReducer from "../features/SellerDetails/SellerDetailsSlice";
 import customerDetailsReducer from "../features/CustomerDetails/CustomerDetailsSlice";
 import customerStateReducer from "../features/CustomerState/CustomerStateSlice";
 import sellerStateReducer from "../features/SellerState/SellerStateSlice";
-import BabyBoyReducer from "../features/ItemDetails/BabyBoySlice";
-import BabyGirlReducer from "../features/ItemDetails/BabyGirlSlice";
+import BabyReducer from "../features/ItemDetails/BabySlice";
 import GirlReducer from "../features/ItemDetails/GirlSlice";
 import BoyReducer from "../features/ItemDetails/BoySlice";
 import ManReducer from "../features/ItemDetails/ManSlice";
@@ -16,12 +15,11 @@ const Store = configureStore({
     sellerLoggedIn: sellerStateReducer,
     customerDetails: customerDetailsReducer,
     sellerDetails: sellerDetailsReducer,
-    babyboy: BabyBoyReducer,
-    babygirl: BabyGirlReducer,
-    boy: BoyReducer,
-    girl: GirlReducer,
-    man: ManReducer,
-    woman: WomanReducer,
+    baby: BabyReducer,
+    boys: BoyReducer,
+    girls: GirlReducer,
+    men: ManReducer,
+    women: WomanReducer,
   },
 });
 
