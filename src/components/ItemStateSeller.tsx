@@ -23,11 +23,16 @@ const ItemStatueSeller: React.FC<Category> = ({ category }) => {
 
   return (
     <>
-      {items.map((item,index) =>
+      {items.map((item, index) =>
         item.mainPic && item.media ? (
           <Holder key={index}>
             <li>
-              <ImageRendering key={index} images={item.mainPic} multiple={false} />
+              <ImageRendering
+                key={index}
+                images={item.mainPic}
+                multiple={false}
+                width="120em"
+              />
             </li>
             <li>
               <span>Name: </span> {item.name}
@@ -43,6 +48,9 @@ const ItemStatueSeller: React.FC<Category> = ({ category }) => {
             </li>
             <li>
               <span>Gender: </span> {item.gender}
+            </li>
+            <li>
+              <span>Categories: </span> {item.categories}
             </li>
             <li>
               <span>Price: </span> {item.price}

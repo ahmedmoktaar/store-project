@@ -51,8 +51,8 @@ export interface ItemValues {
   categories: string;
   description: string;
   gender: string;
-  mainPic: FileList[] | null;
-  media: FileList[] | null;
+  mainPic: FileList[] | string[] | null;
+  media: FileList[] | string[] | null;
   amountInStock: string;
   deliveryTime: string;
 }
@@ -182,13 +182,7 @@ export const brandsList = [
 //-------------------
 // Gender List
 //-------------------
-export const genderList = [
-  "Baby" ,
-  "Boy" ,
-  "Girl" ,
-  "Man" ,
-  "Woman" ,
-];
+export const genderList = ["Baby", "Boy", "Girl", "Man", "Woman"];
 
 //---------------------------------
 // all clothes in object array

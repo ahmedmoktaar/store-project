@@ -3,8 +3,9 @@ import {
   ItemValues,
   itemInitialValues,
 } from "../../../assets/data/GlobalVariables";
+import { maleProducts } from "../../../assets/data/DefaultProducts";
 
-const initialState = [itemInitialValues];
+const initialState = [itemInitialValues , ...maleProducts];
 
 const manSlice = createSlice({
   initialState,

@@ -14,11 +14,11 @@ import RootLayout from "../layout/RootLayout";
 import SellerLayout from "../layout/SellerLayout";
 import SignInCustomer from "../pages/customer/SignInCustomer";
 import SignUpCustomer from "../pages/customer/SignUpCustomer";
-import MenCategoriesPage from "../pages/categories/Men";
-import WomenCategoriesPage from "../pages/categories/Women";
-import BoysCategoriesPage from "../pages/categories/Boys";
-import GirlsCategoriesPage from "../pages/categories/Girls";
-import BabyCategoriesPage from "../pages/categories/Baby";
+import MenCategoriesPage from "../pages/customer/categories/Men";
+import WomenCategoriesPage from "../pages/customer/categories/Women";
+import BoysCategoriesPage from "../pages/customer/categories/Boys";
+import GirlsCategoriesPage from "../pages/customer/categories/Girls";
+import BabyCategoriesPage from "../pages/customer/categories/Baby";
 
 // ----------------------
 // routes construction
