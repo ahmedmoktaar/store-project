@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   AdminDetails,
   SignUpValues,
-} from "../../../assets/data/GlobalVariables";
+} from "../../../../assets/data/GlobalVariables";
 
 const initialState = AdminDetails;
 

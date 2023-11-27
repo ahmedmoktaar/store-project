@@ -11,11 +11,35 @@ interface props {
 // ------------------
 // main component
 // ------------------
-const ImageRendering: React.FC<props> = ({ images, multiple, width,height }) => {
+const ImageRendering: React.FC<props> = ({
+  images,
+  multiple,
+  width,
+  height,
+}) => {
+  // ------------------------
+  // Make Image Path Absolute
+  // ------------------------
+  const makeImagePathAbsolute = (relativePath: string) => {
+    return `${import.meta.env.BASE_URL}${relativePath}`;
+  };
+
+  // ----------------
+  // Render Image
+  // ----------------
   const renderImage = (src: string, alt: string, key: string | number) => (
-    <img key={key} src={src} width={width} alt={alt} height={height}/>
+    <img
+      key={key}
+      src={makeImagePathAbsolute(src)}
+      width={width}
+      alt={alt}
+      height={height}
+    />
   );
 
+  // --------------------------------------------
+  // Render default product Images
+  // --------------------------------------------
   if (images.every((item) => typeof item === "string") && images.length > 0) {
     return (
       <>
@@ -28,6 +52,9 @@ const ImageRendering: React.FC<props> = ({ images, multiple, width,height }) => 
         )}
       </>
     );
+    // --------------------------------------------
+    // Render seller product Images
+    // --------------------------------------------
   } else if (
     images.every((item) => item instanceof FileList) &&
     images.length > 0

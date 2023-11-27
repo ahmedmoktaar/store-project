@@ -3,12 +3,12 @@ import {
   ShoppingCartOutlined,
   AccountCircleOutlined,
 } from "@mui/icons-material";
-import SearchBar from "./SearchBar";
-import styles from "../styles";
-import ActiveLink from "./shared/Link/ActiveLink";
-import MuiButton from "./shared/MuiButton";
-import NavLink from "./shared/Link/NavLink";
-import { useSelector } from "../redux/Store/hooks";
+import SearchBar from "../SearchBar";
+import styles from "../../styles";
+import ActiveLink from "../shared/Link/ActiveLink";
+import MuiButton from "../shared/MuiButton";
+import NavLink from "../shared/Link/NavLink";
+import { useSelector } from "../../redux/Store/hooks";
 
 // ----------------
 // style variables
@@ -32,8 +32,6 @@ const NavCustomer = () => {
       <div className="categories">
         <ActiveLink to="/men">MEN</ActiveLink>
         <ActiveLink to="/women">WOMEN</ActiveLink>
-        <ActiveLink to="/boys">BOYS</ActiveLink>
-        <ActiveLink to="/girls">GIRLS</ActiveLink>
         <ActiveLink to="/baby">BABY</ActiveLink>
       </div>
 
@@ -41,20 +39,22 @@ const NavCustomer = () => {
         <SearchBar />
       </div>
 
-      {LoggedIn ? (
-        <NavLink to="/profile" className="user-wrapper">
-          <AccountCircleOutlined />
-          <span>{customerName}</span>
-        </NavLink>
-      ) : (
-        <NavLink to="/signincustomer"> Login / Register </NavLink>
-      )}
+        {LoggedIn ? (
+          <NavLink to="/profile" className="user-wrapper">
+            <AccountCircleOutlined />
+            <span>{customerName}</span>
+          </NavLink>
+        ) : (
+          <NavLink className="user-wrapper" to="/signincustomer"> Login / Register </NavLink>
+        )}
 
-      <ShoppingCartOutlined />
-      <MuiButton className="checkout-button">CHECKOUT</MuiButton>
-      <NavLink className="sell" to="/additem">
-        SELL
-      </NavLink>
+        <ShoppingCartOutlined />
+
+        <MuiButton className="checkout-button">CHECKOUT</MuiButton>
+
+        <NavLink className="sell" to="/additem">
+          SELL
+        </NavLink>
     </Holder>
   );
 };
@@ -68,15 +68,15 @@ const Holder = styled.div`
   background-color: ${colors.darkBlue};
   color: ${colors.white};
   display: flex;
-  padding: 1.5em 0 1.5em 10em;
+  padding: 1.5em 3.5em 1.5em 11em;
   align-items: center;
   gap: 1.5em;
   font-size: 0.9em;
 
   .categories {
     display: flex;
+    gap: 1.5em;
     a {
-      gap: 0.8em;
       padding: 0.8em;
       border: 1px solid ${colors.darkBlue};
       :hover {

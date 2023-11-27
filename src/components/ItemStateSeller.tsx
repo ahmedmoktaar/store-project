@@ -2,12 +2,13 @@ import styled from "@emotion/styled";
 import { useSelector } from "../redux/Store/hooks";
 import ImageRendering from "./shared/ImageRendering";
 import styles from "../styles";
+import { storeCategories } from "../assets/data/GlobalVariables";
 
 // ------------------
 // props type
 // ------------------
 type Category = {
-  category: "baby" | "boys" | "girls" | "men" | "women";
+  category: storeCategories;
 };
 
 // -------------------

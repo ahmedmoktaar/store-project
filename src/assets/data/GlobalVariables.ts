@@ -78,12 +78,12 @@ export const itemInitialValues: ItemValues = {
 //-------------------------------------------------
 // User State initial values
 //-------------------------------------------------
-const customerDetails = SignUpInitialValues;
-const sellerDetails = SignUpInitialValues;
+const customerDetails = SignUpInitialValues; //customer//
 export const CustomerStateInitialValue = {
   customerState: false,
   customerDetails,
 };
+const sellerDetails = SignUpInitialValues; //seller//
 export const SellerStateInitialValue = { sellerState: false, sellerDetails };
 
 //-------------------
@@ -182,7 +182,17 @@ export const brandsList = [
 //-------------------
 // Gender List
 //-------------------
-export const genderList = ["Baby", "Boy", "Girl", "Man", "Woman"];
+export const genderList = ["Male", "Female", "Baby"];
+
+//---------------------------------
+// categories name in redux store
+//---------------------------------
+export type storeCategories = "men" | "women" | "baby";
+
+//---------------------------------
+// Gender type
+//---------------------------------
+export type Gender = "Male" | "Female" | "Baby";
 
 //---------------------------------
 // all clothes in object array
@@ -200,7 +210,11 @@ export const clothesCategoriesList = [
   { gender: "Male", label: "Activewear", key: "MaleActivewear" },
   { gender: "Male", label: "Vests", key: "MaleVests" },
   { gender: "Male", label: "Blazers", key: "MaleBlazers" },
-  { gender: "Male", label: "Socks", key: "MaleSocks" },
+  {
+    gender: "Male",
+    label: "Long Sleeve T-shirts",
+    key: "MaleLong Sleeve T-shirts",
+  },
   { gender: "Male", label: "Underwear", key: "MaleUnderwear" },
   { gender: "Male", label: "Swimwear", key: "MaleSwimwear" },
   { gender: "Male", label: "Sleepwear", key: "MaleSleepwear" },
@@ -218,7 +232,7 @@ export const clothesCategoriesList = [
   { gender: "Male", label: "Polo Shirts", key: "MalePolo Shirts" },
   { gender: "Male", label: "Track Pants", key: "MaleTrack Pants" },
   { gender: "Male", label: "Tank Tops", key: "MaleTank Tops" },
-  { gender: "Male", label: "V-Neck T-Shirts", key: "MaleV-Neck T-Shirts" },
+  { gender: "Male", label: "Plain T-Shirts", key: "MalePlain T-Shirts" },
   {
     gender: "Male",
     label: "Crew Neck Sweaters",
@@ -335,128 +349,17 @@ export const clothesCategoriesList = [
   { gender: "Baby", label: "Beanies", key: "BabyBeanies" },
 ];
 
-//----------------------
-// male clothes List
-//----------------------
-export const maleCategoriesList = [
-  "T-Shirts",
-  "Jeans",
-  "Jackets",
-  "Sweaters",
-  "Shirts",
-  "Shorts",
-  "Pants",
-  "Hoodies",
-  "Suits",
-  "Activewear",
-  "Vests",
-  "Blazers",
-  "Socks",
-  "Underwear",
-  "Swimwear",
-  "Sleepwear",
-  "Belts",
-  "Ties",
-  "Hats",
-  "Gloves",
-  "Sweatshirts",
-  "Sportswear",
-  "Denim Jackets",
-  "Cargo Pants",
-  "Beanies",
-  "Leather Jackets",
-  "Khaki Pants",
-  "Polo Shirts",
-  "Track Pants",
-  "Tank Tops",
-  "V-Neck T-Shirts",
-  "Crew Neck Sweaters",
-  "Chinos",
-  "Windbreakers",
-  "Formal Shirts",
-  "Cargo Shorts",
-];
+//-------------------------------------------------
+// Function to Filter clothes categories by gender
+//--------------------------------------------------
+export const categoriesByGender = (gender: Gender) => {
+  return clothesCategoriesList
+    .map((category) => (category.gender === gender ? category.label : null))
+    .filter((element): element is string => element !== null);
+};
 
-//----------------------
-// female clothes List
-//----------------------
-export const femaleCategoriesList = [
-  "Dresses",
-  "Tops",
-  "Jeans",
-  "Jackets",
-  "Sweaters",
-  "Skirts",
-  "Pants",
-  "Blouses",
-  "Suits",
-  "Activewear",
-  "Vests",
-  "Blazers",
-  "Socks",
-  "Underwear",
-  "Swimwear",
-  "Sleepwear",
-  "Belts",
-  "Scarves",
-  "Hats",
-  "Gloves",
-  "Sweatshirts",
-  "Sportswear",
-  "Denim Jackets",
-  "Leggings",
-  "Beanies",
-  "Leather Jackets",
-  "Khaki Pants",
-  "Blouses",
-  "Tank Tops",
-  "V-Neck Tops",
-  "Maxi Dresses",
-  "Jumpsuits",
-  "Cardigans",
-  "Floral Dresses",
-  "Wide-Leg Pants",
-  "Crop Tops",
-  "High Heels",
-];
-
-//----------------------
-// baby clothes List
-//----------------------
-export const babyCategoriesList = [
-  "Onesies",
-  "Pajamas",
-  "Rompers",
-  "Bodysuits",
-  "T-Shirts",
-  "Pants",
-  "Dresses",
-  "Sweaters",
-  "Jackets",
-  "Socks",
-  "Hats",
-  "Shoes",
-  "Mittens",
-  "Bibs",
-  "Blankets",
-  "Onesies Sets",
-  "Sleepsuits",
-  "Overalls",
-  "Hoodies",
-  "Swimwear",
-  "Diaper Covers",
-  "Trousers",
-  "Tights",
-  "Headbands",
-  "Onesies with Feet",
-  "Sleepers",
-  "Jumpsuits",
-  "Cardigans",
-  "Onesies with Mittens",
-  "Kimonos",
-  "Tutus",
-  "Leggings",
-  "Overalls with Snaps",
-  "Bodysuits with Collars",
-  "Beanies",
-];
+//-----------------------------------------------------------------
+// Function to transform string (lowerCase and remove whiteSpace)
+//-----------------------------------------------------------------
+export const trim_lowerCase = (para: string) =>
+  para.toLocaleLowerCase().replace(/ /g, "-");

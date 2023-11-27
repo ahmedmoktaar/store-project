@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   SignUpValues,
   CustomerStateInitialValue,
-} from "../../../assets/data/GlobalVariables";
+} from "../../../../assets/data/GlobalVariables";
 
 interface PayloadActionValues {
  customerState: boolean;

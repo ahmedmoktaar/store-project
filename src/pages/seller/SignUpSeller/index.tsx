@@ -10,7 +10,7 @@ import {
   SignUpValues,
 } from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
-import { addSellerDetails } from "../../../redux/features/SellerDetails/SellerDetailsSlice";
+import { addSellerDetails } from "../../../redux/features/sellers/SellerDetails/SellerDetailsSlice";
 import MuiButton from "../../../components/shared/MuiButton";
 import Logo from "../../../components/shared/Logo";
 import Link from "../../../components/shared/Link/Link";

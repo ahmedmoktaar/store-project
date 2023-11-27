@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import styled from "@emotion/styled";
-import Footer from "../components/Footer";
+import Footer from "../components/pageLayout/Footer";
 import Logo from "../components/shared/Logo";
-import NavCustomer from "../components/NavCustomer";
+import NavCustomer from "../components/pageLayout/NavCustomer";
 import styles from "../styles";
 
 // ----------------
@@ -34,6 +34,6 @@ export default RootLayout;
 const Holder = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: max-content auto 16em;
+  grid-template-rows: max-content auto 20em;
   ${fonts.medium}
 `;

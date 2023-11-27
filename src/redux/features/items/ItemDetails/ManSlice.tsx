@@ -2,8 +2,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   ItemValues,
   itemInitialValues,
-} from "../../../assets/data/GlobalVariables";
-import { maleProducts } from "../../../assets/data/DefaultProducts";
+} from "../../../../assets/data/GlobalVariables";
+import { maleProducts } from "../../../../assets/data/DefaultProducts";
 
 const initialState = [itemInitialValues , ...maleProducts];
 
@@ -15,7 +15,7 @@ const manSlice = createSlice({
       const actionPayLoad = action.payload;
       state.push(actionPayLoad);
     },
-  },
+  }, 
 });
 
 export default manSlice.reducer;

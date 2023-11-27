@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
-import styles from "../styles";
-import NavLink from "./shared/Link/NavLink";
-import SVG from "../assets/SVG";
+import styles from "../../styles";
+import NavLink from "../shared/Link/NavLink";
+import SVG from "../../assets/SVG";
 
 // ----------------
 // style variables
@@ -88,6 +88,9 @@ const Holder = styled.div`
   .Nav-Links-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    ul {
+      padding: 0;
+    }
     #header {
       ${fonts.bold}
       margin-bottom: 0.7em;

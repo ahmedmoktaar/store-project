@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import ItemStateSeller from "../../../components/ItemStateSeller";
 
+// ------------------
+// main component
+// ------------------
 const TrackItems: React.FC = () => {
   return (
     <Holder>
       <ItemStateSeller category="baby" />
-      <ItemStateSeller category="boys" />
-      <ItemStateSeller category="girls" />
       <ItemStateSeller category="men" />
       <ItemStateSeller category="women" />
     </Holder>
@@ -15,6 +16,9 @@ const TrackItems: React.FC = () => {
 
 export default TrackItems;
 
+// -------------------
+// STYLED COMPONENT
+// -------------------
 const Holder = styled.div`
   display: flex;
   flex-wrap: wrap;

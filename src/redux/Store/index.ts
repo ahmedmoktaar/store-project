@@ -1,13 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sellerDetailsReducer from "../features/SellerDetails/SellerDetailsSlice";
-import customerDetailsReducer from "../features/CustomerDetails/CustomerDetailsSlice";
-import customerStateReducer from "../features/CustomerState/CustomerStateSlice";
-import sellerStateReducer from "../features/SellerState/SellerStateSlice";
-import BabyReducer from "../features/ItemDetails/BabySlice";
-import GirlReducer from "../features/ItemDetails/GirlSlice";
-import BoyReducer from "../features/ItemDetails/BoySlice";
-import ManReducer from "../features/ItemDetails/ManSlice";
-import WomanReducer from "../features/ItemDetails/WomanSlice";
+import sellerDetailsReducer from "../features/sellers/SellerDetails/SellerDetailsSlice";
+import customerDetailsReducer from "../features/customers/CustomerDetails/CustomerDetailsSlice";
+import customerStateReducer from "../features/customers/CustomerState/CustomerStateSlice";
+import sellerStateReducer from "../features/sellers/SellerState/SellerStateSlice";
+import BabyReducer from "../features/items/ItemDetails/BabySlice";
+import ManReducer from "../features/items/ItemDetails/ManSlice";
+import WomanReducer from "../features/items/ItemDetails/WomanSlice";
+import availableCategoriesReducer from "../features/items/AvailableCategories/AvailableCategoriesSlice";
 
 const Store = configureStore({
   reducer: {
@@ -16,10 +15,9 @@ const Store = configureStore({
     customerDetails: customerDetailsReducer,
     sellerDetails: sellerDetailsReducer,
     baby: BabyReducer,
-    boys: BoyReducer,
-    girls: GirlReducer,
     men: ManReducer,
     women: WomanReducer,
+    availableCategories: availableCategoriesReducer,
   },
 });
 

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import ActiveLink from "./shared/Link/ActiveLink";
-import styles from "../styles";
+import ActiveLink from "../shared/Link/ActiveLink";
+import styles from "../../styles";
 
 // ----------------
 // style variables
@@ -14,7 +14,9 @@ const NavSeller = () => {
   return (
     <Holder>
       <ActiveLink to="/additem">Add New Item</ActiveLink>
+
       <ActiveLink to="/trackitems">Track Your Item</ActiveLink>
+
       <ActiveLink className="home-page" to="/">
         Go To Home Page
       </ActiveLink>
@@ -22,9 +24,11 @@ const NavSeller = () => {
   );
 };
 
-// ----------------
+export default NavSeller;
+
+// -------------------
 // STYLED COMPONENT
-// ----------------
+// -------------------
 const Holder = styled.nav`
   background-color: ${colors.darkBlue};
   padding: 1.8em;
@@ -47,5 +51,3 @@ const Holder = styled.nav`
     color: ${colors.orange};
   }
 `;
-
-export default NavSeller;

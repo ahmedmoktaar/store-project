@@ -16,9 +16,8 @@ import SignInCustomer from "../pages/customer/SignInCustomer";
 import SignUpCustomer from "../pages/customer/SignUpCustomer";
 import MenCategoriesPage from "../pages/customer/categories/Men";
 import WomenCategoriesPage from "../pages/customer/categories/Women";
-import BoysCategoriesPage from "../pages/customer/categories/Boys";
-import GirlsCategoriesPage from "../pages/customer/categories/Girls";
 import BabyCategoriesPage from "../pages/customer/categories/Baby";
+import Category from "../components/Category";
 
 // ----------------------
 // routes construction
@@ -28,10 +27,10 @@ const router = createBrowserRouter(
     <>
       <Route element={<RootLayout />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/men" element={<MenCategoriesPage />} />
+        <Route path="/men" element={<MenCategoriesPage />}>
+          <Route path=":category" element={<Category gender='Male' store='men'/>} />
+        </Route>
         <Route path="/women" element={<WomenCategoriesPage />} />
-        <Route path="/boys" element={<BoysCategoriesPage />} />
-        <Route path="/girls" element={<GirlsCategoriesPage />} />
         <Route path="/baby" element={<BabyCategoriesPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>

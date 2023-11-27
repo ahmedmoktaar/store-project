@@ -11,7 +11,7 @@ import Link from "../../../components/shared/Link/Link";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
-import { login } from "../../../redux/features/SellerState/SellerStateSlice";
+import { login } from "../../../redux/features/sellers/SellerState/SellerStateSlice";
 import { SignUpInitialValues } from "../../../assets/data/GlobalVariables";
 
 // -------------------

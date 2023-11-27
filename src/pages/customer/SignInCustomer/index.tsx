@@ -11,7 +11,7 @@ import Link from "../../../components/shared/Link/Link";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
-import { login } from "../../../redux/features/CustomerState/CustomerStateSlice";
+import { login } from "../../../redux/features/customers/CustomerState/CustomerStateSlice";
 import { SignUpInitialValues } from "../../../assets/data/GlobalVariables";
 
 // -------------------
@@ -102,6 +102,7 @@ const SignInCustomer: React.FC = () => {
             <div className="lock-icon">
               <LockOutlinedIcon fontSize="large" />
             </div>
+
             <Typography className="signin-label" variant="h5" component="h1">
               Sign in
             </Typography>

@@ -1,78 +1,120 @@
 import styled from "@emotion/styled";
-import { useSelector } from "../../../../redux/Store/hooks";
-import { maleCategoriesList } from "../../../../assets/data/GlobalVariables";
 import { Typography } from "@mui/material";
+import { Outlet, useParams } from "react-router-dom";
 import ImageRendering from "../../../../components/shared/ImageRendering";
 import styles from "../../../../styles";
+import {
+  categoriesByGender,
+  trim_lowerCase,
+} from "../../../../assets/data/GlobalVariables";
+import SideNavCategories from "../../../../components/pageLayout/SideNavCategories";
+import UniqueCategoriesArray from "../../../../components/shared/UniqueCategoriesArray";
 
-const { fonts } = styles;
+// -------------------
+// style variables
+// -------------------
+const { fonts, colors } = styles;
+
+// ------------------
+// main component
+// ------------------
 const MenCategoriesPage = () => {
-  const menStore = useSelector((state) => state.men);
+  // ---------------------------------------------
+  // check if the user at available category page
+  // ---------------------------------------------
+  const { category } = useParams();
+
+  const lowerCaseCategoriesByGender = categoriesByGender("Male").map(
+    (category) => trim_lowerCase(category)
+  );
+  const correctPath = lowerCaseCategoriesByGender.includes(category ?? "");
+  
+  // --------------------------------------------------
+  // array of unique categories in a gender redux-store
+  // --------------------------------------------------
+  const filteredCategories = UniqueCategoriesArray("men", "Male");
 
   return (
     <Holder>
-      <>
-        {maleCategoriesList.map((category) => {
-          {
-            const oneCategory = menStore.filter(
-              (item) => item.categories === category
-            );
-            return oneCategory.length > 0 ? (
-              <div className="category-wrapper">
-                <Typography variant="h5" className="category-header">
-                  {category}
-                </Typography>
+      <SideNavCategories storeCategory="men" gender="Male" />
 
-                {oneCategory.map((item, index) => (
-                  <>
-                    {item.mainPic && item.media ? (
-                      <ul>
-                        <li>
-                          <ImageRendering
-                            key={index}
-                            images={item.mainPic}
-                            multiple={false}
-                            width="auto"
-                            height="300em"
-                          />
-                        </li>
-                        <li className="item-name"> {item.name}</li>
-                        <li>Sizes: {item.sizes}</li>
-                        <li>Price: {item.price} $</li>
-                      </ul>
-                    ) : null}
-                  </>
-                ))}
-              </div>
-            ) : null;
-          }
-        })}
-      </>
+      <div className="body-wrapper">
+        <Typography variant="h4" className="semibold header-text">
+          {"Men Clothing"}
+        </Typography>
+
+        {!correctPath ? (
+          <ul className="clothes-wrapper">
+            {filteredCategories.length && (
+              <>
+                {filteredCategories.map((category) => {
+                  return (
+                    <ul className="category-wrapper" key={category.categories}>
+                      <li>
+                        <ImageRendering
+                          images={category.mainPic ?? []}
+                          multiple={false}
+                          width="auto"
+                        />
+                      </li>
+                      <li className="semibold">{category.categories}</li>
+                    </ul>
+                  );
+                })}
+              </>
+            )}
+          </ul>
+        ) : (
+          <Outlet />
+        )}
+      </div>
     </Holder>
   );
 };
 
 export default MenCategoriesPage;
 
+// -------------------
+// STYLED COMPONENT
+// -------------------
 const Holder = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 95vw;
-  .category-wrapper {
-    .category-header {
-      ${fonts.bold}
-    }
-    margin: 1em 4em;
-    .item-name {
-      ${fonts.bold}
-    }
+  display: grid;
+  grid-template-columns: 14em auto;
+  word-wrap: normal;
+  margin: 1em 2em 5em 0.5em;
+  .body-wrapper {
     display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    ul {
-      list-style: none;
+    flex-direction: column;
+    margin-left: 0.5em;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .semibold {
+    ${fonts.semiBold}
+  }
+
+  .header-text {
+    color: ${colors.darkBlue};
+    width: fit-content;
+    padding: 0.3em;
+    margin-bottom: 1em;
+    align-self: center;
+  }
+
+  .clothes-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    text-align-last: center;
+    gap: 1.5em;
+    .category-wrapper {
+      display: grid;
       img {
-        padding: 0;
+        height: 23rem;
+        width: 15rem;
+        object-fit: cover;
       }
     }
   }

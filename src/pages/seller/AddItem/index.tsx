@@ -15,15 +15,13 @@ import {
   sizeList,
   brandsList,
   itemInitialValues,
-  genderList,
   clothesCategoriesList,
+  genderList,
 } from "../../../assets/data/GlobalVariables";
 import { useDispatch } from "../../../redux/Store/hooks";
-import { babyAdd } from "../../../redux/features/ItemDetails/BabySlice";
-import { boyAdd } from "../../../redux/features/ItemDetails/BoySlice";
-import { girlAdd } from "../../../redux/features/ItemDetails/GirlSlice";
-import { manAdd } from "../../../redux/features/ItemDetails/ManSlice";
-import { womanAdd } from "../../../redux/features/ItemDetails/WomanSlice";
+import { babyAdd } from "../../../redux/features/items/ItemDetails/BabySlice";
+import { manAdd } from "../../../redux/features/items/ItemDetails/ManSlice";
+import { womanAdd } from "../../../redux/features/items/ItemDetails/WomanSlice";
 
 // ----------------
 // main component
@@ -108,16 +106,12 @@ const AddItem: React.FC = () => {
       case "Baby":
         dispatch(babyAdd(values));
         break;
-      case "Boy":
-        dispatch(boyAdd(values));
-        break;
-      case "Girl":
-        dispatch(girlAdd(values));
-        break;
-      case "Man":
+
+      case "Male":
         dispatch(manAdd(values));
         break;
-      case "Woman":
+
+      case "Female":
         dispatch(womanAdd(values));
         break;
 
@@ -147,30 +141,39 @@ const AddItem: React.FC = () => {
               ),
             }}
           />
+
           <FormSelect
             name="colors"
             label="Colors Available"
             options={colorsList}
           />
+
           <FormSelect name="sizes" label="Sizes Available" options={sizeList} />
+
           <FormAutoComplete
             name="categories"
             label="Categories"
             options={clothesCategoriesList}
           />
+
           <TextFormLabeled multiline name="description" label="Description" />
+
           <FormRadio name="gender" label="Gender" options={genderList} />
+
           <TextFormLabeled
             name="amountInStock"
             label="Amount In Stock"
             type="number"
           />
+
           <TextFormLabeled name="deliveryTime" label="Delivery Time" />
+
           <FormUploadFiles
             name="mainPic"
             label="Main Picture"
             multiple={false}
           />
+
           <FormUploadFiles name="media" label="Pictures" multiple />
 
           <div className="buttons">

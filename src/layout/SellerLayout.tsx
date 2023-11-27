@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { Navigate, Outlet } from "react-router-dom";
 import styles from "../styles";
-import NavSeller from "../components/NavSeller";
-import Footer from "../components/Footer";
+import NavSeller from "../components/pageLayout/NavSeller";
+import Footer from "../components/pageLayout/Footer";
 import Logo from "../components/shared/Logo";
 import { useSelector } from "../redux/Store/hooks";
 
@@ -44,6 +44,6 @@ export default SellerLayout;
 const Holder = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: max-content auto 16em;
+  grid-template-rows: max-content auto 20em;
   ${fonts.regular}
 `;
