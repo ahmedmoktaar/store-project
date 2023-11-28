@@ -46,7 +46,7 @@ const SearchBar = () => {
         getOptionLabel={(option) => option.label}
         size="small"
         sx={{
-          width: 450,
+          width: 500,
           bgcolor: "white",
           "&&&&& .MuiOutlinedInput-root": {
             paddingRight: "0.5em",

@@ -14,7 +14,7 @@ import ActiveLink from "../shared/Link/ActiveLink";
 import styles from "../../styles";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
 import {
-  availableCategories,
+  arrangeCategories,
   initialAvailableCategories,
 } from "../../redux/features/items/AvailableCategories/AvailableCategoriesSlice";
 import UniqueCategoriesArray from "../shared/UniqueCategoriesArray";
@@ -49,7 +49,7 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
   // ------------------------------
   const dispatch = useDispatch();
   const handleClick = (index: number) => {
-    dispatch(availableCategories(index));
+    dispatch(arrangeCategories(index));
     window.scrollTo({
       top: 0,
     });

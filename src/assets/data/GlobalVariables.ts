@@ -190,6 +190,11 @@ export const genderList = ["Male", "Female", "Baby"];
 export type storeCategories = "men" | "women" | "baby";
 
 //---------------------------------
+// categories name in redux store
+//---------------------------------
+export const storeCategoriesList = ["men" , "women" , "baby"];
+
+//---------------------------------
 // Gender type
 //---------------------------------
 export type Gender = "Male" | "Female" | "Baby";

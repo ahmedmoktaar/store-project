@@ -9,7 +9,7 @@ const availableCategoriesSlice = createSlice({
     initialAvailableCategories: (_state, action: PayloadAction<string[]>) => {
       return action.payload;
     },
-    availableCategories: (state, action: PayloadAction<number>) => {
+    arrangeCategories: (state, action: PayloadAction<number>) => {
       const restItems = state
         .slice(0, action.payload)
         .concat(state.slice(action.payload +1 ));
@@ -21,5 +21,5 @@ const availableCategoriesSlice = createSlice({
 
 export default availableCategoriesSlice.reducer;
 
-export const { availableCategories, initialAvailableCategories } =
+export const { arrangeCategories, initialAvailableCategories } =
   availableCategoriesSlice.actions;

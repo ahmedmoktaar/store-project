@@ -10,7 +10,7 @@ export const maleProducts: ItemValues[] = [
     categories: "Jeans",
     description: "A comfortable and stylish T-shirt for everyday wear.",
     gender: "Male",
-    mainPic: ["src\\assets\\data\\clothesPic\\male.jpg"],
+    mainPic: ["src\\assets\\data\\clothesPic\\male3.jpg"],
     media: [
       "src\\assets\\data\\clothesPic\\male10.jpg",
       "src\\assets\\data\\clothesPic\\male13.jpg",
