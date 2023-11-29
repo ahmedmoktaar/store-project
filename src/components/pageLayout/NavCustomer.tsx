@@ -83,7 +83,7 @@ const NavCustomer = () => {
               </Link>
 
               {isOpen[storeCategory] && (
-                <div className="categories-list-wrapper">
+                <div className="categories-dropdown-list">
                   {StorefilteredCategory.map((category, index) => (
                     <Link
                       to={`/${storeCategory}/${trim_lowerCase(category)}`}
@@ -137,10 +137,11 @@ const Holder = styled.div`
   color: ${colors.white};
   display: flex;
   padding-left: 10em;
-  padding-right: 4em;
+  padding-right: 3em;
   align-items: center;
   font-size: 0.9em;
-  justify-content: space-around;
+  gap: 0.5em;
+  
   a {
     color: ${colors.white};
     text-decoration: none;
@@ -148,20 +149,24 @@ const Holder = styled.div`
 
   .categories {
     display: flex;
-    margin-right: 4em;
     .gender-link-wrapper {
       padding: 2em;
       :hover {
         background-color: ${colors.lightBlue};
       }
+      :active{
+      color: ${colors.darkOrange};
+      }
 
-      .categories-list-wrapper {
-        padding: 2em;
-        margin: 2em;
+      .categories-dropdown-list {
+        padding: 1em;
+        margin: 2.2em;
+        font-size: 0.9em;
+        width: 26em;
         display: flex;
         flex-wrap: wrap;
         position: absolute;
-        left: 0;
+        left: 8.9em;
         gap: 1em;
         background-color: ${colors.lightBlue};
         z-index: 1000;
@@ -170,6 +175,7 @@ const Holder = styled.div`
   }
 
   .user-wrapper {
+    margin:0 1em;
     display: flex;
     flex-direction: column;
     align-items: center;

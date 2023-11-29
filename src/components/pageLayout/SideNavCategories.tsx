@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { List, ListItem, Collapse } from "@mui/material";
+import { List, ListItem, Collapse, Breadcrumbs } from "@mui/material";
 import {
   ArrowDropUpOutlined,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
 import {
   storeCategories,
   Gender,
@@ -18,6 +19,7 @@ import {
   initialAvailableCategories,
 } from "../../redux/features/items/AvailableCategories/AvailableCategoriesSlice";
 import UniqueCategoriesArray from "../shared/UniqueCategoriesArray";
+import Link from "../shared/Link/Link";
 
 // ------------------
 // props type
@@ -36,6 +38,8 @@ const { colors, fonts } = styles;
 // main component
 // ------------------
 const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
+  const { category } = useParams();
+
   // ------------------------------
   // handle categories expanding
   // ------------------------------
@@ -75,7 +79,30 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
 
   return (
     <Holder>
-      <List>
+      <Breadcrumbs aria-label="breadcrumb" className="breadcrumb">
+        <Link underline="hover" color="inherit" to="/">
+          Home
+        </Link>
+
+        <Link underline="hover" color="text.primary" to="/men">
+          Men
+        </Link>
+
+        {StorefilteredCategory.map((oneCategory) => {
+          return category && category === trim_lowerCase(oneCategory) ? (
+            <Link
+              underline="hover"
+              color="text.primary"
+              to={`/men/${category}`}
+              aria-current="page"
+            >
+              {oneCategory}
+            </Link>
+          ) : null;
+        })}
+      </Breadcrumbs>
+
+      <List className="categories-toggle">
         <ListItem onClick={handleCategoriesOnClick}>
           <header>
             <span>Categories</span>
@@ -108,8 +135,6 @@ export default SideNavCateogries;
 // STYLED COMPONENT
 // -------------------
 const Holder = styled.div`
-  margin-top: 4em;
-
   ul {
     display: flex;
     flex-direction: row;
@@ -139,10 +164,21 @@ const Holder = styled.div`
     ${fonts.bold}
   }
 
+  .breadcrumb {
+    margin: 1em 0 0 2em;
+    ${fonts.semiBold}
+    font-size: 0.8em;
+  }
+
+  .categories-toggle {
+    margin-top: 3em;
+  }
+
   .categories-wrapper {
     li {
       padding: 0.3em;
     }
+
     a {
       border: 1px solid ${colors.darkBlue};
       color: ${colors.darkBlue};

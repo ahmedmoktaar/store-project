@@ -192,7 +192,7 @@ export type storeCategories = "men" | "women" | "baby";
 //---------------------------------
 // categories name in redux store
 //---------------------------------
-export const storeCategoriesList = ["men" , "women" , "baby"];
+export const storeCategoriesList = ["men", "women", "baby"];
 
 //---------------------------------
 // Gender type
@@ -367,4 +367,4 @@ export const categoriesByGender = (gender: Gender) => {
 // Function to transform string (lowerCase and remove whiteSpace)
 //-----------------------------------------------------------------
 export const trim_lowerCase = (para: string) =>
-  para.toLocaleLowerCase().replace(/ /g, "-");
+  para.toLowerCase().replace(/ /g, "-")

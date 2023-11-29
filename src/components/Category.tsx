@@ -1,7 +1,12 @@
+import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import styles from "../styles";
 import ImageRendering from "./shared/ImageRendering";
-import { Gender, storeCategories } from "../assets/data/GlobalVariables";
+import {
+  Gender,
+  storeCategories,
+  trim_lowerCase,
+} from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
 
 // ------------------
@@ -15,49 +20,43 @@ interface Props {
 // -------------------
 // style variables
 // -------------------
-const { fonts, colors } = styles;
+const { fonts } = styles;
+
 // ------------------
 // main component
 // ------------------
 const MenCategoriesPage: React.FC<Props> = ({ gender, store }) => {
   // ------------------
-  // Redux-store
+  // Hooks
   // ------------------
+  const { category } = useParams();
   const menStore = useSelector((state) => state[store]);
-  const availableCategories = useSelector((state) => state.availableCategories);
-  
+
   // ------------------
   // filtered Items in gender
   // ------------------
-  const filteredItems = menStore.filter(
-    (category) => category.gender === gender
-  );
+  const filteredItems = menStore.filter((item) => item.gender === gender);
 
   return (
     <Holder>
       <ul className="clothes-wrapper">
         {filteredItems.length > 0 && (
           <>
-            {filteredItems.map((category, index) => {
+            {filteredItems.map((item, index) => {
               return (
-                category.categories === availableCategories[0] && (
-                  <ul className="category-wrapper" key={index}>
-                    <li className="semibold">{category.categories}</li>
+                category === trim_lowerCase(item.categories) && (
+                  <ul className="item-wrapper" key={index}>
                     <li>
                       <ImageRendering
-                        images={category.mainPic ?? []}
+                        images={item.mainPic ?? []}
                         multiple={false}
                         width="auto"
                       />
                     </li>
-                    <li className="semibold">{category.gender}</li>
-                    <li className="semibold">{category.amountInStock}</li>
-                    <li className="semibold">{category.brand}</li>
-                    <li className="semibold">{category.colors}</li>
-                    <li className="semibold">{category.deliveryTime}</li>
-                    <li className="semibold">{category.name}</li>
-                    <li className="semibold">{category.price}</li>
-                    <li className="semibold">{category.sizes}</li>
+
+                    <li className="semibold">{item.name}</li>
+
+                    <li> {item.price} $</li>
                   </ul>
                 )
               );
@@ -85,7 +84,7 @@ const Holder = styled.div`
     padding: 0;
   }
 
-  .category-wrapper {
+  .item-wrapper {
     display: grid;
     img {
       height: 23rem;
@@ -98,11 +97,8 @@ const Holder = styled.div`
     ${fonts.semiBold}
   }
 
-  .header-text {
-    color: ${colors.darkBlue};
-    width: fit-content;
-    padding: 0.3em;
-    margin-bottom: 1em;
-    align-self: center;
+  .small {
+    font-size: 0.9em;
   }
+
 `;
