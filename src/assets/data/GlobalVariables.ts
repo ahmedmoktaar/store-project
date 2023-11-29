@@ -55,6 +55,7 @@ export interface ItemValues {
   media: FileList[] | string[] | null;
   amountInStock: string;
   deliveryTime: string;
+  id: number;
 }
 
 //-------------------------------------------------
@@ -73,6 +74,7 @@ export const itemInitialValues: ItemValues = {
   media: null,
   amountInStock: "",
   deliveryTime: "",
+  id: 0,
 };
 
 //-------------------------------------------------
@@ -208,7 +210,7 @@ export const clothesCategoriesList = [
   { gender: "Male", label: "Jackets", key: "MaleJackets" },
   { gender: "Male", label: "Sweaters", key: "MaleSweaters" },
   { gender: "Male", label: "Shirts", key: "MaleShirts" },
-  { gender: "Male", label: "Shorts", key: "MaleShorts" },
+  { gender: "Male", label: "Trousers", key: "MaleTrousers" },
   { gender: "Male", label: "Pants", key: "MalePants" },
   { gender: "Male", label: "Hoodies", key: "MaleHoodies" },
   { gender: "Male", label: "Suits", key: "MaleSuits" },
