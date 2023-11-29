@@ -112,13 +112,13 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
 
         <Collapse in={isExpanded} timeout="auto" unmountOnExit>
           <List disablePadding className="categories-wrapper">
-            {StorefilteredCategory.map((category, index) => (
-              <ListItem key={category}>
+            {StorefilteredCategory.map((oneCategory, index) => (
+              <ListItem key={oneCategory}>
                 <ActiveLink
-                  to={`${trim_lowerCase(category)}`}
+                  to={`${trim_lowerCase(oneCategory)}`}
                   onClick={() => handleClick(index)}
                 >
-                  {category}
+                  {oneCategory}
                 </ActiveLink>
               </ListItem>
             ))}
