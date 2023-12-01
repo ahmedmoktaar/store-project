@@ -43,8 +43,8 @@ const AddItem: React.FC = () => {
       .number()
       .moreThan(-1, "Can't be negative number")
       .required("Required"),
-    colors: yup.string().required("Required"),
-    sizes: yup.string().required("Required"),
+    colors: yup.array().required("Required"),
+    sizes: yup.array().required("Required"),
     categories: yup.string().required("Required"),
     description: yup.string().required("Required"),
     gender: yup.string().required("Required"),
@@ -130,7 +130,7 @@ const AddItem: React.FC = () => {
       >
         <Form className="form-wrapper">
           <TextFormLabeled name="name" label="Product Name" />
-          <FormRadio name="brand" label="Brand Name" options={brandsList} />
+          <FormRadio name="brand" label="Brand Name: " options={brandsList} />
           <TextFormLabeled
             type="number"
             name="price"
@@ -158,7 +158,7 @@ const AddItem: React.FC = () => {
 
           <TextFormLabeled multiline name="description" label="Description" />
 
-          <FormRadio name="gender" label="Gender" options={genderList} />
+          <FormRadio name="gender" label="Gender: " options={genderList} />
 
           <TextFormLabeled
             name="amountInStock"

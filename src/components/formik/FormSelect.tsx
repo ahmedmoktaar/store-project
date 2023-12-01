@@ -49,7 +49,7 @@ const FormSelect: React.FC<TextFieldProps> = ({
         id={name}
         options={options}
         onChange={(_e, values) =>
-          form.setValue(values.map((item) => item).join(" - "))
+          form.setValue(values.map((item) => item))
         }
         limitTags={2}
         disableCloseOnSelect

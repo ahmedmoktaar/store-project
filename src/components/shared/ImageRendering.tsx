@@ -30,10 +30,15 @@ const ImageRendering: React.FC<props> = ({
   const renderImage = (src: string, alt: string, key: string | number) => (
     <img
       key={key}
-      src={makeImagePathAbsolute(src)}
+      src={src}
       width={width}
       alt={alt}
       height={height}
+      style={{
+        border: "2px solid #ffffff",
+        borderRadius: "8px",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+      }}
     />
   );
 
@@ -45,13 +50,14 @@ const ImageRendering: React.FC<props> = ({
       <>
         {images.map((image, index) =>
           renderImage(
-            image as string,
+            makeImagePathAbsolute(image as string),
             `Image ${index}`,
             images.length > 1 ? index : "Product Main Picture"
           )
         )}
       </>
     );
+
     // --------------------------------------------
     // Render seller product Images
     // --------------------------------------------

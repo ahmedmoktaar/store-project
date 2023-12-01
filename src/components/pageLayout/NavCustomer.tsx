@@ -77,6 +77,7 @@ const NavCustomer = () => {
               className="gender-link-wrapper"
               onMouseEnter={() => handleOpen(storeCategory)}
               onMouseLeave={() => handleClose(storeCategory)}
+              key={storeCategory}
             >
               <Link to={`/${storeCategory}`} className="gender-link">
                 {storeCategory.toUpperCase()}
@@ -90,6 +91,7 @@ const NavCustomer = () => {
                       onClick={() => {
                         return handleClick(index), handleClose;
                       }}
+                      key={category}
                     >
                       {category}
                     </Link>

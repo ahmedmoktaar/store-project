@@ -95,6 +95,7 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
               color="text.primary"
               to={`/men/${category}`}
               aria-current="page"
+              key={oneCategory}
             >
               {oneCategory}
             </Link>

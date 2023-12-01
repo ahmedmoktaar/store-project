@@ -7,6 +7,7 @@ import BabyReducer from "../features/items/ItemDetails/BabySlice";
 import ManReducer from "../features/items/ItemDetails/ManSlice";
 import WomanReducer from "../features/items/ItemDetails/WomanSlice";
 import availableCategoriesReducer from "../features/items/AvailableCategories/AvailableCategoriesSlice";
+import CartReducer from "../features/Cart/CartSlice";
 
 const Store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const Store = configureStore({
     men: ManReducer,
     women: WomanReducer,
     availableCategories: availableCategoriesReducer,
+    cart: CartReducer,
   },
 });
 

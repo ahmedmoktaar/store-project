@@ -46,14 +46,14 @@ export interface ItemValues {
   name: string;
   brand: string;
   price: string;
-  colors: string;
-  sizes: string;
+  colors: string[];
+  sizes: string[];
   categories: string;
   description: string;
   gender: string;
   mainPic: FileList[] | string[] | null;
   media: FileList[] | string[] | null;
-  amountInStock: string;
+  amountInStock: number;
   deliveryTime: string;
   id: number;
 }
@@ -65,16 +65,34 @@ export const itemInitialValues: ItemValues = {
   name: "",
   brand: "",
   price: "",
-  colors: "",
-  sizes: "",
+  colors: [],
+  sizes: [],
   categories: "",
   description: "",
   gender: "",
   mainPic: null,
   media: null,
-  amountInStock: "",
+  amountInStock: 0,
   deliveryTime: "",
   id: 0,
+};
+
+//-------------------------------------------------
+// Item changeable values type
+//-------------------------------------------------
+export interface ItemChangeableValues {
+  colors: string[];
+  sizes: string[];
+  amount: string;
+}
+
+//-------------------------------------------------
+// Item changeable values in the modal
+//-------------------------------------------------
+export const itemChangeableInitialValues: ItemChangeableValues = {
+  colors: [],
+  sizes: [],
+  amount: "1",
 };
 
 //-------------------------------------------------
@@ -369,4 +387,4 @@ export const categoriesByGender = (gender: Gender) => {
 // Function to transform string (lowerCase and remove whiteSpace)
 //-----------------------------------------------------------------
 export const trim_lowerCase = (para: string) =>
-  para.toLowerCase().replace(/ /g, "-")
+  para.toLowerCase().replace(/ /g, "-");

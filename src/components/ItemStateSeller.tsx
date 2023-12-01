@@ -42,10 +42,10 @@ const ItemStatueSeller: React.FC<Category> = ({ category }) => {
               <span>Brand: </span> {item.brand}
             </li>
             <li>
-              <span>Colors: </span> {item.colors}
+              <span>Colors: </span> {item.colors.join(" - ")}
             </li>
             <li>
-              <span>Sizes: </span> {item.sizes}
+              <span>Sizes: </span> {item.sizes.join(" - ")}
             </li>
             <li>
               <span>Gender: </span> {item.gender}

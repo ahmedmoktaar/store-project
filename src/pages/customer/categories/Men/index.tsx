@@ -9,6 +9,7 @@ import {
 } from "../../../../assets/data/GlobalVariables";
 import SideNavCategories from "../../../../components/pageLayout/SideNavCategories";
 import UniqueCategoriesArray from "../../../../components/shared/UniqueCategoriesArray";
+import Link from "../../../../components/shared/Link/Link";
 
 // -------------------
 // style variables
@@ -49,14 +50,16 @@ const MenCategoriesPage = () => {
                 {filteredCategories.map((category) => {
                   return (
                     <ul className="category-wrapper" key={category.categories}>
-                      <li>
-                        <ImageRendering
-                          images={category.mainPic ?? []}
-                          multiple={false}
-                          width="auto"
-                        />
-                      </li>
-                      <li className="semibold">{category.categories}</li>
+                      <Link to={`/men/${trim_lowerCase(category.categories)}`}>
+                        <li>
+                          <ImageRendering
+                            images={category.mainPic ?? []}
+                            multiple={false}
+                            width="auto"
+                          />
+                        </li>
+                        <li className="semibold">{category.categories}</li>
+                      </Link>
                     </ul>
                   );
                 })}

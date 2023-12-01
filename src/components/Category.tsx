@@ -8,6 +8,7 @@ import {
   trim_lowerCase,
 } from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
+import ItemModal from "./ItemModal";
 
 // ------------------
 // props type
@@ -45,19 +46,21 @@ const MenCategoriesPage: React.FC<Props> = ({ gender, store }) => {
             {filteredItems.map((item, index) => {
               return (
                 category === trim_lowerCase(item.categories) && (
-                  <ul className="item-wrapper" key={index}>
-                    <li>
-                      <ImageRendering
-                        images={item.mainPic ?? []}
-                        multiple={false}
-                        width="auto"
-                      />
-                    </li>
+                    <ItemModal item={item} key={index}>
+                      <ul className="item-wrapper">
+                        <li>
+                          <ImageRendering
+                            images={item.mainPic ?? []}
+                            multiple={false}
+                            width="auto"
+                          />
+                        </li>
 
-                    <li className="semibold">{item.name}</li>
+                        <li className="semibold">{item.name}</li>
 
-                    <li> {item.price} $</li>
-                  </ul>
+                        <li> {item.price} $</li>
+                      </ul>
+                    </ItemModal>
                 )
               );
             })}
@@ -100,5 +103,4 @@ const Holder = styled.div`
   .small {
     font-size: 0.9em;
   }
-
 `;

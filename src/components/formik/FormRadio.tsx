@@ -15,6 +15,7 @@ import styles from "../../styles";
 type TextFieldProps = MUITextFieldProps & {
   name: string;
   options: string[];
+  deleteGridTemplateColumns?: boolean;
 };
 
 // -------------------
@@ -29,12 +30,17 @@ const FormRadio: React.FC<TextFieldProps> = ({
   name,
   label,
   options,
+  deleteGridTemplateColumns,
   ...props
 }) => {
   const [field, meta, form] = useField(name);
 
   return (
-    <Holder>
+    <Holder
+      style={
+        deleteGridTemplateColumns ? {} : { gridTemplateColumns: "11em 30em" }
+      }
+    >
       <InputLabel id={name}>{label}</InputLabel>
       <Autocomplete
         fullWidth
@@ -44,10 +50,15 @@ const FormRadio: React.FC<TextFieldProps> = ({
         clearOnEscape
         options={options}
         onChange={(_e, values) => form.setValue(values)}
-        value={field.value ? field.value : null}
+        value={field.value ?? null}
         renderOption={(props, option, { selected, index }) => (
           <li key={index} {...props}>
-            <Radio style={{ marginRight: 8 }} checked={selected} {...field} />
+            <Radio
+              style={{ marginRight: 8 }}
+              checked={selected}
+              {...field}
+              value={option}
+            />
             {option}
           </li>
         )}
@@ -73,14 +84,10 @@ export default FormRadio;
 // -------------------
 const Holder = styled.div`
   display: grid;
-  grid-template-columns: 11em 30em;
   align-items: center;
   gap: 1.5em;
   label {
     font-size: 1.2em;
     ${fonts.bold}
-    ::after {
-      content: " :";
-    }
   }
 `;
