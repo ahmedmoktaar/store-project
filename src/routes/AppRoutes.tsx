@@ -18,6 +18,8 @@ import MenCategoriesPage from "../pages/customer/categories/Men";
 import WomenCategoriesPage from "../pages/customer/categories/Women";
 import BabyCategoriesPage from "../pages/customer/categories/Baby";
 import Category from "../components/Category";
+import CheckoutPage from "../pages/customer/Checkout";
+import CartPage from "../pages/customer/Cart";
 
 // ----------------------
 // routes construction
@@ -28,10 +30,25 @@ const router = createBrowserRouter(
       <Route element={<RootLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/men" element={<MenCategoriesPage />}>
-          <Route path=":category" element={<Category gender='Male' store='men'/>} />
+          <Route
+            path=":category"
+            element={<Category gender="Men" StoreCategory="men" />}
+          />
         </Route>
-        <Route path="/women" element={<WomenCategoriesPage />} />
-        <Route path="/baby" element={<BabyCategoriesPage />} />
+        <Route path="/women" element={<WomenCategoriesPage />}>
+          <Route
+            path=":category"
+            element={<Category gender="Women" StoreCategory="women" />}
+          />
+        </Route>
+        <Route path="/baby" element={<BabyCategoriesPage />}>
+          <Route
+            path=":category"
+            element={<Category gender="Baby" StoreCategory="baby" />}
+          />
+        </Route>
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       <Route element={<SellerLayout />}>

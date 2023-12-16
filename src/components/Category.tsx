@@ -4,7 +4,7 @@ import styles from "../styles";
 import ImageRendering from "./shared/ImageRendering";
 import {
   Gender,
-  storeCategories,
+  StoreCategories,
   trim_lowerCase,
 } from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
@@ -15,7 +15,7 @@ import ItemModal from "./ItemModal";
 // ------------------
 interface Props {
   gender: Gender;
-  store: storeCategories;
+  StoreCategory: StoreCategories;
 }
 
 // -------------------
@@ -26,17 +26,21 @@ const { fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const MenCategoriesPage: React.FC<Props> = ({ gender, store }) => {
+const MenCategoriesPage: React.FC<Props> = ({ gender, StoreCategory }) => {
   // ------------------
   // Hooks
   // ------------------
   const { category } = useParams();
-  const menStore = useSelector((state) => state[store]);
+  const storeGenderItems = useSelector(
+    (state) => state[StoreCategory].Products
+  );
 
   // ------------------
   // filtered Items in gender
   // ------------------
-  const filteredItems = menStore.filter((item) => item.gender === gender);
+  const filteredItems = storeGenderItems.filter(
+    (item) => item.gender === gender
+  );
 
   return (
     <Holder>
@@ -46,21 +50,21 @@ const MenCategoriesPage: React.FC<Props> = ({ gender, store }) => {
             {filteredItems.map((item, index) => {
               return (
                 category === trim_lowerCase(item.categories) && (
-                    <ItemModal item={item} key={index}>
-                      <ul className="item-wrapper">
-                        <li>
-                          <ImageRendering
-                            images={item.mainPic ?? []}
-                            multiple={false}
-                            width="auto"
-                          />
-                        </li>
+                  <ItemModal item={item} key={index}>
+                    <ul className="item-wrapper">
+                      <li>
+                        <ImageRendering
+                          images={item.mainPic ?? []}
+                          multiple={false}
+                          width="auto"
+                        />
+                      </li>
 
-                        <li className="semibold">{item.name}</li>
+                      <li className="semibold">{item.name}</li>
 
-                        <li> {item.price} $</li>
-                      </ul>
-                    </ItemModal>
+                      <li> {item.price} $</li>
+                    </ul>
+                  </ItemModal>
                 )
               );
             })}

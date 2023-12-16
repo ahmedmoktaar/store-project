@@ -103,6 +103,7 @@ export const CustomerStateInitialValue = {
   customerState: false,
   customerDetails,
 };
+
 const sellerDetails = SignUpInitialValues; //seller//
 export const SellerStateInitialValue = { sellerState: false, sellerDetails };
 
@@ -184,7 +185,7 @@ export const brandsList = [
   "Lacoste",
   "Levi's",
   "Louis Vuitton",
-  "Mango",
+  "Mengo",
   "Michael Kors",
   "New Balance",
   "Nike",
@@ -199,127 +200,120 @@ export const brandsList = [
   "Vans",
 ];
 
-//-------------------
-// Gender List
-//-------------------
-export const genderList = ["Male", "Female", "Baby"];
+//---------------------------------
+// Gender type & List
+//---------------------------------
+export type Gender = "Men" | "Women" | "Baby";
+export const genderList:Gender[] = ["Men", "Women", "Baby"];
 
-//---------------------------------
-// categories name in redux store
-//---------------------------------
-export type storeCategories = "men" | "women" | "baby";
+//-----------------------------------------
+// categories type in redux store & List 
+//-----------------------------------------
+export type StoreCategories = "men" | "women" | "baby";
+export const storeCategoriesList: StoreCategories[] = ["men", "women", "baby"];
 
-//---------------------------------
-// categories name in redux store
-//---------------------------------
-export const storeCategoriesList = ["men", "women", "baby"];
-
-//---------------------------------
-// Gender type
-//---------------------------------
-export type Gender = "Male" | "Female" | "Baby";
 
 //---------------------------------
 // all clothes in object array
 //---------------------------------
 export const clothesCategoriesList = [
-  { gender: "Male", label: "T-Shirts", key: "MaleT-Shirts" },
-  { gender: "Male", label: "Jeans", key: "MaleJeans" },
-  { gender: "Male", label: "Jackets", key: "MaleJackets" },
-  { gender: "Male", label: "Sweaters", key: "MaleSweaters" },
-  { gender: "Male", label: "Shirts", key: "MaleShirts" },
-  { gender: "Male", label: "Trousers", key: "MaleTrousers" },
-  { gender: "Male", label: "Pants", key: "MalePants" },
-  { gender: "Male", label: "Hoodies", key: "MaleHoodies" },
-  { gender: "Male", label: "Suits", key: "MaleSuits" },
-  { gender: "Male", label: "Activewear", key: "MaleActivewear" },
-  { gender: "Male", label: "Vests", key: "MaleVests" },
-  { gender: "Male", label: "Blazers", key: "MaleBlazers" },
+  { gender: "Men", label: "T-Shirts", key: "MenT-Shirts" },
+  { gender: "Men", label: "Jeans", key: "MenJeans" },
+  { gender: "Men", label: "Jackets", key: "MenJackets" },
+  { gender: "Men", label: "Sweaters", key: "MenSweaters" },
+  { gender: "Men", label: "Shirts", key: "MenShirts" },
+  { gender: "Men", label: "Trousers", key: "MenTrousers" },
+  { gender: "Men", label: "Pants", key: "MenPants" },
+  { gender: "Men", label: "Hoodies", key: "MenHoodies" },
+  { gender: "Men", label: "Suits", key: "MenSuits" },
+  { gender: "Men", label: "Activewear", key: "MenActivewear" },
+  { gender: "Men", label: "Vests", key: "MenVests" },
+  { gender: "Men", label: "Blazers", key: "MenBlazers" },
   {
-    gender: "Male",
+    gender: "Men",
     label: "Long Sleeve T-shirts",
-    key: "MaleLong Sleeve T-shirts",
+    key: "MenLong Sleeve T-shirts",
   },
-  { gender: "Male", label: "Underwear", key: "MaleUnderwear" },
-  { gender: "Male", label: "Swimwear", key: "MaleSwimwear" },
-  { gender: "Male", label: "Sleepwear", key: "MaleSleepwear" },
-  { gender: "Male", label: "Belts", key: "MaleBelts" },
-  { gender: "Male", label: "Ties", key: "MaleTies" },
-  { gender: "Male", label: "Hats", key: "MaleHats" },
-  { gender: "Male", label: "Gloves", key: "MaleGloves" },
-  { gender: "Male", label: "Sweatshirts", key: "MaleSweatshirts" },
-  { gender: "Male", label: "Sportswear", key: "MaleSportswear" },
-  { gender: "Male", label: "Denim Jackets", key: "MaleDenim Jackets" },
-  { gender: "Male", label: "Cargo Pants", key: "MaleCargo Pants" },
-  { gender: "Male", label: "Beanies", key: "MaleBeanies" },
-  { gender: "Male", label: "Leather Jackets", key: "MaleLeather Jackets" },
-  { gender: "Male", label: "Khaki Pants", key: "MaleKhaki Pants" },
-  { gender: "Male", label: "Polo Shirts", key: "MalePolo Shirts" },
-  { gender: "Male", label: "Track Pants", key: "MaleTrack Pants" },
-  { gender: "Male", label: "Tank Tops", key: "MaleTank Tops" },
-  { gender: "Male", label: "Plain T-Shirts", key: "MalePlain T-Shirts" },
+  { gender: "Men", label: "Underwear", key: "MenUnderwear" },
+  { gender: "Men", label: "Swimwear", key: "MenSwimwear" },
+  { gender: "Men", label: "Sleepwear", key: "MenSleepwear" },
+  { gender: "Men", label: "Belts", key: "MenBelts" },
+  { gender: "Men", label: "Ties", key: "MenTies" },
+  { gender: "Men", label: "Hats", key: "MenHats" },
+  { gender: "Men", label: "Gloves", key: "MenGloves" },
+  { gender: "Men", label: "Sweatshirts", key: "MenSweatshirts" },
+  { gender: "Men", label: "Sportswear", key: "MenSportswear" },
+  { gender: "Men", label: "Denim Jackets", key: "MenDenim Jackets" },
+  { gender: "Men", label: "Cargo Pants", key: "MenCargo Pants" },
+  { gender: "Men", label: "Beanies", key: "MenBeanies" },
+  { gender: "Men", label: "Leather Jackets", key: "MenLeather Jackets" },
+  { gender: "Men", label: "Khaki Pants", key: "MenKhaki Pants" },
+  { gender: "Men", label: "Polo Shirts", key: "MenPolo Shirts" },
+  { gender: "Men", label: "Track Pants", key: "MenTrack Pants" },
+  { gender: "Men", label: "Tank Tops", key: "MenTank Tops" },
+  { gender: "Men", label: "Plain T-Shirts", key: "MenPlain T-Shirts" },
   {
-    gender: "Male",
+    gender: "Men",
     label: "Crew Neck Sweaters",
-    key: "MaleCrew Neck Sweaters",
+    key: "MenCrew Neck Sweaters",
   },
-  { gender: "Male", label: "Chinos", key: "MaleChinos" },
-  { gender: "Male", label: "Windbreakers", key: "MaleWindbreakers" },
-  { gender: "Male", label: "Formal Shirts", key: "MaleFormal Shirts" },
-  { gender: "Male", label: "Cargo Shorts", key: "MaleCargo Shorts" },
+  { gender: "Men", label: "Chinos", key: "MenChinos" },
+  { gender: "Men", label: "Windbreakers", key: "MenWindbreakers" },
+  { gender: "Men", label: "Formal Shirts", key: "MenFormal Shirts" },
+  { gender: "Men", label: "Cargo Shorts", key: "MenCargo Shorts" },
 
-  { gender: "Female", label: "Dresses", key: "FemaleDresses" },
-  { gender: "Female", label: "Tops", key: "FemaleTops" },
-  { gender: "Female", label: "Jeans", key: "FemaleJeans" },
-  { gender: "Female", label: "Jackets", key: "FemaleJackets" },
-  { gender: "Female", label: "Sweaters", key: "FemaleSweaters" },
-  { gender: "Female", label: "Skirts", key: "FemaleSkirts" },
-  { gender: "Female", label: "Pants", key: "FemalePants" },
-  { gender: "Female", label: "Blouses", key: "FemaleBlouses" },
-  { gender: "Female", label: "Suits", key: "FemaleSuits" },
-  { gender: "Female", label: "Activewear", key: "FemaleActivewear" },
-  { gender: "Female", label: "Vests", key: "FemaleVests" },
-  { gender: "Female", label: "Blazers", key: "FemaleBlazers" },
-  { gender: "Female", label: "Socks", key: "FemaleSocks" },
-  { gender: "Female", label: "Underwear", key: "FemaleUnderwear" },
-  { gender: "Female", label: "Swimwear", key: "FemaleSwimwear" },
-  { gender: "Female", label: "Sleepwear", key: "FemaleSleepwear" },
-  { gender: "Female", label: "Belts", key: "FemaleBelts" },
-  { gender: "Female", label: "Scarves", key: "FemaleScarves" },
-  { gender: "Female", label: "Hats", key: "FemaleHats" },
-  { gender: "Female", label: "Gloves", key: "FemaleGloves" },
-  { gender: "Female", label: "Sweatshirts", key: "FemaleSweatshirts" },
-  { gender: "Female", label: "Sportswear", key: "FemaleSportswear" },
+  { gender: "Women", label: "Dresses", key: "WomenDresses" },
+  { gender: "Women", label: "Tops", key: "WomenTops" },
+  { gender: "Women", label: "Jeans", key: "WomenJeans" },
+  { gender: "Women", label: "Jackets", key: "WomenJackets" },
+  { gender: "Women", label: "Sweaters", key: "WomenSweaters" },
+  { gender: "Women", label: "Skirts", key: "WomenSkirts" },
+  { gender: "Women", label: "Pants", key: "WomenPants" },
+  { gender: "Women", label: "Blouses", key: "WomenBlouses" },
+  { gender: "Women", label: "Suits", key: "WomenSuits" },
+  { gender: "Women", label: "Activewear", key: "WomenActivewear" },
+  { gender: "Women", label: "Vests", key: "WomenVests" },
+  { gender: "Women", label: "Blazers", key: "WomenBlazers" },
+  { gender: "Women", label: "Socks", key: "WomenSocks" },
+  { gender: "Women", label: "Underwear", key: "WomenUnderwear" },
+  { gender: "Women", label: "Swimwear", key: "WomenSwimwear" },
+  { gender: "Women", label: "Sleepwear", key: "WomenSleepwear" },
+  { gender: "Women", label: "Belts", key: "WomenBelts" },
+  { gender: "Women", label: "Scarves", key: "WomenScarves" },
+  { gender: "Women", label: "Hats", key: "WomenHats" },
+  { gender: "Women", label: "Gloves", key: "WomenGloves" },
+  { gender: "Women", label: "Sweatshirts", key: "WomenSweatshirts" },
+  { gender: "Women", label: "Sportswear", key: "WomenSportswear" },
   {
-    gender: "Female",
+    gender: "Women",
     label: "Denim Jackets",
-    key: "FemaleDenim Jackets",
+    key: "WomenDenim Jackets",
   },
-  { gender: "Female", label: "Leggings", key: "FemaleLeggings" },
-  { gender: "Female", label: "Beanies", key: "FemaleBeanies" },
+  { gender: "Women", label: "Leggings", key: "WomenLeggings" },
+  { gender: "Women", label: "Beanies", key: "WomenBeanies" },
   {
-    gender: "Female",
+    gender: "Women",
     label: "Leather Jackets",
-    key: "FemaleLeather Jackets",
+    key: "WomenLeather Jackets",
   },
-  { gender: "Female", label: "Khaki Pants", key: "FemaleKhaki Pants" },
-  { gender: "Female", label: "Tank Tops", key: "FemaleTank Tops" },
-  { gender: "Female", label: "V-Neck Tops", key: "FemaleV-Neck Tops" },
-  { gender: "Female", label: "Maxi Dresses", key: "FemaleMaxi Dresses" },
-  { gender: "Female", label: "Jumpsuits", key: "FemaleJumpsuits" },
-  { gender: "Female", label: "Cardigans", key: "FemaleCardigans" },
+  { gender: "Women", label: "Khaki Pants", key: "WomenKhaki Pants" },
+  { gender: "Women", label: "Tank Tops", key: "WomenTank Tops" },
+  { gender: "Women", label: "V-Neck Tops", key: "WomenV-Neck Tops" },
+  { gender: "Women", label: "Maxi Dresses", key: "WomenMaxi Dresses" },
+  { gender: "Women", label: "Jumpsuits", key: "WomenJumpsuits" },
+  { gender: "Women", label: "Cardigans", key: "WomenCardigans" },
   {
-    gender: "Female",
+    gender: "Women",
     label: "Floral Dresses",
-    key: "FemaleFloral Dresses",
+    key: "WomenFloral Dresses",
   },
   {
-    gender: "Female",
+    gender: "Women",
     label: "Wide-Leg Pants",
-    key: "FemaleWide-Leg Pants",
+    key: "WomenWide-Leg Pants",
   },
-  { gender: "Female", label: "Crop Tops", key: "FemaleCrop Tops" },
-  { gender: "Female", label: "High Heels", key: "FemaleHigh Heels" },
+  { gender: "Women", label: "Crop Tops", key: "WomenCrop Tops" },
+  { gender: "Women", label: "High Heels", key: "WomenHigh Heels" },
 
   { gender: "Baby", label: "Onesies", key: "BabyOnesies" },
   { gender: "Baby", label: "Pajamas", key: "BabyPajamas" },

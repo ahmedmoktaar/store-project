@@ -3,18 +3,29 @@ import {
   ShoppingCartOutlined,
   AccountCircleOutlined,
 } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar";
 import styles from "../../styles";
-import MuiButton from "../shared/MuiButton";
 import NavLink from "../shared/Link/NavLink";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
-import { useState } from "react";
 import Link from "../shared/Link/Link";
-import { arrangeCategories } from "../../redux/features/items/AvailableCategories/AvailableCategoriesSlice";
 import {
-  storeCategoriesList,
+  StoreCategories,
   trim_lowerCase,
 } from "../../assets/data/GlobalVariables";
+import {
+  menArrangeCategories,
+  menInitialCategories,
+} from "../../redux/features/items/ItemDetails/MenSlice";
+import UniqueCategoriesArray from "../shared/UniqueCategoriesArray";
+import {
+  womenArrangeCategories,
+  womenInitialCategories,
+} from "../../redux/features/items/ItemDetails/WomenSlice";
+import {
+  babyArrangeCategories,
+  babyInitialCategories,
+} from "../../redux/features/items/ItemDetails/BabySlice";
 
 // ----------------
 // style variables
@@ -37,7 +48,8 @@ const NavCustomer = () => {
   // handle dropdown category list
   // ------------------------------
   const [isOpen, setIsOpen] = useState<{ [key: string]: boolean }>({});
-  const handleOpen = (storeCategory: string) => {
+
+  const handleOpen = (storeCategory: StoreCategories) => {
     setIsOpen((prevOpenStates) => ({
       ...prevOpenStates,
       [storeCategory]: true,
@@ -50,57 +62,122 @@ const NavCustomer = () => {
     }));
   };
 
+  const DropList: React.FC<{ storeCategory: StoreCategories }> = ({
+    storeCategory,
+  }) =>
+    isOpen[storeCategory] && (
+      <div className="categories-dropdown-list">
+        {StoreCategoryfilteredCategories(storeCategory).map(
+          (category, index) => (
+            <Link
+              to={`/${storeCategory}/${trim_lowerCase(category)}`}
+              onClick={() => {
+                return (
+                  handleClick(index, storeCategory), handleClose(storeCategory)
+                );
+              }}
+              key={category}
+            >
+              {category}
+            </Link>
+          )
+        )}
+      </div>
+    );
+
   // ------------------------------
   // handle category onClick
   // ------------------------------
   const dispatch = useDispatch();
-  const handleClick = (index: number) => {
-    dispatch(arrangeCategories(index));
+  const handleClick = (index: number, storeCategory: StoreCategories) => {
+    switch (storeCategory) {
+      case "men":
+        dispatch(menArrangeCategories(index));
+        break;
+      case "women":
+        dispatch(womenArrangeCategories(index));
+        break;
+      case "baby":
+        dispatch(babyArrangeCategories(index));
+        break;
+      default:
+        null;
+    }
+
     window.scrollTo({
       top: 0,
     });
   };
 
-  // ------------------------------------
-  // categories array for in-store clothes
-  // ------------------------------------
-  const StorefilteredCategory = useSelector(
-    (state) => state.availableCategories
+  // ----------------------------------------------------------------
+  //  in-store clothes categories array for every store-category
+  // ----------------------------------------------------------------
+  const StoreCategoryfilteredCategories = (category: StoreCategories) => {
+    return useSelector((state) => state[category].Categories);
+  };
+
+  // ------------------------------------------------------
+  // initial dispatch in-store categories to redux-store
+  // ------------------------------------------------------
+  const makeOneItemPerCategoryMen = UniqueCategoriesArray("men", "Men");
+  const filterMenCategory = makeOneItemPerCategoryMen.map(
+    (item) => item.categories
   );
+
+  const makeOneItemPerCategoryWomen = UniqueCategoriesArray("women", "Women");
+  const filterWomenCategory = makeOneItemPerCategoryWomen.map(
+    (item) => item.categories
+  );
+
+  const makeOneItemPerCategoryBaby = UniqueCategoriesArray("baby", "Baby");
+  const filterBabyCategory = makeOneItemPerCategoryBaby.map(
+    (item) => item.categories
+  );
+
+  useEffect(() => {
+    dispatch(menInitialCategories(filterMenCategory));
+    dispatch(womenInitialCategories(filterWomenCategory));
+    dispatch(babyInitialCategories(filterBabyCategory));
+  }, [filterMenCategory, filterWomenCategory, filterBabyCategory]);
 
   return (
     <Holder>
       <div className="categories">
-        {storeCategoriesList.map((storeCategory) => {
-          return (
-            <div
-              className="gender-link-wrapper"
-              onMouseEnter={() => handleOpen(storeCategory)}
-              onMouseLeave={() => handleClose(storeCategory)}
-              key={storeCategory}
-            >
-              <Link to={`/${storeCategory}`} className="gender-link">
-                {storeCategory.toUpperCase()}
-              </Link>
+        <div
+          className="gender-link-wrapper"
+          onMouseEnter={() => handleOpen("men")}
+          onMouseLeave={() => handleClose("men")}
+          key="men"
+        >
+          <Link to="/men" className="gender-link">
+            MEN
+          </Link>
+          <DropList storeCategory="men" />
+        </div>
 
-              {isOpen[storeCategory] && (
-                <div className="categories-dropdown-list">
-                  {StorefilteredCategory.map((category, index) => (
-                    <Link
-                      to={`/${storeCategory}/${trim_lowerCase(category)}`}
-                      onClick={() => {
-                        return handleClick(index), handleClose;
-                      }}
-                      key={category}
-                    >
-                      {category}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
+        <div
+          className="gender-link-wrapper"
+          onMouseEnter={() => handleOpen("women")}
+          onMouseLeave={() => handleClose("women")}
+          key="women"
+        >
+          <Link to="/women" className="gender-link">
+            WOMEN
+          </Link>
+          <DropList storeCategory="women" />
+        </div>
+
+        <div
+          className="gender-link-wrapper"
+          onMouseEnter={() => handleOpen("baby")}
+          onMouseLeave={() => handleClose("baby")}
+          key="baby"
+        >
+          <Link to="/baby" className="gender-link">
+            BABY
+          </Link>
+          <DropList storeCategory="baby" />
+        </div>
       </div>
 
       <div className="search-bar">
@@ -118,9 +195,15 @@ const NavCustomer = () => {
         </NavLink>
       )}
 
-      <ShoppingCartOutlined />
+      <div className="cart-checkout-wrapper">
+        <Link to="/cart" className="cart-button">
+          <ShoppingCartOutlined />
+        </Link>
 
-      <MuiButton className="checkout-button">CHECKOUT</MuiButton>
+        <Link to="/checkout" className="checkout-button">
+          CHECKOUT
+        </Link>
+      </div>
 
       <NavLink className="sell" to="/additem">
         SELL
@@ -138,12 +221,14 @@ const Holder = styled.div`
   background-color: ${colors.darkBlue};
   color: ${colors.white};
   display: flex;
+  justify-content: space-around;
+
   padding-left: 10em;
   padding-right: 3em;
   align-items: center;
   font-size: 0.9em;
   gap: 0.5em;
-  
+
   a {
     color: ${colors.white};
     text-decoration: none;
@@ -156,8 +241,8 @@ const Holder = styled.div`
       :hover {
         background-color: ${colors.lightBlue};
       }
-      :active{
-      color: ${colors.darkOrange};
+      :active {
+        color: ${colors.darkOrange};
       }
 
       .categories-dropdown-list {
@@ -177,7 +262,7 @@ const Holder = styled.div`
   }
 
   .user-wrapper {
-    margin:0 1em;
+    margin: 0 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -196,13 +281,43 @@ const Holder = styled.div`
     }
   }
 
-  .checkout-button {
-    background-color: ${colors.green};
-    opacity: 0.8;
-    ${fonts.semiBold}
-    :hover {
-      opacity: 1;
+  .cart-checkout-wrapper {
+    display: flex;
+    align-items: center;
+
+    .checkout-button {
       background-color: ${colors.green};
+      opacity: 0.8;
+      padding: 0.5em;
+      border-radius: 2em;
+      margin: 1em;
+      ${fonts.semiBold}
+      :hover {
+        opacity: 1;
+        background-color: ${colors.green};
+        color: ${colors.white};
+      }
+      :active {
+        color: ${colors.darkBlue};
+      }
+    }
+    .cart-button {
+      position: relative;
+      top: 0.2em;
+      color: ${colors.white};
+      opacity: 0.8;
+
+      svg {
+        font-size: 2.2em;
+        opacity: 0.8;
+        color: ${colors.darkOrange};
+        :hover {
+          opacity: 1;
+        }
+        :active {
+          color: ${colors.white};
+        }
+      }
     }
   }
 `;

@@ -19,9 +19,9 @@ import {
   genderList,
 } from "../../../assets/data/GlobalVariables";
 import { useDispatch } from "../../../redux/Store/hooks";
-import { babyAdd } from "../../../redux/features/items/ItemDetails/BabySlice";
-import { manAdd } from "../../../redux/features/items/ItemDetails/ManSlice";
-import { womanAdd } from "../../../redux/features/items/ItemDetails/WomanSlice";
+import { babyAddProduct } from "../../../redux/features/items/ItemDetails/BabySlice";
+import { menAddProduct } from "../../../redux/features/items/ItemDetails/MenSlice";
+import { womenAddProduct } from "../../../redux/features/items/ItemDetails/WomenSlice";
 
 // ----------------
 // main component
@@ -104,15 +104,15 @@ const AddItem: React.FC = () => {
   const onSubmit = (values: ItemValues) => {
     switch (values.gender) {
       case "Baby":
-        dispatch(babyAdd(values));
+        dispatch(babyAddProduct(values));
         break;
 
-      case "Male":
-        dispatch(manAdd(values));
+      case "Men":
+        dispatch(menAddProduct(values));
         break;
 
-      case "Female":
-        dispatch(womanAdd(values));
+      case "Women":
+        dispatch(womenAddProduct(values));
         break;
 
       default:

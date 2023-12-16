@@ -24,7 +24,7 @@ const MenCategoriesPage = () => {
   // check if the user at available category page
   // ---------------------------------------------
   const { category } = useParams();
-  const lowerCaseCategoriesByGender = categoriesByGender("Male").map(
+  const lowerCaseCategoriesByGender = categoriesByGender("Men").map(
     (category) => trim_lowerCase(category)
   );
   const correctPath = lowerCaseCategoriesByGender.includes(category ?? "");
@@ -32,11 +32,11 @@ const MenCategoriesPage = () => {
   // --------------------------------------------------
   // array of unique categories in a gender redux-store
   // --------------------------------------------------
-  const filteredCategories = UniqueCategoriesArray("men", "Male");
+  const filteredCategories = UniqueCategoriesArray("men", "Men");
 
   return (
     <Holder>
-      <SideNavCategories storeCategory="men" gender="Male" />
+      <SideNavCategories storeCategory="men" />
 
       <div className="body-wrapper">
         <Typography variant="h5" className="semibold header-text">

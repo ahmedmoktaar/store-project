@@ -2,13 +2,13 @@ import styled from "@emotion/styled";
 import { useSelector } from "../redux/Store/hooks";
 import ImageRendering from "./shared/ImageRendering";
 import styles from "../styles";
-import { storeCategories } from "../assets/data/GlobalVariables";
+import { StoreCategories } from "../assets/data/GlobalVariables";
 
 // ------------------
 // props type
 // ------------------
 type Category = {
-  category: storeCategories;
+  category: StoreCategories;
 };
 
 // -------------------
@@ -20,7 +20,7 @@ const { fonts, colors } = styles;
 // main component
 // ------------------
 const ItemStatueSeller: React.FC<Category> = ({ category }) => {
-  const items = useSelector((state) => state[category]);
+  const items = useSelector((state) => state[category].Products);
 
   return (
     <>

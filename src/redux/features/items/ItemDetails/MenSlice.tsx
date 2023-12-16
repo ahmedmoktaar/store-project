@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ItemValues } from "../../../../assets/data/GlobalVariables";
-import { babyDefaultProducts } from "../../../../assets/data/DefaultProducts";
+import { menDefaultProducts } from "../../../../assets/data/DefaultProducts";
 
 // ------------------
 // initial State type
@@ -14,28 +14,28 @@ interface initialState {
 // initial State
 // ------------------
 const initialState: initialState = {
-  Products: [...babyDefaultProducts],
+  Products: [...menDefaultProducts],
   Categories: [],
 };
 
 // ------------------
 // Main Component
 // ------------------
-const babySlice = createSlice({
+const manSlice = createSlice({
   initialState,
-  name: "baby",
+  name: "men",
   reducers: {
-    babyAddProduct: (state, action: PayloadAction<ItemValues>) => {
+    menAddProduct: (state, action: PayloadAction<ItemValues>) => {
       const actionPayLoad = action.payload;
       actionPayLoad.id = state.Products[state.Products.length - 1].id + 1;
       state.Products.push(actionPayLoad);
     },
 
-    babyInitialCategories: (state, action: PayloadAction<string[]>) => {
+    menInitialCategories: (state, action: PayloadAction<string[]>) => {
       state.Categories = action.payload;
     },
 
-    babyArrangeCategories: (state, action: PayloadAction<number>) => {
+    menArrangeCategories: (state, action: PayloadAction<number>) => {
       const restItems = state.Categories.slice(0, action.payload).concat(
         state.Categories.slice(action.payload + 1)
       );
@@ -44,7 +44,7 @@ const babySlice = createSlice({
   },
 });
 
-export default babySlice.reducer;
+export default manSlice.reducer;
 
-export const { babyAddProduct, babyInitialCategories, babyArrangeCategories } =
-  babySlice.actions;
+export const { menAddProduct, menInitialCategories, menArrangeCategories } =
+  manSlice.actions;

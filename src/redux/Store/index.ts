@@ -4,9 +4,8 @@ import customerDetailsReducer from "../features/customers/CustomerDetails/Custom
 import customerStateReducer from "../features/customers/CustomerState/CustomerStateSlice";
 import sellerStateReducer from "../features/sellers/SellerState/SellerStateSlice";
 import BabyReducer from "../features/items/ItemDetails/BabySlice";
-import ManReducer from "../features/items/ItemDetails/ManSlice";
-import WomanReducer from "../features/items/ItemDetails/WomanSlice";
-import availableCategoriesReducer from "../features/items/AvailableCategories/AvailableCategoriesSlice";
+import MenReducer from "../features/items/ItemDetails/MenSlice";
+import WomenReducer from "../features/items/ItemDetails/WomenSlice";
 import CartReducer from "../features/Cart/CartSlice";
 
 const Store = configureStore({
@@ -16,9 +15,8 @@ const Store = configureStore({
     customerDetails: customerDetailsReducer,
     sellerDetails: sellerDetailsReducer,
     baby: BabyReducer,
-    men: ManReducer,
-    women: WomanReducer,
-    availableCategories: availableCategoriesReducer,
+    men: MenReducer,
+    women: WomenReducer,
     cart: CartReducer,
   },
 });

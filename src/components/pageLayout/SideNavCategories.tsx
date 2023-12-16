@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import { List, ListItem, Collapse, Breadcrumbs } from "@mui/material";
 import {
@@ -7,26 +7,22 @@ import {
 } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import {
-  storeCategories,
-  Gender,
+  StoreCategories,
   trim_lowerCase,
 } from "../../assets/data/GlobalVariables";
 import ActiveLink from "../shared/Link/ActiveLink";
 import styles from "../../styles";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
-import {
-  arrangeCategories,
-  initialAvailableCategories,
-} from "../../redux/features/items/AvailableCategories/AvailableCategoriesSlice";
-import UniqueCategoriesArray from "../shared/UniqueCategoriesArray";
 import Link from "../shared/Link/Link";
+import { menArrangeCategories } from "../../redux/features/items/ItemDetails/MenSlice";
+import { womenArrangeCategories } from "../../redux/features/items/ItemDetails/WomenSlice";
+import { babyArrangeCategories } from "../../redux/features/items/ItemDetails/BabySlice";
 
 // ------------------
 // props type
 // ------------------
 interface Props {
-  gender: Gender;
-  storeCategory: storeCategories;
+  storeCategory: StoreCategories;
 }
 
 // ----------------
@@ -37,7 +33,7 @@ const { colors, fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
+const SideNavCategories: React.FC<Props> = ({ storeCategory }) => {
   const { category } = useParams();
 
   // ------------------------------
@@ -53,7 +49,20 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
   // ------------------------------
   const dispatch = useDispatch();
   const handleClick = (index: number) => {
-    dispatch(arrangeCategories(index));
+    switch (storeCategory) {
+      case "men":
+        dispatch(menArrangeCategories(index));
+        break;
+      case "women":
+        dispatch(womenArrangeCategories(index));
+        break;
+      case "baby":
+        dispatch(babyArrangeCategories(index));
+        break;
+      default:
+        null;
+    }
+
     window.scrollTo({
       top: 0,
     });
@@ -63,19 +72,8 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
   // categories array for in-store clothes
   // ------------------------------------
   const StorefilteredCategory = useSelector(
-    (state) => state.availableCategories
+    (state) => state[storeCategory].Categories
   );
-  const makeOneItemPerCategory = UniqueCategoriesArray(storeCategory, gender);
-  const filteredCategory = makeOneItemPerCategory.map(
-    (item) => item.categories
-  );
-
-  // ------------------------------------------
-  // dispatch in-store categories to redux-store
-  // ------------------------------------------
-  useEffect(() => {
-    dispatch(initialAvailableCategories(filteredCategory));
-  }, []);
 
   return (
     <Holder>
@@ -84,8 +82,13 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
           Home
         </Link>
 
-        <Link underline="hover" color="text.primary" to="/men">
-          Men
+        <Link
+          className="storeCategory"
+          underline="hover"
+          color="text.primary"
+          to={`/${storeCategory}`}
+        >
+          {storeCategory}
         </Link>
 
         {StorefilteredCategory.map((oneCategory) => {
@@ -93,7 +96,7 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
             <Link
               underline="hover"
               color="text.primary"
-              to={`/men/${category}`}
+              to={`/${storeCategory}/${category}`}
               aria-current="page"
               key={oneCategory}
             >
@@ -130,7 +133,7 @@ const SideNavCateogries: React.FC<Props> = ({ storeCategory, gender }) => {
   );
 };
 
-export default SideNavCateogries;
+export default SideNavCategories;
 
 // -------------------
 // STYLED COMPONENT
@@ -169,6 +172,9 @@ const Holder = styled.div`
     margin: 1em 0 0 2em;
     ${fonts.semiBold}
     font-size: 0.8em;
+    a {
+      text-transform: uppercase;
+    }
   }
 
   .categories-toggle {

@@ -1,5 +1,5 @@
 import {
-  storeCategories,
+  StoreCategories,
   Gender,
   ItemValues,
   categoriesByGender,
@@ -10,18 +10,18 @@ import { useSelector } from "../../redux/Store/hooks";
 // main component
 // ------------------
 const UniqueCategoriesArray = (
-  storeCategory: storeCategories,
+  storeCategory: StoreCategories,
   gender: Gender
 ): ItemValues[] => {
-  const storeGender = useSelector((state) => state[storeCategory]);
+  const storeGenderItems = useSelector((state) => state[storeCategory].Products);
 
   // --------------------------------------------------
   // array of available items in a gender redux-store
   // --------------------------------------------------
-  const filterCategories = categoriesByGender(gender)
+  const genderAvailableItems = categoriesByGender(gender)
     .map(
       (category) =>
-        storeGender.find(
+        storeGenderItems.find(
           (item) => item.gender === gender && item.categories === category
         ) || null
     )
@@ -31,10 +31,10 @@ const UniqueCategoriesArray = (
   // array of unique categories in a gender redux-store
   // --------------------------------------------------
   const isUniqueCategory: Record<string, boolean> = {};
-  const uniqueCategories = filterCategories.filter((obj) => {
-    if (categoriesByGender(gender).includes(obj.categories)) {
-      if (!isUniqueCategory[obj.categories]) {
-        isUniqueCategory[obj.categories] = true;
+  const uniqueCategories = genderAvailableItems.filter((item) => {
+    if (categoriesByGender(gender).includes(item.categories)) {
+      if (!isUniqueCategory[item.categories]) {
+        isUniqueCategory[item.categories] = true;
         return true;
       }
     }
