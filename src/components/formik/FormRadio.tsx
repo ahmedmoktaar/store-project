@@ -36,11 +36,7 @@ const FormRadio: React.FC<TextFieldProps> = ({
   const [field, meta, form] = useField(name);
 
   return (
-    <Holder
-      style={
-        deleteGridTemplateColumns ? {} : { gridTemplateColumns: "11em 30em" }
-      }
-    >
+    <Holder style={deleteGridTemplateColumns ? {} : { gridTemplateColumns: "11em 30em" }}>
       <InputLabel id={name}>{label}</InputLabel>
       <Autocomplete
         fullWidth
@@ -50,7 +46,7 @@ const FormRadio: React.FC<TextFieldProps> = ({
         clearOnEscape
         options={options}
         onChange={(_e, values) => form.setValue(values)}
-        value={field.value ?? null}
+        value={field.value || null}
         renderOption={(props, option, { selected, index }) => (
           <li key={index} {...props}>
             <Radio
@@ -85,7 +81,6 @@ export default FormRadio;
 const Holder = styled.div`
   display: grid;
   align-items: center;
-  gap: 1.5em;
   label {
     font-size: 1.2em;
     ${fonts.bold}

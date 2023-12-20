@@ -8,14 +8,14 @@ import {
   trim_lowerCase,
 } from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
-import ItemModal from "./ItemModal";
+import ModalItemPreOrder from "./formik/ModalItemPreOrder";
 
 // ------------------
 // props type
 // ------------------
 interface Props {
   gender: Gender;
-  StoreCategory: StoreCategories;
+  storeCategory: StoreCategories;
 }
 
 // -------------------
@@ -26,17 +26,17 @@ const { fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const MenCategoriesPage: React.FC<Props> = ({ gender, StoreCategory }) => {
+const MenCategoriesPage: React.FC<Props> = ({ gender, storeCategory }) => {
   // ------------------
   // Hooks
   // ------------------
   const { category } = useParams();
   const storeGenderItems = useSelector(
-    (state) => state[StoreCategory].Products
+    (state) => state[storeCategory].Products
   );
 
   // ------------------
-  // filtered Items in gender
+  // filter Items in gender
   // ------------------
   const filteredItems = storeGenderItems.filter(
     (item) => item.gender === gender
@@ -50,7 +50,7 @@ const MenCategoriesPage: React.FC<Props> = ({ gender, StoreCategory }) => {
             {filteredItems.map((item, index) => {
               return (
                 category === trim_lowerCase(item.categories) && (
-                  <ItemModal item={item} key={index}>
+                  <ModalItemPreOrder item={item} key={index}>
                     <ul className="item-wrapper">
                       <li>
                         <ImageRendering
@@ -64,7 +64,7 @@ const MenCategoriesPage: React.FC<Props> = ({ gender, StoreCategory }) => {
 
                       <li> {item.price} $</li>
                     </ul>
-                  </ItemModal>
+                  </ModalItemPreOrder>
                 )
               );
             })}
@@ -93,6 +93,8 @@ const Holder = styled.div`
 
   .item-wrapper {
     display: grid;
+    padding: 0.5em;
+    border: 2px solid #000000;
     img {
       height: 23rem;
       width: 15rem;

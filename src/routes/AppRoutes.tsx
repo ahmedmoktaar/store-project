@@ -29,32 +29,36 @@ const router = createBrowserRouter(
     <>
       <Route element={<RootLayout />}>
         <Route path="/" element={<HomePage />} />
+
         <Route path="/men" element={<MenCategoriesPage />}>
           <Route
             path=":category"
-            element={<Category gender="Men" StoreCategory="men" />}
+            element={<Category gender="Men" storeCategory="men" />}
           />
         </Route>
         <Route path="/women" element={<WomenCategoriesPage />}>
           <Route
             path=":category"
-            element={<Category gender="Women" StoreCategory="women" />}
+            element={<Category gender="Women" storeCategory="women" />}
           />
         </Route>
         <Route path="/baby" element={<BabyCategoriesPage />}>
           <Route
             path=":category"
-            element={<Category gender="Baby" StoreCategory="baby" />}
+            element={<Category gender="Baby" storeCategory="baby" />}
           />
         </Route>
+
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
+
       <Route element={<SellerLayout />}>
         <Route path="/additem" element={<AddItem />} />
         <Route path="/trackitems" element={<TrackItems />} />
       </Route>
+
       <Route>
         <Route path="/signinseller" element={<SignInSeller />} />
         <Route path="/signupseller" element={<SignUpSeller />} />

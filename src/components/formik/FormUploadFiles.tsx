@@ -119,7 +119,6 @@ const Holder = styled.div`
   display: grid;
   grid-template-columns: 11em 30em;
   align-items: center;
-  gap: 0.5em 1.5em;
   
   label:first-of-type {
     font-size: 1.2em;

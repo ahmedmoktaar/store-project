@@ -14,15 +14,14 @@ import {
   ItemChangeableValues,
   ItemValues,
   itemChangeableInitialValues,
-} from "../assets/data/GlobalVariables";
-import FormToggleButton from "./formik/FormToggleButton";
-import MuiButton from "./shared/MuiButton";
-import ImageRendering from "./shared/ImageRendering";
-import FormRadio from "./formik/FormRadio";
-import ImageModal from "./shared/ImageModal";
-import styles from "../styles";
-import { useDispatch } from "../redux/Store/hooks";
-import { addItemToCart } from "../redux/features/Cart/CartSlice";
+} from "../../assets/data/GlobalVariables";
+import MuiButton from "../shared/MuiButton";
+import ImageRendering from "../shared/ImageRendering";
+import FormRadio from "./FormRadio";
+import ImageModal from "../shared/ImageModal";
+import styles from "../../styles";
+import { useDispatch } from "../../redux/Store/hooks";
+import { addItemToCart } from "../../redux/features/Cart/CartSlice";
 
 // -------------------
 // style variables
@@ -40,7 +39,7 @@ interface Props {
 // ------------------
 // main component
 // ------------------
-const ItemModal: React.FC<Props> = ({ item, children }) => {
+const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
   // -------
   // hooks
   // -------
@@ -58,12 +57,11 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
     setOpen(false);
   };
 
-  // --------------------------
+  // --------------------------------
   // array to choose order quantity
-  // --------------------------
-  const amountInStockArray = Array.from(
-    { length: item.amountInStock },
-    (_, index) => (index + 1).toString()
+  // --------------------------------
+  const amountInStockArray = Array.from({ length: item.amountInStock }, (_, index) =>
+    (index + 1).toString()
   );
 
   // --------------------------
@@ -73,11 +71,11 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
 
   const validationSchema = yup.object({
     colors: yup
-      .array()
+      .string()
       .required("Please Choose Minimum One Color")
       .min(1, "Please Choose Minimum One Color"),
     sizes: yup
-      .array()
+      .string()
       .required("Please Choose Minimum One Size")
       .min(1, "Please Choose Minimum One Size"),
     amount: yup.string(),
@@ -87,7 +85,7 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
   const onSubmit = (values: ItemChangeableValues) => {
     if (buttonClicked === "buy-now") {
       dispatch(addItemToCart({ ...item, ...values }));
-      navigateTo("/cart");
+      navigateTo("/checkout");
     } else if (buttonClicked === "add-to-cart") {
       dispatch(addItemToCart({ ...item, ...values }));
     } else {
@@ -108,14 +106,6 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
           <Form>
             <ModalWrapper>
               <div className="left-side-wrapper">
-                <MuiButton
-                  variant="text"
-                  onClick={handleClose}
-                  className="close-button"
-                >
-                  X
-                </MuiButton>
-
                 <ImageModal multiple={false}>
                   <ImageRendering
                     width="230em"
@@ -125,11 +115,7 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
                 </ImageModal>
 
                 <ImageModal multiple>
-                  <ImageRendering
-                    width="50em"
-                    multiple
-                    images={item.media ?? []}
-                  />
+                  <ImageRendering width="50em" multiple images={item.media ?? []} />
                 </ImageModal>
 
                 <DialogContentText className="description">
@@ -138,6 +124,15 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
               </div>
 
               <div className="right-side-wrapper">
+                <MuiButton
+                  variant="contained"
+                  color="warning"
+                  onClick={handleClose}
+                  className="close-button"
+                >
+                  &times;
+                </MuiButton>
+
                 <DialogTitle className="semiBold">{item.name}</DialogTitle>
 
                 <DialogContent className="content-wrapper">
@@ -148,12 +143,32 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
 
                   <div>
                     <span>Colors: </span>
-                    <FormToggleButton name={"colors"} list={item.colors} />
+                    <FormRadio
+                      name={"colors"}
+                      options={item.colors}
+                      deleteGridTemplateColumns
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          padding: "0.1em 0.4em",
+                          width: "9em",
+                        },
+                      }}
+                    />
                   </div>
 
                   <div>
                     <span>Sizes: </span>
-                    <FormToggleButton name={"sizes"} list={item.sizes} />
+                    <FormRadio
+                      name={"sizes"}
+                      options={item.sizes}
+                      deleteGridTemplateColumns
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          padding: "0.1em 0.4em",
+                          width: "9em",
+                        },
+                      }}
+                    />
                   </div>
 
                   <div>
@@ -170,7 +185,7 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
                       deleteGridTemplateColumns
                       sx={{
                         "& .MuiOutlinedInput-root": {
-                          padding: "0.3em",
+                          padding: "0.1em 0.4em",
                           width: "9em",
                         },
                       }}
@@ -189,7 +204,7 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
                   >
                     Add to Cart
                   </MuiButton>
-                  
+
                   <MuiButton
                     className="button-buy"
                     onClick={() => setButtonClicked("buy-now")}
@@ -199,9 +214,7 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
                   </MuiButton>
 
                   <DialogActions className="dialog-actions">
-                    <MuiButton onClick={handleClose}>
-                      Continue Shopping
-                    </MuiButton>
+                    <MuiButton onClick={handleClose}>Continue Shopping</MuiButton>
                   </DialogActions>
                 </DialogContent>
               </div>
@@ -213,8 +226,11 @@ const ItemModal: React.FC<Props> = ({ item, children }) => {
   );
 };
 
-export default ItemModal;
+export default ModalItemPreOrder;
 
+// -------------------
+// STYLED COMPONENT
+// -------------------
 const Holder = styled.div`
   a {
     cursor: pointer;
@@ -226,30 +242,38 @@ const Holder = styled.div`
 
 const ModalWrapper = styled.div`
   display: grid;
+  justify-content: space-between;
   grid-template-columns: 20em auto;
   margin: 0 1em;
-  justify-content: space-between;
+
   .close-button {
     position: relative;
-    right: 11.5em;
-    bottom: 0;
-    color: ${colors.darkBlue};
-    border-color: ${colors.darkBlue};
+    left: 0.68em;
+    min-width: 1em;
+    font-size: 1.5em;
+    line-height: 1.5;
+    border-radius: 0.1em;
+    padding: 0 0.5em;
+    margin: 0 0 0 auto;
+    ${fonts.bold}
   }
+
   a {
     cursor: pointer;
     :hover {
-      opacity: 0.9;
+      opacity: 0.8;
     }
   }
+
   .left-side-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 1em 0 1em 1em;
     .description {
       margin: 1em 0;
-      ${fonts.semiBold}
       text-align: center;
+      ${fonts.semiBold}
     }
   }
 
@@ -257,29 +281,24 @@ const ModalWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
     .content-wrapper {
       & > div {
         display: grid;
         grid-template-columns: 5em max-content;
-        margin-bottom: 1em;
+        margin: 1em;
         align-items: center;
-        div {
-          display: block;
-        }
       }
       span:first-of-type {
         color: ${colors.darkBlue};
       }
       .button-cart {
+        margin: 0 0.5em;
         background-color: ${colors.darkOrange};
         color: ${colors.darkBlue};
-        margin: 0 1em 1em 2em;
       }
       .button-buy {
         background-color: ${colors.yellow};
         color: ${colors.darkBlue};
-        margin-bottom: 1em;
       }
     }
     .semiBold {

@@ -1,18 +1,13 @@
 import styled from "@emotion/styled";
-import {
-  ShoppingCartOutlined,
-  AccountCircleOutlined,
-} from "@mui/icons-material";
+import { ShoppingCartOutlined, AccountCircleOutlined } from "@mui/icons-material";
+import { Badge } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchBar from "../SearchBar";
 import styles from "../../styles";
 import NavLink from "../shared/Link/NavLink";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
 import Link from "../shared/Link/Link";
-import {
-  StoreCategories,
-  trim_lowerCase,
-} from "../../assets/data/GlobalVariables";
+import { StoreCategories, trim_lowerCase } from "../../assets/data/GlobalVariables";
 import {
   menArrangeCategories,
   menInitialCategories,
@@ -39,7 +34,8 @@ const NavCustomer = () => {
   // ---------------
   // hooks
   // ---------------
-  const LoggedIn = useSelector((state) => state.customerLoggedIn.customerState);
+  const loggedin = useSelector((state) => state.customerLoggedIn.customerState);
+  const itemsNumInCart = useSelector((state) => state.cart).length - 1;
   const customerName = useSelector(
     (state) => state.customerLoggedIn.customerDetails.firstName
   );
@@ -62,26 +58,23 @@ const NavCustomer = () => {
     }));
   };
 
-  const DropList: React.FC<{ storeCategory: StoreCategories }> = ({
-    storeCategory,
-  }) =>
+  // ------------------------------
+  // category DropList  
+  // ------------------------------
+  const DropList: React.FC<{ storeCategory: StoreCategories }> = ({ storeCategory }) =>
     isOpen[storeCategory] && (
       <div className="categories-dropdown-list">
-        {StoreCategoryfilteredCategories(storeCategory).map(
-          (category, index) => (
-            <Link
-              to={`/${storeCategory}/${trim_lowerCase(category)}`}
-              onClick={() => {
-                return (
-                  handleClick(index, storeCategory), handleClose(storeCategory)
-                );
-              }}
-              key={category}
-            >
-              {category}
-            </Link>
-          )
-        )}
+        {StoreCategoryfilteredCategories(storeCategory).map((category, index) => (
+          <Link
+            to={`/${storeCategory}/${trim_lowerCase(category)}`}
+            onClick={() => {
+              return handleClick(index, storeCategory), handleClose(storeCategory);
+            }}
+            key={category}
+          >
+            {category}
+          </Link>
+        ))}
       </div>
     );
 
@@ -120,25 +113,19 @@ const NavCustomer = () => {
   // initial dispatch in-store categories to redux-store
   // ------------------------------------------------------
   const makeOneItemPerCategoryMen = UniqueCategoriesArray("men", "Men");
-  const filterMenCategory = makeOneItemPerCategoryMen.map(
-    (item) => item.categories
-  );
+  const filterMenCategory = makeOneItemPerCategoryMen.map((item) => item.categories);
 
   const makeOneItemPerCategoryWomen = UniqueCategoriesArray("women", "Women");
-  const filterWomenCategory = makeOneItemPerCategoryWomen.map(
-    (item) => item.categories
-  );
+  const filterWomenCategory = makeOneItemPerCategoryWomen.map((item) => item.categories);
 
   const makeOneItemPerCategoryBaby = UniqueCategoriesArray("baby", "Baby");
-  const filterBabyCategory = makeOneItemPerCategoryBaby.map(
-    (item) => item.categories
-  );
+  const filterBabyCategory = makeOneItemPerCategoryBaby.map((item) => item.categories);
 
   useEffect(() => {
     dispatch(menInitialCategories(filterMenCategory));
     dispatch(womenInitialCategories(filterWomenCategory));
     dispatch(babyInitialCategories(filterBabyCategory));
-  }, [filterMenCategory, filterWomenCategory, filterBabyCategory]);
+  }, []);
 
   return (
     <Holder>
@@ -184,7 +171,7 @@ const NavCustomer = () => {
         <SearchBar />
       </div>
 
-      {LoggedIn ? (
+      {loggedin ? (
         <NavLink to="/profile" className="user-wrapper">
           <AccountCircleOutlined />
           <span>{customerName}</span>
@@ -197,7 +184,9 @@ const NavCustomer = () => {
 
       <div className="cart-checkout-wrapper">
         <Link to="/cart" className="cart-button">
-          <ShoppingCartOutlined />
+          <Badge badgeContent={itemsNumInCart} color="warning">
+            <ShoppingCartOutlined />
+          </Badge>
         </Link>
 
         <Link to="/checkout" className="checkout-button">
@@ -222,7 +211,6 @@ const Holder = styled.div`
   color: ${colors.white};
   display: flex;
   justify-content: space-around;
-
   padding-left: 10em;
   padding-right: 3em;
   align-items: center;
@@ -237,14 +225,13 @@ const Holder = styled.div`
   .categories {
     display: flex;
     .gender-link-wrapper {
-      padding: 2em;
+      padding: 2em 1.5em;
       :hover {
         background-color: ${colors.lightBlue};
       }
       :active {
         color: ${colors.darkOrange};
       }
-
       .categories-dropdown-list {
         padding: 1em;
         margin: 2.2em;
@@ -253,7 +240,7 @@ const Holder = styled.div`
         display: flex;
         flex-wrap: wrap;
         position: absolute;
-        left: 8.9em;
+        left: 9.4em;
         gap: 1em;
         background-color: ${colors.lightBlue};
         z-index: 1000;
@@ -284,6 +271,24 @@ const Holder = styled.div`
   .cart-checkout-wrapper {
     display: flex;
     align-items: center;
+    gap: 1em;
+    .cart-button {
+      position: relative;
+      top: 0.2em;
+      color: ${colors.white};
+      opacity: 0.8;
+      svg {
+        font-size: 2.2em;
+        opacity: 0.8;
+        color: ${colors.darkOrange};
+        :hover {
+          opacity: 1;
+        }
+        :active {
+          color: ${colors.white};
+        }
+      }
+    }
 
     .checkout-button {
       background-color: ${colors.green};
@@ -299,24 +304,6 @@ const Holder = styled.div`
       }
       :active {
         color: ${colors.darkBlue};
-      }
-    }
-    .cart-button {
-      position: relative;
-      top: 0.2em;
-      color: ${colors.white};
-      opacity: 0.8;
-
-      svg {
-        font-size: 2.2em;
-        opacity: 0.8;
-        color: ${colors.darkOrange};
-        :hover {
-          opacity: 1;
-        }
-        :active {
-          color: ${colors.white};
-        }
       }
     }
   }

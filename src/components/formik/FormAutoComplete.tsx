@@ -73,7 +73,6 @@ export default FormAutoComplete;
 const Holder = styled.div`
   display: grid;
   grid-template-columns: 11em 30em;
-  gap: 1.5em;
   align-items: center;
   label {
     font-size: 1.2em;

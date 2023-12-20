@@ -81,8 +81,8 @@ export const itemInitialValues: ItemValues = {
 // Item changeable values type
 //-------------------------------------------------
 export interface ItemChangeableValues {
-  colors: string[];
-  sizes: string[];
+  colors: string;
+  sizes: string;
   amount: string;
 }
 
@@ -90,8 +90,8 @@ export interface ItemChangeableValues {
 // Item changeable values in the modal
 //-------------------------------------------------
 export const itemChangeableInitialValues: ItemChangeableValues = {
-  colors: [],
-  sizes: [],
+  colors: "",
+  sizes: "",
   amount: "1",
 };
 
@@ -106,6 +106,47 @@ export const CustomerStateInitialValue = {
 
 const sellerDetails = SignUpInitialValues; //seller//
 export const SellerStateInitialValue = { sellerState: false, sellerDetails };
+
+//-------------------------------------------------
+// Cart  initial values
+//-------------------------------------------------
+export interface cartInitialStateType {
+  name: string;
+  brand: string;
+  price: string;
+  colors: string;
+  sizes: string;
+  categories: string;
+  description: string;
+  gender: string;
+  mainPic: FileList[] | string[] | null;
+  media: FileList[] | string[] | null;
+  amountInStock: number;
+  deliveryTime: string;
+  id: number;
+  amount: string;
+}
+
+export const cartInitialState: cartInitialStateType = {
+  name: "",
+  brand: "",
+  price: "",
+  colors: "",
+  sizes: "",
+  categories: "",
+  description: "",
+  gender: "",
+  mainPic: null,
+  media: null,
+  amountInStock: 0,
+  deliveryTime: "",
+  id: 0,
+  amount: "",
+};
+
+export interface ItemWithOrderID extends cartInitialStateType {
+  orderID: number;
+}
 
 //-------------------
 // Colors List
@@ -204,14 +245,13 @@ export const brandsList = [
 // Gender type & List
 //---------------------------------
 export type Gender = "Men" | "Women" | "Baby";
-export const genderList:Gender[] = ["Men", "Women", "Baby"];
+export const genderList: Gender[] = ["Men", "Women", "Baby"];
 
 //-----------------------------------------
-// categories type in redux store & List 
+// categories type in redux store & List
 //-----------------------------------------
 export type StoreCategories = "men" | "women" | "baby";
 export const storeCategoriesList: StoreCategories[] = ["men", "women", "baby"];
-
 
 //---------------------------------
 // all clothes in object array
@@ -380,5 +420,4 @@ export const categoriesByGender = (gender: Gender) => {
 //-----------------------------------------------------------------
 // Function to transform string (lowerCase and remove whiteSpace)
 //-----------------------------------------------------------------
-export const trim_lowerCase = (para: string) =>
-  para.toLowerCase().replace(/ /g, "-");
+export const trim_lowerCase = (para: string) => para.toLowerCase().replace(/ /g, "-");
