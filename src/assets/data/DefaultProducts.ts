@@ -4,7 +4,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Skinny Pant 1",
     brand: "Dior",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Jeans",
@@ -23,7 +23,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Skinny Pant 2",
     brand: "Dior",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Jeans",
@@ -42,7 +42,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Skinny Pant 3",
     brand: "Dior",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Jeans",
@@ -61,7 +61,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Skinny Pant 4",
     brand: "Nike",
-    price: "55",
+    price: 55,
     colors: ["White", "Brown", "Yellow"],
     sizes: ["S", "L", "2XL"],
     categories: "Jeans",
@@ -80,7 +80,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Basic T-Shirt",
     brand: "Adidas",
-    price: "25",
+    price: 25,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Activewear",
@@ -100,7 +100,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Basic T-Shirt 2",
     brand: "Adidas",
-    price: "25",
+    price: 25,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Activewear",
@@ -120,7 +120,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "California T-Shirt",
     brand: "Lacoste",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "T-Shirts",
@@ -139,7 +139,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Basic Sweater",
     brand: "Reebok",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Sweaters",
@@ -158,7 +158,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Los Angeles T-Shirt",
     brand: "Gucci",
-    price: "25",
+    price: 25,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "T-Shirts",
@@ -177,7 +177,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Los Angeles T-Shirt",
     brand: "Chanel",
-    price: "25",
+    price: 25,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Long Sleeve T-shirts",
@@ -196,7 +196,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "California T-Shirt",
     brand: "Dior",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Long Sleeve T-shirts",
@@ -215,7 +215,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "High Hat",
     brand: "Nike",
-    price: "55",
+    price: 55,
     colors: ["White", "Brown", "Yellow"],
     sizes: ["S", "L", "2XL"],
     categories: "Hats",
@@ -234,7 +234,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Raining Hoodie",
     brand: "Nike",
-    price: "55",
+    price: 55,
     colors: ["White", "Brown", "Yellow"],
     sizes: ["S", "L", "2XL"],
     categories: "Hoodies",
@@ -253,7 +253,7 @@ export const menDefaultProducts: ItemValues[] = [
   {
     name: "Classic Trousers",
     brand: "Nike",
-    price: "55",
+    price: 55,
     colors: ["White", "Brown", "Yellow"],
     sizes: ["S", "L", "2XL"],
     categories: "Trousers",
@@ -275,7 +275,7 @@ export const womenDefaultProducts: ItemValues[] = [
   {
     name: "Calforina T-shirt",
     brand: "Dior",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Dresses",
@@ -294,7 +294,7 @@ export const womenDefaultProducts: ItemValues[] = [
   {
     name: "Skinny Pant 9",
     brand: "Nike",
-    price: "55",
+    price: 55,
     colors: ["White", "Brown", "Yellow"],
     sizes: ["S", "L", "2XL"],
     categories: "Dresses",
@@ -313,7 +313,7 @@ export const womenDefaultProducts: ItemValues[] = [
   {
     name: "Los Angeles T-Shirt",
     brand: "Adidas",
-    price: "25",
+    price: 25,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Tops",
@@ -332,7 +332,7 @@ export const womenDefaultProducts: ItemValues[] = [
   {
     name: "Basic Hoodie",
     brand: "Armani",
-    price: "60",
+    price: 60,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Tops",
@@ -352,7 +352,7 @@ export const womenDefaultProducts: ItemValues[] = [
   {
     name: "Leather Sneakers",
     brand: "Gucci",
-    price: "25",
+    price: 25,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Skirts",
@@ -371,7 +371,7 @@ export const womenDefaultProducts: ItemValues[] = [
   {
     name: "Calforina T-shirt",
     brand: "Lacoste",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Skirts",
@@ -393,7 +393,7 @@ export const babyDefaultProducts: ItemValues[] = [
   {
     name: "Skinny Pant",
     brand: "Nike",
-    price: "55",
+    price: 55,
     colors: ["White", "Brown", "Yellow"],
     sizes: ["S", "L", "2XL"],
     categories: "Hats",
@@ -413,7 +413,7 @@ export const babyDefaultProducts: ItemValues[] = [
   {
     name: "Calforina T-shirt",
     brand: "Dior",
-    price: "39",
+    price: 39,
     colors: ["Black", "White", "Gray"],
     sizes: ["M", "L", "XL"],
     categories: "Onesies",
@@ -432,7 +432,7 @@ export const babyDefaultProducts: ItemValues[] = [
   {
     name: "Skinny Pant",
     brand: "Nike",
-    price: "55",
+    price: 55,
     colors: ["White", "Brown", "Yellow"],
     sizes: ["S", "L", "2XL"],
     categories: "Onesies",
@@ -451,7 +451,7 @@ export const babyDefaultProducts: ItemValues[] = [
   {
     name: "Los Angeles T-Shirt",
     brand: "Adidas",
-    price: "25",
+    price: 25,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Pajamas",
@@ -470,7 +470,7 @@ export const babyDefaultProducts: ItemValues[] = [
   {
     name: "Basic Hoodie",
     brand: "Armani",
-    price: "60",
+    price: 60,
     colors: ["Red", "Blue", "Black"],
     sizes: ["S", "M", "L", "XL"],
     categories: "Pajamas",

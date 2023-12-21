@@ -45,7 +45,7 @@ export const AdminDetails: SignUpValues[] = [
 export interface ItemValues {
   name: string;
   brand: string;
-  price: string;
+  price: number;
   colors: string[];
   sizes: string[];
   categories: string;
@@ -64,7 +64,7 @@ export interface ItemValues {
 export const itemInitialValues: ItemValues = {
   name: "",
   brand: "",
-  price: "",
+  price: 0,
   colors: [],
   sizes: [],
   categories: "",
@@ -113,7 +113,7 @@ export const SellerStateInitialValue = { sellerState: false, sellerDetails };
 export interface cartInitialStateType {
   name: string;
   brand: string;
-  price: string;
+  price: number;
   colors: string;
   sizes: string;
   categories: string;
@@ -130,7 +130,7 @@ export interface cartInitialStateType {
 export const cartInitialState: cartInitialStateType = {
   name: "",
   brand: "",
-  price: "",
+  price: 0,
   colors: "",
   sizes: "",
   categories: "",
@@ -421,3 +421,19 @@ export const categoriesByGender = (gender: Gender) => {
 // Function to transform string (lowerCase and remove whiteSpace)
 //-----------------------------------------------------------------
 export const trim_lowerCase = (para: string) => para.toLowerCase().replace(/ /g, "-");
+
+//-----------------------------------------------------------------
+// Promo Codes
+//-----------------------------------------------------------------
+export const promoCodes = [
+  "code1",
+  "code2",
+  "code3",
+  "code4",
+  "code5",
+  "code6",
+  "code7",
+  "code8",
+  "code9",
+  "code10",
+];
