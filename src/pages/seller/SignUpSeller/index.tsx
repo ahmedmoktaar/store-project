@@ -5,10 +5,7 @@ import * as yup from "yup";
 import { Form, Formik } from "formik";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
-import {
-  SignUpInitialValues,
-  SignUpValues,
-} from "../../../assets/data/GlobalVariables";
+import { SignUpInitialValues, SignUpValues } from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
 import { addSellerDetails } from "../../../redux/features/sellers/SellerDetails/SellerDetailsSlice";
 import MuiButton from "../../../components/shared/MuiButton";
@@ -69,6 +66,7 @@ const SignUpSeller: React.FC = () => {
           <Typography className="signup-label" variant="h4" component="h1">
             Create account
           </Typography>
+
           <Formik
             initialValues={SignUpInitialValues}
             validationSchema={validationSchema}
@@ -83,7 +81,8 @@ const SignUpSeller: React.FC = () => {
               <FormPassword name="password" label="Password *" />
               <FormPassword name="confirmPassword" label="Password *" />
               <FormTextField name="paypal" label="PayPal Details *" />
-              <FormTextField name="socialMedia" label="Social Media Links" />
+              <FormTextField name="socialMedia" label="Social Media Links (Optional)" />
+
               <MuiButton type="submit" className="submit-button">
                 submit
               </MuiButton>
@@ -95,8 +94,8 @@ const SignUpSeller: React.FC = () => {
               Already have an account? <Link to="/signinseller">Sign in</Link>
             </p>
             <p>
-              For further support, you may visit the Help Center or contact our
-              customer service team.
+              For further support, you may visit the Help Center or contact our customer
+              service team.
             </p>
           </div>
         </Holder>
@@ -115,6 +114,7 @@ const Holder = styled.div`
   width: 20em;
   text-align: center;
   font-size: 1.1em;
+
   .form-wrapper {
     margin-top: 1.5em;
     display: grid;
@@ -124,6 +124,7 @@ const Holder = styled.div`
       gap: 0.8em;
     }
   }
+
   .submit-button {
     background-color: ${colors.orange};
     color: ${colors.Blue};
@@ -132,6 +133,7 @@ const Holder = styled.div`
       background-color: ${colors.darkOrange};
     }
   }
+
   .additional-info {
     p:first-of-type {
       font-size: 0.9em;

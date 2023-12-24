@@ -5,10 +5,7 @@ import * as yup from "yup";
 import { Form, Formik } from "formik";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
-import {
-  SignUpInitialValues,
-  SignUpValues,
-} from "../../../assets/data/GlobalVariables";
+import { SignUpInitialValues, SignUpValues } from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
 import { addCustomerDetails } from "../../../redux/features/customers/CustomerDetails/CustomerDetailsSlice";
 import MuiButton from "../../../components/shared/MuiButton";
@@ -56,7 +53,7 @@ const SignUpCustomer: React.FC = () => {
 
   const onSubmit = (values: SignUpValues) => {
     dispatch(addCustomerDetails(values));
-    navigateTo("/signincustomer");
+    navigateTo(-1);
   };
 
   return (
@@ -83,8 +80,8 @@ const SignUpCustomer: React.FC = () => {
               <FormTextField name="email" label="Email *" />
               <FormPassword name="password" label="Password *" />
               <FormPassword name="confirmPassword" label="Password *" />
-              <FormTextField name="paypal" label="PayPal Details" />
-              <FormTextField name="socialMedia" label="Social Media Links" />
+              <FormTextField name="paypal" label="PayPal Details (Optional)" />
+              <FormTextField name="socialMedia" label="Social Media Links (Optional)" />
               <MuiButton type="submit" className="submit-button">
                 submit
               </MuiButton>
@@ -93,11 +90,11 @@ const SignUpCustomer: React.FC = () => {
 
           <div className="additional-info">
             <p>
-              Already have an account? <Link to="/signincustomer">Sign in</Link>
+              Already have an account? <Link to="/signinuser">Sign in</Link>
             </p>
             <p>
-              For further support, you may visit the Help Center or contact our
-              customer service team.
+              For further support, you may visit the Help Center or contact our customer
+              service team.
             </p>
           </div>
         </Holder>

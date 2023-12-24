@@ -18,8 +18,8 @@ import MenCategoriesPage from "../pages/customer/categories/Men";
 import WomenCategoriesPage from "../pages/customer/categories/Women";
 import BabyCategoriesPage from "../pages/customer/categories/Baby";
 import Category from "../components/Category";
-import CheckoutPage from "../pages/customer/Checkout";
-import CartPage from "../pages/customer/Cart";
+import CartPage from "../pages/customer/buying/Cart";
+import CheckoutPage from "../pages/customer/buying/Checkout";
 
 // ----------------------
 // routes construction
@@ -29,6 +29,9 @@ const router = createBrowserRouter(
     <>
       <Route element={<RootLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="*" element={<NotFound />} />
 
         <Route path="/men" element={<MenCategoriesPage />}>
           <Route
@@ -48,10 +51,6 @@ const router = createBrowserRouter(
             element={<Category gender="Baby" storeCategory="baby" />}
           />
         </Route>
-
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="*" element={<NotFound />} />
       </Route>
 
       <Route element={<SellerLayout />}>
@@ -62,8 +61,8 @@ const router = createBrowserRouter(
       <Route>
         <Route path="/signinseller" element={<SignInSeller />} />
         <Route path="/signupseller" element={<SignUpSeller />} />
-        <Route path="/signincustomer" element={<SignInCustomer />} />
-        <Route path="/signupcustomer" element={<SignUpCustomer />} />
+        <Route path="/signinuser" element={<SignInCustomer />} />
+        <Route path="/signupuser" element={<SignUpCustomer />} />
       </Route>
     </>
   )

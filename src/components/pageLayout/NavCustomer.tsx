@@ -177,7 +177,7 @@ const NavCustomer = () => {
           <span>{customerName}</span>
         </NavLink>
       ) : (
-        <NavLink className="user-wrapper" to="/signincustomer">
+        <NavLink className="user-wrapper" to="/signinuser">
           Login / Register
         </NavLink>
       )}

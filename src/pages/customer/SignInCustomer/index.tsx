@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -44,8 +44,7 @@ const SignInCustomer: React.FC = () => {
   const LoggedInUserDetails = (value: loginValues) => {
     const validUser = customerDetails.find(
       (customerDetail) =>
-        value.email === customerDetail.email &&
-        value.password === customerDetail.password
+        value.email === customerDetail.email && value.password === customerDetail.password
     );
 
     if (validUser) {
@@ -56,9 +55,10 @@ const SignInCustomer: React.FC = () => {
   };
 
   // --------------------
-  // useNavigate Hook
+  // Router Hooks
   // --------------------
   const navigateTo = useNavigate();
+  const location = useLocation();
 
   // --------------------
   // formik variables
@@ -71,29 +71,40 @@ const SignInCustomer: React.FC = () => {
   const validationSchema = yup.object({
     email: yup
       .string()
-      .required("Required")
+      .required("Invalid email")
       .test("email-check", "Incorrect email", (value) => {
         return customerDetails.some(
-          (customerDetail) => value === customerDetail.email
+          (customerDetail) => value.toLowerCase() === customerDetail.email
         );
       }),
     password: yup
       .string()
-      .required("Required")
-      .test("password-check", "Incorrect password", (value) => {
-        return customerDetails.some(
-          (customerDetail) => value === customerDetail.password
-        );
+      .when("email", {
+        is: (email:string) => email && customerDetails.some(
+          (customerDetail) => email.toLowerCase() === customerDetail.email
+        ),
+        then: (schema) =>
+          schema.required('Incorrect password').test("password-check", "Incorrect password", (value) => {
+            return customerDetails.some(
+              (customerDetail) => value === customerDetail.password
+            );
+          }),
       }),
   });
 
   const onSubmit = (value: loginValues) => {
-    dispatch(login(LoggedInUserDetails(value))), navigateTo("/");
+    {
+      location.pathname === "/checkout"
+        ? dispatch(login(LoggedInUserDetails(value)))
+        : (dispatch(login(LoggedInUserDetails(value))), navigateTo("/"));
+    }
   };
 
   return (
     <>
-      {LoggedIn ? (
+      {location.pathname === "/checkout" && LoggedIn ? (
+        <Navigate to="/checkout" />
+      ) : LoggedIn ? (
         <Navigate to="/profile" replace={true} />
       ) : (
         <Holder>
@@ -123,13 +134,11 @@ const SignInCustomer: React.FC = () => {
               </Form>
             </Formik>
 
-            <Link to="/signupcustomer" className="signup-link">
+            <Link to="/signupuser" className="signup-link">
               Don't have an account? Sign Up
             </Link>
 
-            <div className="copyright">
-              Copyright © 2023. All Rights Reserved.
-            </div>
+            <div className="copyright">Copyright © 2023. All Rights Reserved.</div>
           </>
         </Holder>
       )}
@@ -181,9 +190,8 @@ const Holder = styled.div`
   }
 
   .copyright {
+    margin-top: 3em;
     font-size: 0.6em;
-    position: absolute;
-    bottom: 5em;
     align-self: center;
   }
 `;

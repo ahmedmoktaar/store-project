@@ -44,8 +44,7 @@ const SignInSeller: React.FC = () => {
   const loggedInSellerDetails = (value: loginValues) => {
     const validSeller = sellerDetails.find(
       (sellerDetail) =>
-        value.email === sellerDetail.email &&
-        value.password === sellerDetail.password
+        value.email === sellerDetail.email && value.password === sellerDetail.password
     );
 
     if (validSeller) {
@@ -73,21 +72,22 @@ const SignInSeller: React.FC = () => {
       .string()
       .required("Required")
       .test("email-check", "Incorrect email", (value) => {
-        return sellerDetails.some(
-          (sellerdetail) => value === sellerdetail.email
-        );
+        return sellerDetails.some((sellerdetail) => value === sellerdetail.email);
       }),
-    password: yup
-      .string()
-      .required("Required")
-      .test("password-check", "Incorrect password", (value) => {
-        return sellerDetails.some(
-          (sellerdetail) => value === sellerdetail.password
-        );
-      }),
+    password: yup.string().when("email", {
+      is: (email: string) =>
+        email &&
+        sellerDetails.some((sellerDetail) => email.toLowerCase() === sellerDetail.email),
+      then: (schema) =>
+        schema
+          .required("Incorrect password")
+          .test("password-check", "Incorrect password", (value) => {
+            return sellerDetails.some((sellerDetail) => value === sellerDetail.password);
+          }),
+    }),
   });
 
-  const onSubmit = (value:loginValues) => {
+  const onSubmit = (value: loginValues) => {
     dispatch(login(loggedInSellerDetails(value))), navigateTo("/additem");
   };
 
@@ -126,9 +126,7 @@ const SignInSeller: React.FC = () => {
               Don't have an account? Sign Up
             </Link>
 
-            <div className="copyright">
-              Copyright © 2023. All Rights Reserved.
-            </div>
+            <div className="copyright">Copyright © 2023. All Rights Reserved.</div>
           </>
         </Holder>
       )}
@@ -148,11 +146,13 @@ const Holder = styled.div`
   flex-direction: column;
   gap: 0.6em;
   width: 16em;
+
   form {
     div:first-of-type {
       margin-bottom: 0.6em;
     }
   }
+
   .lock-icon {
     background-color: ${colors.orange};
     width: 2.5em;
@@ -163,20 +163,23 @@ const Holder = styled.div`
     justify-content: center;
     align-items: center;
   }
+
   .signin-label {
     margin-bottom: 1em;
     align-self: center;
   }
+
   .signin-button {
     margin-top: 2em;
   }
+
   .signup-link {
     font-size: 0.75em;
   }
+
   .copyright {
     font-size: 0.6em;
-    position: absolute;
-    bottom: 5em;
+    margin-top: 3em;
     align-self: center;
   }
 `;
