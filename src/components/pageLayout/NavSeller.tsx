@@ -13,9 +13,9 @@ const { colors, fonts } = styles;
 const NavSeller = () => {
   return (
     <Holder>
-      <ActiveLink to="/additem">Add New Item</ActiveLink>
+      <ActiveLink to="/addproduct">Add New Product</ActiveLink>
 
-      <ActiveLink to="/trackitems">Track Your Item</ActiveLink>
+      <ActiveLink to="/trackproducts">Track Your Products</ActiveLink>
 
       <ActiveLink className="home-page" to="/">
         Go To Home Page

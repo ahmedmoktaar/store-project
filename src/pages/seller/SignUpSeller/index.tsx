@@ -12,6 +12,7 @@ import MuiButton from "../../../components/shared/MuiButton";
 import Logo from "../../../components/shared/Logo";
 import Link from "../../../components/shared/Link/Link";
 import styles from "../../../styles";
+import { addNewSellerProducts } from "../../../redux/features/items/ProductsSlice";
 
 // ----------------
 // style variables
@@ -27,7 +28,7 @@ const SignUpSeller: React.FC = () => {
   // ------------------
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
-  const LoggedIn = useSelector((state) => state.sellerLoggedIn.sellerState);
+  const sellersDetails = useSelector((state) => state.sellersDetails);
 
   // --------------------
   // formik variables
@@ -53,12 +54,15 @@ const SignUpSeller: React.FC = () => {
 
   const onSubmit = (values: SignUpValues) => {
     dispatch(addSellerDetails(values));
+    dispatch(addNewSellerProducts(values.email));
     navigateTo("/signinseller");
   };
 
+  const isLoggedIn = sellersDetails.find((sellerDetail) => sellerDetail.isActive);
+
   return (
     <>
-      {LoggedIn ? (
+      {isLoggedIn ? (
         <Navigate to="/" replace={true} />
       ) : (
         <Holder>

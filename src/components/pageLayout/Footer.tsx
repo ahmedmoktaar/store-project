@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
             <NavLink to="/">Home Page</NavLink>
           </li>
           <li>
-            <NavLink to="/additem">Sell With Us</NavLink>
+            <NavLink to="/addproduct">Sell With Us</NavLink>
           </li>
         </ul>
         <div className="payment-icons-container">

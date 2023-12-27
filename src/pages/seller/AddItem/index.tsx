@@ -10,23 +10,22 @@ import MuiButton from "../../../components/shared/MuiButton";
 import FormUploadFiles from "../../../components/formik/FormUploadFiles";
 import FormRadio from "../../../components/formik/FormRadio";
 import {
-  ItemValues,
+  ProductValues,
   colorsList,
   sizeList,
   brandsList,
-  itemInitialValues,
+  productInitialValues,
   clothesCategoriesList,
   genderList,
+  StoreCategories,
 } from "../../../assets/data/GlobalVariables";
-import { useDispatch } from "../../../redux/Store/hooks";
-import { babyAddProduct } from "../../../redux/features/items/ItemDetails/BabySlice";
-import { menAddProduct } from "../../../redux/features/items/ItemDetails/MenSlice";
-import { womenAddProduct } from "../../../redux/features/items/ItemDetails/WomenSlice";
+import { useDispatch, useSelector } from "../../../redux/Store/hooks";
+import { addProduct } from "../../../redux/features/items/ProductsSlice";
 
 // ----------------
 // main component
 // ----------------
-const AddItem: React.FC = () => {
+const AddProduct: React.FC = () => {
   // ----------------
   // hooks
   // ----------------
@@ -34,17 +33,21 @@ const AddItem: React.FC = () => {
   const dispatch = useDispatch();
 
   // ----------------
+  // find active seller email
+  // ----------------
+  const activeSellerEmail = useSelector((state) => state.sellersDetails).find(
+    (seller) => seller.isActive
+  )?.email;
+
+  // ----------------
   // formik variables
   // ----------------
   const validationSchema = yup.object({
     name: yup.string().required("Required"),
     brand: yup.string().required("Required"),
-    price: yup
-      .number()
-      .moreThan(-1, "Can't be negative number")
-      .required("Required"),
-    colors: yup.array().required("Required"),
-    sizes: yup.array().required("Required"),
+    price: yup.number().moreThan(0, "Invalid Price").required("Required"),
+    colors: yup.array().min(1, "Required").required("Required"),
+    sizes: yup.array().min(1, "Required").required("Required"),
     categories: yup.string().required("Required"),
     description: yup.string().required("Required"),
     gender: yup.string().required("Required"),
@@ -96,35 +99,28 @@ const AddItem: React.FC = () => {
       .required("At least one file required"),
     amountInStock: yup
       .number()
-      .moreThan(-1, "Can't be negative number")
+      .moreThan(0, "Invalid Number")
       .required("Required"),
     deliveryTime: yup.string().required("Required"),
   });
 
-  const onSubmit = (values: ItemValues) => {
-    switch (values.gender) {
-      case "Baby":
-        dispatch(babyAddProduct(values));
-        break;
+  const onSubmit = (values: ProductValues) => {
+    const category = values.gender.toLowerCase() as StoreCategories;
+    dispatch(
+      addProduct({
+        product: values,
+        storeCategory: category,
+        sellerEmail: activeSellerEmail,
+      })
+    );
 
-      case "Men":
-        dispatch(menAddProduct(values));
-        break;
-
-      case "Women":
-        dispatch(womenAddProduct(values));
-        break;
-
-      default:
-        null;
-    }
-    navigateTo("/trackitems");
+    navigateTo("/trackproducts");
   };
 
   return (
     <Holder>
       <Formik
-        initialValues={itemInitialValues}
+        initialValues={productInitialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
@@ -136,17 +132,11 @@ const AddItem: React.FC = () => {
             name="price"
             label="Price"
             InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
+              startAdornment: <InputAdornment position="start">$</InputAdornment>,
             }}
           />
 
-          <FormSelect
-            name="colors"
-            label="Colors Available"
-            options={colorsList}
-          />
+          <FormSelect name="colors" label="Colors Available" options={colorsList} />
 
           <FormSelect name="sizes" label="Sizes Available" options={sizeList} />
 
@@ -160,19 +150,11 @@ const AddItem: React.FC = () => {
 
           <FormRadio name="gender" label="Gender: " options={genderList} />
 
-          <TextFormLabeled
-            name="amountInStock"
-            label="Amount In Stock"
-            type="number"
-          />
+          <TextFormLabeled name="amountInStock" label="Amount In Stock" type="number" />
 
           <TextFormLabeled name="deliveryTime" label="Delivery Time" />
 
-          <FormUploadFiles
-            name="mainPic"
-            label="Main Picture"
-            multiple={false}
-          />
+          <FormUploadFiles name="mainPic" label="Main Picture" multiple={false} />
 
           <FormUploadFiles name="media" label="Pictures" multiple />
 
@@ -190,7 +172,7 @@ const AddItem: React.FC = () => {
   );
 };
 
-export default AddItem;
+export default AddProduct;
 
 // -------------------
 // STYLED COMPONENT

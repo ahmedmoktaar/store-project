@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import NotFound from "../pages/NotFound";
-import AddItem from "../pages/seller/AddItem";
-import TrackItems from "../pages/seller/TrackItems";
+import AddProduct from "../pages/seller/AddItem";
+import TrackProducts from "../pages/seller/TrackItems";
 import SignInSeller from "../pages/seller/SignInSeller";
 import SignUpSeller from "../pages/seller/SignUpSeller";
 import RootLayout from "../layout/RootLayout";
@@ -36,26 +36,26 @@ const router = createBrowserRouter(
         <Route path="/men" element={<MenCategoriesPage />}>
           <Route
             path=":category"
-            element={<Category gender="Men" storeCategory="men" />}
+            element={<Category storeCategory="men" />}
           />
         </Route>
         <Route path="/women" element={<WomenCategoriesPage />}>
           <Route
             path=":category"
-            element={<Category gender="Women" storeCategory="women" />}
+            element={<Category storeCategory="women" />}
           />
         </Route>
         <Route path="/baby" element={<BabyCategoriesPage />}>
           <Route
             path=":category"
-            element={<Category gender="Baby" storeCategory="baby" />}
+            element={<Category storeCategory="baby" />}
           />
         </Route>
       </Route>
 
       <Route element={<SellerLayout />}>
-        <Route path="/additem" element={<AddItem />} />
-        <Route path="/trackitems" element={<TrackItems />} />
+        <Route path="/addproduct" element={<AddProduct />} />
+        <Route path="/trackproducts" element={<TrackProducts />} />
       </Route>
 
       <Route>

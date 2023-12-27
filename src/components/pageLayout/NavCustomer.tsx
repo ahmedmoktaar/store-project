@@ -7,20 +7,16 @@ import styles from "../../styles";
 import NavLink from "../shared/Link/NavLink";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
 import Link from "../shared/Link/Link";
-import { StoreCategories, trim_lowerCase } from "../../assets/data/GlobalVariables";
 import {
-  menArrangeCategories,
-  menInitialCategories,
-} from "../../redux/features/items/ItemDetails/MenSlice";
-import UniqueCategoriesArray from "../shared/UniqueCategoriesArray";
+  Gender,
+  StoreCategories,
+  trim_lowerCase,
+} from "../../assets/data/GlobalVariables";
+import UniqueProductCategoryArray from "../shared/UniqueCategoriesArray";
 import {
-  womenArrangeCategories,
-  womenInitialCategories,
-} from "../../redux/features/items/ItemDetails/WomenSlice";
-import {
-  babyArrangeCategories,
-  babyInitialCategories,
-} from "../../redux/features/items/ItemDetails/BabySlice";
+  arrangeCategories,
+  initialCategories,
+} from "../../redux/features/items/ProductsSlice";
 
 // ----------------
 // style variables
@@ -34,10 +30,10 @@ const NavCustomer = () => {
   // ---------------
   // hooks
   // ---------------
-  const loggedin = useSelector((state) => state.customerLoggedIn.customerState);
-  const itemsNumInCart = useSelector((state) => state.cart).length - 1;
+  const loggedin = useSelector((state) => state.customersLoggedIn.customerState);
+  const productNumInCart = useSelector((state) => state.cart).length - 1;
   const customerName = useSelector(
-    (state) => state.customerLoggedIn.customerDetails.firstName
+    (state) => state.customersLoggedIn.customerDetails.firstName
   );
 
   // ------------------------------
@@ -59,12 +55,12 @@ const NavCustomer = () => {
   };
 
   // ------------------------------
-  // category DropList  
+  // category DropList
   // ------------------------------
   const DropList: React.FC<{ storeCategory: StoreCategories }> = ({ storeCategory }) =>
     isOpen[storeCategory] && (
       <div className="categories-dropdown-list">
-        {StoreCategoryfilteredCategories(storeCategory).map((category, index) => (
+        {StoreCategoryProductsCategories(storeCategory).map((category, index) => (
           <Link
             to={`/${storeCategory}/${trim_lowerCase(category)}`}
             onClick={() => {
@@ -83,19 +79,7 @@ const NavCustomer = () => {
   // ------------------------------
   const dispatch = useDispatch();
   const handleClick = (index: number, storeCategory: StoreCategories) => {
-    switch (storeCategory) {
-      case "men":
-        dispatch(menArrangeCategories(index));
-        break;
-      case "women":
-        dispatch(womenArrangeCategories(index));
-        break;
-      case "baby":
-        dispatch(babyArrangeCategories(index));
-        break;
-      default:
-        null;
-    }
+    dispatch(arrangeCategories({ index: index, storeCategory: storeCategory }));
 
     window.scrollTo({
       top: 0,
@@ -103,29 +87,44 @@ const NavCustomer = () => {
   };
 
   // ----------------------------------------------------------------
-  //  in-store clothes categories array for every store-category
+  //  in-store Products categories array for every storeCategory
   // ----------------------------------------------------------------
-  const StoreCategoryfilteredCategories = (category: StoreCategories) => {
-    return useSelector((state) => state[category].Categories);
+  const StoreCategoryProductsCategories = (category: StoreCategories) => {
+    return useSelector((state) => state.storeProducts.productsCategories[category]);
   };
 
   // ------------------------------------------------------
   // initial dispatch in-store categories to redux-store
   // ------------------------------------------------------
-  const makeOneItemPerCategoryMen = UniqueCategoriesArray("men", "Men");
-  const filterMenCategory = makeOneItemPerCategoryMen.map((item) => item.categories);
+  const FilteredCategory = (category: StoreCategories, gender: Gender) => {
+    const uniqueCategoriesArray = UniqueProductCategoryArray(category, gender);
+    return uniqueCategoriesArray.map((product) => product.categories);
+  };
 
-  const makeOneItemPerCategoryWomen = UniqueCategoriesArray("women", "Women");
-  const filterWomenCategory = makeOneItemPerCategoryWomen.map((item) => item.categories);
-
-  const makeOneItemPerCategoryBaby = UniqueCategoriesArray("baby", "Baby");
-  const filterBabyCategory = makeOneItemPerCategoryBaby.map((item) => item.categories);
+  const menCategories = FilteredCategory("men", "Men");
+  const womenCategories = FilteredCategory("women", "Women");
+  const babyCategories = FilteredCategory("baby", "Baby");
 
   useEffect(() => {
-    dispatch(menInitialCategories(filterMenCategory));
-    dispatch(womenInitialCategories(filterWomenCategory));
-    dispatch(babyInitialCategories(filterBabyCategory));
-  }, []);
+    dispatch(
+      initialCategories({
+        storeCategory: "men",
+        categories: menCategories,
+      })
+    );
+    dispatch(
+      initialCategories({
+        storeCategory: "women",
+        categories: womenCategories,
+      })
+    );
+    dispatch(
+      initialCategories({
+        storeCategory: "baby",
+        categories: babyCategories,
+      })
+    );
+  }, [babyCategories, menCategories, womenCategories]);
 
   return (
     <Holder>
@@ -184,7 +183,7 @@ const NavCustomer = () => {
 
       <div className="cart-checkout-wrapper">
         <Link to="/cart" className="cart-button">
-          <Badge badgeContent={itemsNumInCart} color="warning">
+          <Badge badgeContent={productNumInCart} color="warning">
             <ShoppingCartOutlined />
           </Badge>
         </Link>
@@ -194,7 +193,7 @@ const NavCustomer = () => {
         </Link>
       </div>
 
-      <NavLink className="sell" to="/additem">
+      <NavLink className="sell" to="/addproduct">
         SELL
       </NavLink>
     </Holder>

@@ -3,18 +3,17 @@ import styled from "@emotion/styled";
 import styles from "../styles";
 import ImageRendering from "./shared/ImageRendering";
 import {
-  Gender,
+  ProductValues,
   StoreCategories,
   trim_lowerCase,
 } from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
-import ModalItemPreOrder from "./formik/ModalItemPreOrder";
+import ModalProductPreOrder from "./formik/ModalItemPreOrder";
 
 // ------------------
 // props type
 // ------------------
 interface Props {
-  gender: Gender;
   storeCategory: StoreCategories;
 }
 
@@ -26,45 +25,46 @@ const { fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const MenCategoriesPage: React.FC<Props> = ({ gender, storeCategory }) => {
+const Category: React.FC<Props> = ({ storeCategory }) => {
   // ------------------
   // Hooks
   // ------------------
   const { category } = useParams();
-  const storeGenderItems = useSelector(
-    (state) => state[storeCategory].Products
-  );
 
-  // ------------------
-  // filter Items in gender
-  // ------------------
-  const filteredItems = storeGenderItems.filter(
-    (item) => item.gender === gender
-  );
+  // ------------------------------
+  // storeCategory Products
+  // ------------------------------
+  const storeCategoryProducts = useSelector((state) => {
+    const result: ProductValues[] = [];
+    state.storeProducts.sellersProducts.map((sellerProducts) =>
+      result.push(...sellerProducts.sellerProduct[storeCategory])
+    );
+    return result;
+  });
 
   return (
     <Holder>
       <ul className="clothes-wrapper">
-        {filteredItems.length > 0 && (
+        {storeCategoryProducts.length > 0 && (
           <>
-            {filteredItems.map((item, index) => {
+            {storeCategoryProducts.map((product, index) => {
               return (
-                category === trim_lowerCase(item.categories) && (
-                  <ModalItemPreOrder item={item} key={index}>
-                    <ul className="item-wrapper">
+                category === trim_lowerCase(product.categories) && (
+                  <ModalProductPreOrder product={product} key={index}>
+                    <ul className="product-wrapper">
                       <li>
                         <ImageRendering
-                          images={item.mainPic ?? []}
+                          images={product.mainPic ?? []}
                           multiple={false}
                           width="auto"
                         />
                       </li>
 
-                      <li className="semibold">{item.name}</li>
+                      <li className="semibold">{product.name}</li>
 
-                      <li> {item.price} $</li>
+                      <li> {product.price} $</li>
                     </ul>
-                  </ModalItemPreOrder>
+                  </ModalProductPreOrder>
                 )
               );
             })}
@@ -75,7 +75,7 @@ const MenCategoriesPage: React.FC<Props> = ({ gender, storeCategory }) => {
   );
 };
 
-export default MenCategoriesPage;
+export default Category;
 
 // -------------------
 // STYLED COMPONENT
@@ -91,10 +91,10 @@ const Holder = styled.div`
     padding: 0;
   }
 
-  .item-wrapper {
+  .product-wrapper {
     display: grid;
     padding: 0.5em;
-    border: 2px solid #000000;
+    border: 1px solid #000000;
     img {
       height: 23rem;
       width: 15rem;

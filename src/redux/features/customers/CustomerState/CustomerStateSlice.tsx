@@ -12,7 +12,7 @@ interface PayloadActionValues {
 const initialState = CustomerStateInitialValue;
 
 const customerStateSlice = createSlice({
-  name: "CustomerLogState",
+  name: "CustomersLogState",
   initialState,
   reducers: {
     login: (state, action: PayloadAction<PayloadActionValues>) => {

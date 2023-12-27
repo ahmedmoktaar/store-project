@@ -1,22 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sellerDetailsReducer from "../features/sellers/SellerDetails/SellerDetailsSlice";
-import customerDetailsReducer from "../features/customers/CustomerDetails/CustomerDetailsSlice";
-import customerStateReducer from "../features/customers/CustomerState/CustomerStateSlice";
-import sellerStateReducer from "../features/sellers/SellerState/SellerStateSlice";
-import BabyReducer from "../features/items/ItemDetails/BabySlice";
-import MenReducer from "../features/items/ItemDetails/MenSlice";
-import WomenReducer from "../features/items/ItemDetails/WomenSlice";
+import sellersDetailsReducer from "../features/sellers/SellerDetails/SellerDetailsSlice";
+import customersDetailsReducer from "../features/customers/CustomerDetails/CustomerDetailsSlice";
+import customersStateReducer from "../features/customers/CustomerState/CustomerStateSlice";
 import CartReducer from "../features/Cart/CartSlice";
+import storeProductsReducer from "../features/items/ProductsSlice";
 
 const Store = configureStore({
   reducer: {
-    customerLoggedIn: customerStateReducer,
-    sellerLoggedIn: sellerStateReducer,
-    customerDetails: customerDetailsReducer,
-    sellerDetails: sellerDetailsReducer,
-    baby: BabyReducer,
-    men: MenReducer,
-    women: WomenReducer,
+    customersLoggedIn: customersStateReducer,
+    customersDetails: customersDetailsReducer,
+    sellersDetails: sellersDetailsReducer,
+    storeProducts: storeProductsReducer,
     cart: CartReducer,
   },
 });

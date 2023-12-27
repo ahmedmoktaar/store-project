@@ -11,8 +11,7 @@ import Link from "../../../components/shared/Link/Link";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
-import { login } from "../../../redux/features/sellers/SellerState/SellerStateSlice";
-import { SignUpInitialValues } from "../../../assets/data/GlobalVariables";
+import { login } from "../../../redux/features/sellers/SellerDetails/SellerDetailsSlice";
 
 // -------------------
 // style variables
@@ -34,25 +33,8 @@ const SignInSeller: React.FC = () => {
   // --------------------
   // reduex data
   // --------------------
-  const sellerDetails = useSelector((state) => state.sellerDetails);
-  const LoggedIn = useSelector((state) => state.sellerLoggedIn.sellerState);
+  const sellersDetails = useSelector((state) => state.sellersDetails);
   const dispatch = useDispatch();
-
-  // --------------------
-  // return seller details
-  // --------------------
-  const loggedInSellerDetails = (value: loginValues) => {
-    const validSeller = sellerDetails.find(
-      (sellerDetail) =>
-        value.email === sellerDetail.email && value.password === sellerDetail.password
-    );
-
-    if (validSeller) {
-      return { sellerState: true, sellerDetails: validSeller };
-    } else {
-      return { sellerState: true, sellerDetails: SignUpInitialValues };
-    }
-  };
 
   // --------------------
   // useNavigate Hook
@@ -72,28 +54,29 @@ const SignInSeller: React.FC = () => {
       .string()
       .required("Required")
       .test("email-check", "Incorrect email", (value) => {
-        return sellerDetails.some((sellerdetail) => value === sellerdetail.email);
+        return sellersDetails.some((sellerdetail) => value === sellerdetail.email);
       }),
     password: yup.string().when("email", {
       is: (email: string) =>
         email &&
-        sellerDetails.some((sellerDetail) => email.toLowerCase() === sellerDetail.email),
+        sellersDetails.some((sellerDetail) => email.toLowerCase() === sellerDetail.email),
       then: (schema) =>
         schema
           .required("Incorrect password")
           .test("password-check", "Incorrect password", (value) => {
-            return sellerDetails.some((sellerDetail) => value === sellerDetail.password);
+            return sellersDetails.some((sellerDetail) => value === sellerDetail.password);
           }),
     }),
   });
 
   const onSubmit = (value: loginValues) => {
-    dispatch(login(loggedInSellerDetails(value))), navigateTo("/additem");
+    dispatch(login(value.email)), navigateTo("/addproduct");
   };
 
+  const isLoggedIn = sellersDetails.find((sellerDetail) => sellerDetail.isActive);
   return (
     <>
-      {LoggedIn ? (
+      {isLoggedIn ? (
         <Navigate to="/" replace={true} />
       ) : (
         <Holder>

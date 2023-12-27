@@ -1,20 +1,20 @@
 import styled from "@emotion/styled";
-import ItemStateSeller from "../../../components/ItemStateSeller";
+import ProductStateSeller from "../../../components/ItemStateSeller";
 
 // ------------------
 // main component
 // ------------------
-const TrackItems: React.FC = () => {
+const TrackProducts: React.FC = () => {
   return (
     <Holder>
-      <ItemStateSeller category="baby" />
-      <ItemStateSeller category="men" />
-      <ItemStateSeller category="women" />
+      <ProductStateSeller category="baby" />
+      <ProductStateSeller category="men" />
+      <ProductStateSeller category="women" />
     </Holder>
   );
 };
 
-export default TrackItems;
+export default TrackProducts;
 
 // -------------------
 // STYLED COMPONENT

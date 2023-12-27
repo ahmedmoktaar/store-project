@@ -1,22 +1,14 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 import { List, ListItem, Collapse, Breadcrumbs } from "@mui/material";
-import {
-  ArrowDropUpOutlined,
-  ArrowDropDownOutlined,
-} from "@mui/icons-material";
+import { ArrowDropUpOutlined, ArrowDropDownOutlined } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
-import {
-  StoreCategories,
-  trim_lowerCase,
-} from "../../assets/data/GlobalVariables";
+import { StoreCategories, trim_lowerCase } from "../../assets/data/GlobalVariables";
 import ActiveLink from "../shared/Link/ActiveLink";
 import styles from "../../styles";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
 import Link from "../shared/Link/Link";
-import { menArrangeCategories } from "../../redux/features/items/ItemDetails/MenSlice";
-import { womenArrangeCategories } from "../../redux/features/items/ItemDetails/WomenSlice";
-import { babyArrangeCategories } from "../../redux/features/items/ItemDetails/BabySlice";
+import { arrangeCategories } from "../../redux/features/items/ProductsSlice";
 
 // ------------------
 // props type
@@ -49,30 +41,18 @@ const SideNavCategories: React.FC<Props> = ({ storeCategory }) => {
   // ------------------------------
   const dispatch = useDispatch();
   const handleClick = (index: number) => {
-    switch (storeCategory) {
-      case "men":
-        dispatch(menArrangeCategories(index));
-        break;
-      case "women":
-        dispatch(womenArrangeCategories(index));
-        break;
-      case "baby":
-        dispatch(babyArrangeCategories(index));
-        break;
-      default:
-        null;
-    }
+    dispatch(arrangeCategories({ index: index, storeCategory: storeCategory }));
 
     window.scrollTo({
       top: 0,
     });
   };
 
-  // ------------------------------------
-  // categories array for in-store clothes
-  // ------------------------------------
-  const StorefilteredCategory = useSelector(
-    (state) => state[storeCategory].Categories
+  // ------------------------------------------------------------------
+  //  in-store Products categories array for every storeCategory
+  // ------------------------------------------------------------------
+  const StoreCategoryProductsCategories = useSelector(
+    (state) => state.storeProducts.productsCategories[storeCategory]
   );
 
   return (
@@ -91,7 +71,7 @@ const SideNavCategories: React.FC<Props> = ({ storeCategory }) => {
           {storeCategory}
         </Link>
 
-        {StorefilteredCategory.map((oneCategory) => {
+        {StoreCategoryProductsCategories.map((oneCategory) => {
           return category && category === trim_lowerCase(oneCategory) ? (
             <Link
               underline="hover"
@@ -116,7 +96,7 @@ const SideNavCategories: React.FC<Props> = ({ storeCategory }) => {
 
         <Collapse in={isExpanded} timeout="auto" unmountOnExit>
           <List disablePadding className="categories-wrapper">
-            {StorefilteredCategory.map((category, index) => (
+            {StoreCategoryProductsCategories.map((category, index) => (
               <ListItem key={category}>
                 <ActiveLink
                   to={`${trim_lowerCase(category)}`}

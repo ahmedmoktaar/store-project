@@ -28,14 +28,27 @@ interface loginValues {
 }
 
 // ------------------
+// props type
+// ------------------
+interface Props {
+  hidden?: boolean;
+}
+
+// ------------------
 // main component
 // ------------------
-const SignInCustomer: React.FC = () => {
+const SignInCustomer: React.FC<Props> = ({ hidden }) => {
+  // --------------------
+  // Router Hooks
+  // --------------------
+  const navigateTo = useNavigate();
+  const location = useLocation();
+
   // --------------------
   // reduex data
   // --------------------
-  const customerDetails = useSelector((state) => state.customerDetails);
-  const LoggedIn = useSelector((state) => state.customerLoggedIn.customerState);
+  const customerDetails = useSelector((state) => state.customersDetails);
+  const LoggedIn = useSelector((state) => state.customersLoggedIn.customerState);
   const dispatch = useDispatch();
 
   // --------------------
@@ -55,12 +68,6 @@ const SignInCustomer: React.FC = () => {
   };
 
   // --------------------
-  // Router Hooks
-  // --------------------
-  const navigateTo = useNavigate();
-  const location = useLocation();
-
-  // --------------------
   // formik variables
   // --------------------
   const initialValues: loginValues = {
@@ -77,19 +84,21 @@ const SignInCustomer: React.FC = () => {
           (customerDetail) => value.toLowerCase() === customerDetail.email
         );
       }),
-    password: yup
-      .string()
-      .when("email", {
-        is: (email:string) => email && customerDetails.some(
+    password: yup.string().when("email", {
+      is: (email: string) =>
+        email &&
+        customerDetails.some(
           (customerDetail) => email.toLowerCase() === customerDetail.email
         ),
-        then: (schema) =>
-          schema.required('Incorrect password').test("password-check", "Incorrect password", (value) => {
+      then: (schema) =>
+        schema
+          .required("Incorrect password")
+          .test("password-check", "Incorrect password", (value) => {
             return customerDetails.some(
               (customerDetail) => value === customerDetail.password
             );
           }),
-      }),
+    }),
   });
 
   const onSubmit = (value: loginValues) => {
@@ -108,7 +117,7 @@ const SignInCustomer: React.FC = () => {
         <Navigate to="/profile" replace={true} />
       ) : (
         <Holder>
-          <Logo />
+          <Logo hidden={hidden} />
           <>
             <div className="lock-icon">
               <LockOutlinedIcon fontSize="large" />

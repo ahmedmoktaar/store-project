@@ -6,9 +6,9 @@ import styled from "@emotion/styled";
 import ImageRendering from "../../../../components/shared/ImageRendering";
 import { useSelector } from "../../../../redux/Store/hooks";
 import styles from "../../../../styles";
-import ModalItemInCart from "../../../../components/formik/ModalItemInCart";
+import ModalProductInCart from "../../../../components/formik/ModalItemInCart";
 import MuiButton from "../../../../components/shared/MuiButton";
-import { ItemWithOrderID, promoCodes } from "../../../../assets/data/GlobalVariables";
+import { ProductWithOrderID, promoCodes } from "../../../../assets/data/GlobalVariables";
 import FormTextField from "../../../../components/formik/FormTextField";
 import Link from "../../../../components/shared/Link/Link";
 
@@ -21,7 +21,7 @@ const { fonts, colors } = styles;
 // props type
 // -------------------
 interface Props {
-  item: ItemWithOrderID;
+  product: ProductWithOrderID;
   index: number;
 }
 
@@ -33,9 +33,13 @@ const CartPage = () => {
   // // Hooks
   // // ------------------
   const location = useLocation();
-  const cartItems = useSelector((state) => state.cart);
+  const cartProducts = useSelector((state) => state.cart);
   const [promoCodeValue, setPromoCodeValue] = useState(0);
-  const subtotal = cartItems.reduce((prev, current) => prev + current.price, 0);
+
+  // // --------------------------------
+  // // calculate in cart products price
+  // // --------------------------------
+  const subtotal = cartProducts.reduce((prev, current) => prev + current.price, 0);
 
   // // ------------------
   // // Formik Values
@@ -53,42 +57,48 @@ const CartPage = () => {
   };
 
   // ------------------
-  // one Item component
+  // one Product component
   // ------------------
-  const Item: React.FC<Props> = ({ item, index }) =>
-    item.mainPic && item.media ? (
-      <ModalItemInCart item={item}>
+  const Product: React.FC<Props> = ({ product, index }) =>
+    product.mainPic && product.media ? (
+      <ModalProductInCart product={product}>
         <ul key={index}>
           <li>
-            <ImageRendering images={item.mainPic} multiple={false} width="230em" />
+            <ImageRendering images={product.mainPic} multiple={false} width="230em" />
           </li>
           <li>
-            <span>Name: </span> <span>{item.name}</span>
+            <span>Name: </span> <span>{product.name}</span>
           </li>
           <li>
-            <span>Colors: </span> <span>{item.colors}</span>
+            <span>Colors: </span> <span>{product.colors}</span>
           </li>
           <li>
-            <span>Sizes: </span> <span>{item.sizes}</span>
+            <span>Sizes: </span> <span>{product.sizes}</span>
           </li>
           <li>
-            <span>Amount: </span> <span>{item.amount}</span>
+            <span>Amount: </span> <span>{product.amount}</span>
           </li>
           <li>
-            <span>Price: </span> <span>{item.price} $ </span>
+            <span>Price: </span> <span>{product.price} $ </span>
           </li>
         </ul>
-      </ModalItemInCart>
-    ) : cartItems[1] ? null : (
-      <div className="empty-cart"> THE CART IS EMPTY </div>
+      </ModalProductInCart>
+    ) : cartProducts[1] ? null : (
+      <div className="empty-cart">
+        <span>THE CART IS EMPTY</span>
+        
+        <Link to="/">
+          <MuiButton color="success">Back TO HOME PAGE</MuiButton>
+        </Link>
+      </div>
     );
 
   return (
     <Holder>
       <div>
-        <ul className="item-wrapper">
-          {cartItems.map((item, index) => (
-            <Item item={item} index={index} key={index} />
+        <ul className="product-wrapper">
+          {cartProducts.map((product, index) => (
+            <Product product={product} index={index} key={index} />
           ))}
         </ul>
       </div>
@@ -168,7 +178,7 @@ const CartPage = () => {
             </div>
           </div>
         </>
-      ) : (
+      ) : cartProducts[1] ? (
         <>
           <div className="vl-cart" />
 
@@ -190,7 +200,7 @@ const CartPage = () => {
             </div>
           </div>
         </>
-      )}
+      ) : null}
     </Holder>
   );
 };
@@ -203,8 +213,8 @@ export default CartPage;
 const Holder = styled.div`
   display: grid;
   grid-template-columns: auto 1em 24em;
-  
-  .item-wrapper {
+
+  .product-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 2em;
@@ -280,9 +290,10 @@ const Holder = styled.div`
   }
 
   .empty-cart {
-    position: relative;
-    top: 5em;
-    margin: auto auto;
+    display: grid;
+    grid-auto-columns: max-content;
+    gap: 1em;
+    margin: 1em 50%;
     text-align: center;
     font-size: 1.5em;
   }

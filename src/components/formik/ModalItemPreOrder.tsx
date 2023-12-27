@@ -11,9 +11,9 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import {
-  ItemChangeableValues,
-  ItemValues,
-  itemChangeableInitialValues,
+  ProductChangeableValues,
+  ProductValues,
+  productChangeableInitialValues,
 } from "../../assets/data/GlobalVariables";
 import MuiButton from "../shared/MuiButton";
 import ImageRendering from "../shared/ImageRendering";
@@ -21,7 +21,7 @@ import FormRadio from "./FormRadio";
 import ImageModal from "../shared/ImageModal";
 import styles from "../../styles";
 import { useDispatch } from "../../redux/Store/hooks";
-import { addItemToCart } from "../../redux/features/Cart/CartSlice";
+import { addProductToCart } from "../../redux/features/Cart/CartSlice";
 
 // -------------------
 // style variables
@@ -32,14 +32,14 @@ const { fonts, colors } = styles;
 // props type
 // ------------------
 interface Props {
-  item: ItemValues;
+  product: ProductValues;
   children: React.ReactElement;
 }
 
 // ------------------
 // main component
 // ------------------
-const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
+const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
   // -------
   // hooks
   // -------
@@ -60,14 +60,14 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
   // --------------------------------
   // array to choose order quantity
   // --------------------------------
-  const amountInStockArray = Array.from({ length: item.amountInStock }, (_, index) =>
+  const amountInStockArray = Array.from({ length: product.amountInStock }, (_, index) =>
     (index + 1).toString()
   );
 
   // --------------------------
   // Formik variables
   // --------------------------
-  const initialValues = itemChangeableInitialValues;
+  const initialValues = productChangeableInitialValues;
 
   const validationSchema = yup.object({
     colors: yup
@@ -82,12 +82,12 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
   });
 
   const [buttonClicked, setButtonClicked] = useState("");
-  const onSubmit = (values: ItemChangeableValues) => {
+  const onSubmit = (values: ProductChangeableValues) => {
     if (buttonClicked === "buy-now") {
-      dispatch(addItemToCart({ ...item, ...values }));
+      dispatch(addProductToCart({ ...product, ...values }));
       navigateTo("/checkout");
     } else if (buttonClicked === "add-to-cart") {
-      dispatch(addItemToCart({ ...item, ...values }));
+      dispatch(addProductToCart({ ...product, ...values }));
     } else {
       null;
     }
@@ -110,16 +110,16 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
                   <ImageRendering
                     width="230em"
                     multiple={false}
-                    images={item.mainPic ?? []}
+                    images={product.mainPic ?? []}
                   />
                 </ImageModal>
 
                 <ImageModal multiple>
-                  <ImageRendering width="50em" multiple images={item.media ?? []} />
+                  <ImageRendering width="50em" multiple images={product.media ?? []} />
                 </ImageModal>
 
                 <DialogContentText className="description">
-                  {item.description}
+                  {product.description}
                 </DialogContentText>
               </div>
 
@@ -133,24 +133,24 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
                   &times;
                 </MuiButton>
 
-                <DialogTitle className="semiBold">{item.name}</DialogTitle>
+                <DialogTitle className="semiBold">{product.name}</DialogTitle>
 
                 <DialogContent className="content-wrapper">
                   <div>
                     <span>Price:</span>
-                    <span className="semiBold"> {`${item.price} $`}</span>
+                    <span className="semiBold"> {`${product.price} $`}</span>
                   </div>
 
                   <div>
                     <span>Colors: </span>
                     <FormRadio
                       name={"colors"}
-                      options={item.colors}
+                      options={product.colors}
                       deleteGridTemplateColumns
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           padding: "0.1em 0.4em",
-                          width: "9em",
+                          width: "11em",
                         },
                       }}
                     />
@@ -160,12 +160,12 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
                     <span>Sizes: </span>
                     <FormRadio
                       name={"sizes"}
-                      options={item.sizes}
+                      options={product.sizes}
                       deleteGridTemplateColumns
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           padding: "0.1em 0.4em",
-                          width: "9em",
+                          width: "11em",
                         },
                       }}
                     />
@@ -173,7 +173,7 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
 
                   <div>
                     <span>In Stock: </span>
-                    <span className="semiBold">{item.amountInStock} </span>
+                    <span className="semiBold">{product.amountInStock} </span>
                   </div>
 
                   <div>
@@ -194,7 +194,7 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
 
                   <div>
                     <span>Delivery: </span>
-                    <span className="semiBold">{item.deliveryTime}</span>
+                    <span className="semiBold">{product.deliveryTime}</span>
                   </div>
 
                   <MuiButton
@@ -226,7 +226,7 @@ const ModalItemPreOrder: React.FC<Props> = ({ item, children }) => {
   );
 };
 
-export default ModalItemPreOrder;
+export default ModalProductPreOrder;
 
 // -------------------
 // STYLED COMPONENT

@@ -1,47 +1,37 @@
 import {
   StoreCategories,
   Gender,
-  ItemValues,
-  categoriesByGender,
+  ProductValues,
+  filterCategoriesByGender,
 } from "../../assets/data/GlobalVariables";
 import { useSelector } from "../../redux/Store/hooks";
 
 // ------------------
 // main component
 // ------------------
-const UniqueCategoriesArray = (
+const UniqueProductCategoryArray = (
   storeCategory: StoreCategories,
   gender: Gender
-): ItemValues[] => {
-  const storeGenderItems = useSelector((state) => state[storeCategory].Products);
+): ProductValues[] => {
+  const sellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
+  // --------------------------------------------------
+  // array of available products in a gender redux-store
+  // --------------------------------------------------
+  const storeCategoryProducts = sellersProducts
+    .map((sellerProduct) => sellerProduct.sellerProduct[storeCategory])
+    .flat();
 
   // --------------------------------------------------
-  // array of available items in a gender redux-store
+  // array of one product for each category in a gender redux-store
   // --------------------------------------------------
-  const genderAvailableItems = categoriesByGender(gender)
+  const categoryAvailableProducts = filterCategoriesByGender(gender)
     .map(
       (category) =>
-        storeGenderItems.find(
-          (item) => item.gender === gender && item.categories === category
-        ) || null
+        storeCategoryProducts.find((product) => product.categories === category) || null
     )
-    .filter((item): item is ItemValues => item !== null);
+    .filter((product): product is ProductValues => product !== null);
 
-  // --------------------------------------------------
-  // array of unique categories in a gender redux-store
-  // --------------------------------------------------
-  const isUniqueCategory: Record<string, boolean> = {};
-  const uniqueCategories = genderAvailableItems.filter((item) => {
-    if (categoriesByGender(gender).includes(item.categories)) {
-      if (!isUniqueCategory[item.categories]) {
-        isUniqueCategory[item.categories] = true;
-        return true;
-      }
-    }
-    return false;
-  });
-
-  return uniqueCategories;
+  return categoryAvailableProducts;
 };
 
-export default UniqueCategoriesArray;
+export default UniqueProductCategoryArray;

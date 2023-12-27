@@ -1,56 +1,15 @@
 //-------------------------------------------------
-// Sellers values type
+// Product details type
 //-------------------------------------------------
-export interface SignUpValues {
-  firstName: string;
-  lastName?: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  paypal?: string;
-  socialMedia?: string;
-}
-
-//-------------------------------------------------
-// Sign up initial values
-//-------------------------------------------------
-export const SignUpInitialValues: SignUpValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  paypal: "",
-  socialMedia: "",
-};
-
-//-------------------------------------------------
-// Admin details as a seller + initial value for seller
-//-------------------------------------------------
-export const AdminDetails: SignUpValues[] = [
-  {
-    firstName: "admin",
-    lastName: "",
-    email: "admin@example.com",
-    password: "123456zZ#",
-    confirmPassword: "123456zZ#",
-    paypal: "",
-    socialMedia: "",
-  },
-];
-
-//-------------------------------------------------
-// Item details type
-//-------------------------------------------------
-export interface ItemValues {
+export interface ProductValues {
   name: string;
   brand: string;
   price: number;
   colors: string[];
-  sizes: string[];
+  sizes: sizeType[] | [];
   categories: string;
   description: string;
-  gender: string;
+  gender: Gender | "";
   mainPic: FileList[] | string[] | null;
   media: FileList[] | string[] | null;
   amountInStock: number;
@@ -59,9 +18,9 @@ export interface ItemValues {
 }
 
 //-------------------------------------------------
-// Item details initial values
+// Product details initial values
 //-------------------------------------------------
-export const itemInitialValues: ItemValues = {
+export const productInitialValues: ProductValues = {
   name: "",
   brand: "",
   price: 0,
@@ -78,21 +37,45 @@ export const itemInitialValues: ItemValues = {
 };
 
 //-------------------------------------------------
-// Item changeable values type
+// Sellers details type
 //-------------------------------------------------
-export interface ItemChangeableValues {
-  colors: string;
-  sizes: string;
-  amount: string;
+export interface SignUpValues {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  paypal: string;
+  socialMedia?: string;
+  isActive: boolean;
 }
 
 //-------------------------------------------------
-// Item changeable values in the modal
+// Sign up initial values
 //-------------------------------------------------
-export const itemChangeableInitialValues: ItemChangeableValues = {
-  colors: "",
-  sizes: "",
-  amount: "1",
+export const SignUpInitialValues: SignUpValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  paypal: "",
+  socialMedia: "",
+  isActive: false,
+};
+
+//-------------------------------------------------
+// Admin account details
+//-------------------------------------------------
+export const AdminDetails: SignUpValues = {
+  firstName: "admin",
+  lastName: "",
+  email: "admin@example.com",
+  password: "123456zZ#",
+  confirmPassword: "123456zZ#",
+  paypal: "",
+  socialMedia: "",
+  isActive: false,
 };
 
 //-------------------------------------------------
@@ -104,21 +87,36 @@ export const CustomerStateInitialValue = {
   customerDetails,
 };
 
-const sellerDetails = SignUpInitialValues; //seller//
-export const SellerStateInitialValue = { sellerState: false, sellerDetails };
+//-------------------------------------------------
+// Product changeable values type
+//-------------------------------------------------
+export interface ProductChangeableValues {
+  colors: string;
+  sizes: sizeType | "";
+  amount: string;
+}
 
 //-------------------------------------------------
-// Cart  initial values
+// Product changeable values in the modal
+//-------------------------------------------------
+export const productChangeableInitialValues: ProductChangeableValues = {
+  colors: "",
+  sizes: "",
+  amount: "1",
+};
+
+//-------------------------------------------------
+// Cart initial values
 //-------------------------------------------------
 export interface cartInitialStateType {
   name: string;
   brand: string;
   price: number;
   colors: string;
-  sizes: string;
+  sizes: sizeType | "";
   categories: string;
   description: string;
-  gender: string;
+  gender: Gender | "";
   mainPic: FileList[] | string[] | null;
   media: FileList[] | string[] | null;
   amountInStock: number;
@@ -144,7 +142,7 @@ export const cartInitialState: cartInitialStateType = {
   amount: "",
 };
 
-export interface ItemWithOrderID extends cartInitialStateType {
+export interface ProductWithOrderID extends cartInitialStateType {
   orderID: number;
 }
 
@@ -201,9 +199,10 @@ export const colorsList = [
 ];
 
 //-------------------
-// Size List
+// Size type & List
 //-------------------
-export const sizeList = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"];
+export type sizeType = "S" | "M" | "L" | "XL" | "2XL" | "3XL" | "4XL";
+export const sizeList: sizeType[] = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"];
 
 //-------------------
 // Brands List
@@ -248,10 +247,9 @@ export type Gender = "Men" | "Women" | "Baby";
 export const genderList: Gender[] = ["Men", "Women", "Baby"];
 
 //-----------------------------------------
-// categories type in redux store & List
+// categories type in redux store
 //-----------------------------------------
 export type StoreCategories = "men" | "women" | "baby";
-export const storeCategoriesList: StoreCategories[] = ["men", "women", "baby"];
 
 //---------------------------------
 // all clothes in object array
@@ -411,7 +409,7 @@ export const clothesCategoriesList = [
 //-------------------------------------------------
 // Function to Filter clothes categories by gender
 //--------------------------------------------------
-export const categoriesByGender = (gender: Gender) => {
+export const filterCategoriesByGender = (gender: Gender) => {
   return clothesCategoriesList
     .map((category) => (category.gender === gender ? category.label : null))
     .filter((element): element is string => element !== null);

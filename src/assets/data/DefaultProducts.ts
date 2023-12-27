@@ -1,6 +1,6 @@
-import { ItemValues } from "./GlobalVariables";
+import { ProductValues } from "./GlobalVariables";
 
-export const menDefaultProducts: ItemValues[] = [
+export const menDefaultProducts: ProductValues[] = [
   {
     name: "Skinny Pant 1",
     brand: "Dior",
@@ -18,7 +18,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 2,
+    id: 1100000000,
   },
   {
     name: "Skinny Pant 2",
@@ -37,7 +37,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 3,
+    id: 1100000001,
   },
   {
     name: "Skinny Pant 3",
@@ -56,7 +56,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 4,
+    id: 1100000002,
   },
   {
     name: "Skinny Pant 4",
@@ -75,7 +75,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 10,
     deliveryTime: "3 sec",
-    id: 5,
+    id: 1100000003,
   },
   {
     name: "Basic T-Shirt",
@@ -94,7 +94,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 6,
+    id: 1100000004,
   },
 
   {
@@ -114,7 +114,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 7,
+    id: 1100000005,
   },
 
   {
@@ -134,7 +134,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 9,
+    id: 1100000006,
   },
   {
     name: "Basic Sweater",
@@ -153,7 +153,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 11,
+    id: 1100000007,
   },
   {
     name: "Los Angeles T-Shirt",
@@ -172,7 +172,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 8,
+    id: 1100000008,
   },
   {
     name: "Los Angeles T-Shirt",
@@ -191,7 +191,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 12,
+    id: 1100000009,
   },
   {
     name: "California T-Shirt",
@@ -210,7 +210,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 13,
+    id: 1100000010,
   },
   {
     name: "High Hat",
@@ -229,7 +229,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 10,
     deliveryTime: "3 sec",
-    id: 14,
+    id: 1100000011,
   },
   {
     name: "Raining Hoodie",
@@ -248,7 +248,7 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 10,
     deliveryTime: "3 sec",
-    id: 15,
+    id: 1100000012,
   },
   {
     name: "Classic Trousers",
@@ -267,11 +267,11 @@ export const menDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 10,
     deliveryTime: "3 sec",
-    id: 16,
+    id: 1100000013,
   },
 ];
 
-export const womenDefaultProducts: ItemValues[] = [
+export const womenDefaultProducts: ProductValues[] = [
   {
     name: "Calforina T-shirt",
     brand: "Dior",
@@ -289,7 +289,7 @@ export const womenDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 17,
+    id: 1200000000,
   },
   {
     name: "Skinny Pant 9",
@@ -308,7 +308,7 @@ export const womenDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 10,
     deliveryTime: "3 sec",
-    id: 18,
+    id: 1200000001,
   },
   {
     name: "Los Angeles T-Shirt",
@@ -327,7 +327,7 @@ export const womenDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 19,
+    id: 1200000002,
   },
   {
     name: "Basic Hoodie",
@@ -346,7 +346,7 @@ export const womenDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 20,
+    id: 1200000003,
   },
 
   {
@@ -366,7 +366,7 @@ export const womenDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 21,
+    id: 1200000004,
   },
   {
     name: "Calforina T-shirt",
@@ -385,11 +385,11 @@ export const womenDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 22,
+    id: 1200000005,
   },
 ];
 
-export const babyDefaultProducts: ItemValues[] = [
+export const babyDefaultProducts: ProductValues[] = [
   {
     name: "Skinny Pant",
     brand: "Nike",
@@ -407,7 +407,7 @@ export const babyDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 10,
     deliveryTime: "3 sec",
-    id: 1,
+    id: 1300000000,
   },
 
   {
@@ -427,7 +427,7 @@ export const babyDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 30,
+    id: 1300000001,
   },
   {
     name: "Skinny Pant",
@@ -446,7 +446,7 @@ export const babyDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 10,
     deliveryTime: "3 sec",
-    id: 31,
+    id: 1300000002,
   },
   {
     name: "Los Angeles T-Shirt",
@@ -465,7 +465,7 @@ export const babyDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 32,
+    id: 1300000003,
   },
   {
     name: "Basic Hoodie",
@@ -484,6 +484,6 @@ export const babyDefaultProducts: ItemValues[] = [
     ],
     amountInStock: 20,
     deliveryTime: "3 sec",
-    id: 33,
+    id: 1300000004,
   },
 ];

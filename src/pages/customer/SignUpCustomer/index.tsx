@@ -27,7 +27,7 @@ const SignUpCustomer: React.FC = () => {
   // ------------------
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
-  const LoggedIn = useSelector((state) => state.customerLoggedIn.customerState);
+  const LoggedIn = useSelector((state) => state.customersLoggedIn.customerState);
 
   // --------------------
   // formik variables

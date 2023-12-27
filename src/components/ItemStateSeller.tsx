@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useSelector } from "../redux/Store/hooks";
 import ImageRendering from "./shared/ImageRendering";
 import styles from "../styles";
-import { ItemValues, StoreCategories } from "../assets/data/GlobalVariables";
+import { ProductValues, StoreCategories } from "../assets/data/GlobalVariables";
 
 // ------------------
 // props type
@@ -11,8 +11,8 @@ type CategoryType = {
   category: StoreCategories;
 };
 
-type ItemType = {
-  item: ItemValues;
+type ProductType = {
+  product: ProductValues;
   index: number;
 };
 
@@ -22,42 +22,42 @@ type ItemType = {
 const { fonts, colors } = styles;
 
 // -------------------
-// helper function
+// one product component
 // -------------------
-const Item: React.FC<ItemType> = ({ item, index }) => {
+const Product: React.FC<ProductType> = ({ product, index }) => {
   return (
     <>
-      {item.mainPic && item.media ? (
+      {product.mainPic && product.media ? (
         <Holder key={index}>
           <li>
-            <ImageRendering images={item.mainPic} multiple={false} width="auto" />
+            <ImageRendering images={product.mainPic} multiple={false} width="auto" />
           </li>
           <li>
-            <span>Name: </span> {item.name}
+            <span>Name: </span> {product.name}
           </li>
           <li>
-            <span>Brand: </span> {item.brand}
+            <span>Brand: </span> {product.brand}
           </li>
           <li>
-            <span>Colors: </span> {item.colors.join(" - ")}
+            <span>Colors: </span> {product.colors.join(" - ")}
           </li>
           <li>
-            <span>Sizes: </span> {item.sizes.join(" - ")}
+            <span>Sizes: </span> {product.sizes.join(" - ")}
           </li>
           <li>
-            <span>Gender: </span> {item.gender}
+            <span>Gender: </span> {product.gender}
           </li>
           <li>
-            <span>Categories: </span> {item.categories}
+            <span>Categories: </span> {product.categories}
           </li>
           <li>
-            <span>Price: </span> {item.price}
+            <span>Price: </span> {product.price}
           </li>
           <li>
-            <span>No. in Stock: </span> {item.amountInStock}
+            <span>No. in Stock: </span> {product.amountInStock}
           </li>
           <li>
-            <span>Delivery Time: </span> {item.deliveryTime}
+            <span>Delivery Time: </span> {product.deliveryTime}
           </li>
         </Holder>
       ) : null}
@@ -68,19 +68,26 @@ const Item: React.FC<ItemType> = ({ item, index }) => {
 // ------------------
 // main component
 // ------------------
-const ItemStateSeller: React.FC<CategoryType> = ({ category }) => {
-  const items = useSelector((state) => state[category].Products);
+const ProductStateSeller: React.FC<CategoryType> = ({ category }) => {
+  // ------------------
+  // active seller Products
+  // ------------------
+  const sellersDetails = useSelector((state) => state.sellersDetails);
+  const SellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
+
+  const activeSeller = sellersDetails.findIndex((seller) => seller.isActive);
+  const activeSellerProduct = SellersProducts[activeSeller].sellerProduct[category];
 
   return (
     <>
-      {items.map((item, index) => (
-        <Item item={item} index={index} />
+      {activeSellerProduct.map((product, index) => (
+        <Product product={product} index={index} />
       ))}
     </>
   );
 };
 
-export default ItemStateSeller;
+export default ProductStateSeller;
 
 // -------------------
 // STYLED COMPONENT

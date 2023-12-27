@@ -4,11 +4,11 @@ import { Outlet, useParams } from "react-router-dom";
 import ImageRendering from "../../../../components/shared/ImageRendering";
 import styles from "../../../../styles";
 import {
-  categoriesByGender,
+  filterCategoriesByGender,
   trim_lowerCase,
 } from "../../../../assets/data/GlobalVariables";
 import SideNavCategories from "../../../../components/pageLayout/SideNavCategories";
-import UniqueCategoriesArray from "../../../../components/shared/UniqueCategoriesArray";
+import UniqueProductCategoryArray from "../../../../components/shared/UniqueCategoriesArray";
 import Link from "../../../../components/shared/Link/Link";
 
 // -------------------
@@ -24,15 +24,15 @@ const MenCategoriesPage = () => {
   // check if the user at available category page
   // ---------------------------------------------
   const { category } = useParams();
-  const lowerCaseCategoriesByGender = categoriesByGender("Men").map(
-    (category) => trim_lowerCase(category)
+  const lowerCaseCategoriesByGender = filterCategoriesByGender("Men").map((category) =>
+    trim_lowerCase(category)
   );
   const correctPath = lowerCaseCategoriesByGender.includes(category ?? "");
 
   // --------------------------------------------------
-  // array of unique categories in a gender redux-store
+  // array of one product for each category in a gender redux-store
   // --------------------------------------------------
-  const filteredCategories = UniqueCategoriesArray("men", "Men");
+  const filteredCategories = UniqueProductCategoryArray("men", "Men");
 
   return (
     <Holder>

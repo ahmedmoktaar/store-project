@@ -8,12 +8,19 @@ import Link from "./Link/Link";
 // ----------------
 const { colors, fonts } = styles;
 
+// ------------------
+// props type
+// ------------------
+interface Props {
+  hidden?: boolean;
+}
+
 // ---------------
 // main component
 // ---------------
-const Logo = () => {
+const Logo: React.FC<Props> = ({ hidden }) => {
   return (
-    <Holder className="logo">
+    <Holder className="logo" hidden={hidden}>
       <Link to="/">
         <SVG.logo />
       </Link>

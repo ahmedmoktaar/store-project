@@ -4,11 +4,11 @@ import { Outlet, useParams } from "react-router-dom";
 import ImageRendering from "../../../../components/shared/ImageRendering";
 import styles from "../../../../styles";
 import {
-  categoriesByGender,
+  filterCategoriesByGender,
   trim_lowerCase,
 } from "../../../../assets/data/GlobalVariables";
 import SideNavCategories from "../../../../components/pageLayout/SideNavCategories";
-import UniqueCategoriesArray from "../../../../components/shared/UniqueCategoriesArray";
+import UniqueProductCategoryArray from "../../../../components/shared/UniqueCategoriesArray";
 import Link from "../../../../components/shared/Link/Link";
 
 // -------------------
@@ -24,15 +24,15 @@ const WomenCategoriesPage = () => {
   // check if the user at available category page
   // ---------------------------------------------
   const { category } = useParams();
-  const lowerCaseCategoriesByGender = categoriesByGender("Women").map(
-    (category) => trim_lowerCase(category)
+  const lowerCaseCategoriesByGender = filterCategoriesByGender("Women").map((category) =>
+    trim_lowerCase(category)
   );
   const correctPath = lowerCaseCategoriesByGender.includes(category ?? "");
 
   // --------------------------------------------------
-  // array of unique categories in a gender redux-store
+  // array of one product for each category in a gender redux-store
   // --------------------------------------------------
-  const filteredCategories = UniqueCategoriesArray("women", "Women");
+  const filteredCategories = UniqueProductCategoryArray("women", "Women");
 
   return (
     <Holder>
@@ -50,9 +50,7 @@ const WomenCategoriesPage = () => {
                 {filteredCategories.map((category) => {
                   return (
                     <ul className="category-wrapper" key={category.categories}>
-                      <Link
-                        to={`/women/${trim_lowerCase(category.categories)}`}
-                      >
+                      <Link to={`/women/${trim_lowerCase(category.categories)}`}>
                         <li>
                           <ImageRendering
                             images={category.mainPic ?? []}

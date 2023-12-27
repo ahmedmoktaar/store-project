@@ -4,10 +4,10 @@ import {
   SignUpValues,
 } from "../../../../assets/data/GlobalVariables";
 
-const initialState = AdminDetails;
+const initialState = [AdminDetails];
 
-const customerDetailsSlice = createSlice({
-  name: "customerDetails",
+const customersDetailsSlice = createSlice({
+  name: "customersDetails",
   initialState,
   reducers: {
     addCustomerDetails: (state, action: PayloadAction<SignUpValues>) => {
@@ -17,5 +17,5 @@ const customerDetailsSlice = createSlice({
   },
 });
 
-export default customerDetailsSlice.reducer;
-export const { addCustomerDetails } = customerDetailsSlice.actions;
+export default customersDetailsSlice.reducer;
+export const { addCustomerDetails } = customersDetailsSlice.actions;

@@ -10,11 +10,11 @@ import MuiButton from "../../../../components/shared/MuiButton";
 import NotFound from "../../../NotFound";
 import { useSelector } from "../../../../redux/Store/hooks";
 
-const steps = ["Bag", "Payment", "Confirmation"];
+const steps = ["Bag", "shipping", "Payment", "Confirmation"];
 
 const CheckoutPage: React.FC = () => {
-  const cartItems = useSelector((state) => state.cart);
-  const Loggedin = useSelector((state) => state.customerLoggedIn.customerState);
+  const cartProducts = useSelector((state) => state.cart);
+  const Loggedin = useSelector((state) => state.customersLoggedIn.customerState);
 
   const [activeStep, setActiveStep] = useState(0);
   const handleNext = () => {
@@ -25,22 +25,23 @@ const CheckoutPage: React.FC = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-
   const Components: React.FC<{ index: number }> = ({ index }) => {
     switch (index) {
       case 0:
         return <CartPage />;
-
       case 1:
-        return <Payment />;
+        return "";
 
       case 2:
-        return <Confirmation />;
+        return <Payment />;
 
       case 3:
+        return <Confirmation />;
+
+      case 4:
         return (
           <>
-            <Alert severity="success" variant="filled" >
+            <Alert severity="success" variant="filled">
               Your order is confirmed
             </Alert>
             <Outlet />
@@ -68,7 +69,7 @@ const CheckoutPage: React.FC = () => {
             })}
           </Stepper>
           <Components index={activeStep} />
-          {cartItems.length === 1 ? null : (
+          {cartProducts.length === 1 ? null : (
             <>
               <Typography>Step {activeStep + 1}</Typography>
               <Outlet />
@@ -90,7 +91,7 @@ const CheckoutPage: React.FC = () => {
       ) : (
         <>
           <Typography> You need to be logged in to checkout</Typography>
-          <SignInCustomer />
+          <SignInCustomer hidden={true}/>
         </>
       )}
     </Holder>

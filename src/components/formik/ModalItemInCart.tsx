@@ -10,10 +10,11 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import styled from "@emotion/styled";
 import {
-  ItemChangeableValues,
-  ItemWithOrderID,
-  itemChangeableInitialValues,
-  itemInitialValues,
+  ProductChangeableValues,
+  ProductWithOrderID,
+  StoreCategories,
+  productChangeableInitialValues,
+  productInitialValues,
 } from "../../assets/data/GlobalVariables";
 import MuiButton from "../shared/MuiButton";
 import ImageRendering from "../shared/ImageRendering";
@@ -21,7 +22,10 @@ import FormRadio from "./FormRadio";
 import ImageModal from "../shared/ImageModal";
 import styles from "../../styles";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
-import { addItemToCart, removeItemFromCart } from "../../redux/features/Cart/CartSlice";
+import {
+  addProductToCart,
+  removeProductFromCart,
+} from "../../redux/features/Cart/CartSlice";
 
 // -------------------
 // style variables
@@ -32,26 +36,33 @@ const { fonts, colors } = styles;
 // props type
 // ------------------
 interface Props {
-  item: ItemWithOrderID;
+  product: ProductWithOrderID;
   children: React.ReactElement;
 }
 
 // ------------------
 // main component
 // ------------------
-const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
+const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   // -------
   // hooks
   // -------
   const dispatch = useDispatch();
-  const womenItems = useSelector((state) => state.women.Products);
-  const menItems = useSelector((state) => state.men.Products);
-  const babyItems = useSelector((state) => state.baby.Products);
-  const originalItem =
-    babyItems.find((OneItem) => OneItem.id === item.id) ??
-    menItems.find((OneItem) => OneItem.id === item.id) ??
-    womenItems.find((OneItem) => OneItem.id === item.id) ??
-    itemInitialValues;
+  const sellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
+
+  // -----------------------------------
+  // get original Product details
+  // -----------------------------------
+  const storeCategoryProducts = (storeCategory: StoreCategories) =>
+    sellersProducts
+      .map((sellerProduct) => sellerProduct.sellerProduct[storeCategory])
+      .flat();
+
+  const originalProduct =
+    storeCategoryProducts("men").find((OneProduct) => OneProduct.id === product.id) ??
+    storeCategoryProducts("women").find((OneProduct) => OneProduct.id === product.id) ??
+    storeCategoryProducts("baby").find((OneProduct) => OneProduct.id === product.id) ??
+    productInitialValues;
 
   // --------------------------
   // handel Modal open & close
@@ -65,18 +76,18 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
   };
 
   // --------------------------
-  // handel item remove
+  // handel Product remove
   // --------------------------
   const handleRemove = () => {
-    dispatch(removeItemFromCart(item.orderID));
+    dispatch(removeProductFromCart(product.orderID));
     handleClose();
   };
 
   // --------------------------
   // array to choose order quantity
   // --------------------------
-  const amountInStockArray = originalItem
-    ? Array.from({ length: originalItem.amountInStock }, (_, index) =>
+  const amountInStockArray = originalProduct
+    ? Array.from({ length: originalProduct.amountInStock }, (_, index) =>
         (index + 1).toString()
       )
     : [""];
@@ -84,7 +95,7 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
   // --------------------------
   // Formik variables
   // --------------------------
-  const initialValues = itemChangeableInitialValues;
+  const initialValues = productChangeableInitialValues;
 
   const validationSchema = yup.object({
     colors: yup
@@ -98,9 +109,9 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
     amount: yup.string(),
   });
 
-  const onSubmit = (values: ItemChangeableValues) => {
-    dispatch(removeItemFromCart(item.orderID));
-    dispatch(addItemToCart({ ...originalItem, ...values }));
+  const onSubmit = (values: ProductChangeableValues) => {
+    dispatch(removeProductFromCart(product.orderID));
+    dispatch(addProductToCart({ ...originalProduct, ...values }));
     handleClose();
   };
 
@@ -130,7 +141,7 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
                   <ImageRendering
                     width="230em"
                     multiple={false}
-                    images={originalItem.mainPic ?? []}
+                    images={originalProduct.mainPic ?? []}
                   />
                 </ImageModal>
 
@@ -138,12 +149,12 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
                   <ImageRendering
                     width="50em"
                     multiple
-                    images={originalItem.media ?? []}
+                    images={originalProduct.media ?? []}
                   />
                 </ImageModal>
 
                 <DialogContentText className="description">
-                  {originalItem.description}
+                  {originalProduct.description}
                 </DialogContentText>
               </div>
 
@@ -156,25 +167,25 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
                 >
                   &times;
                 </MuiButton>
-                <DialogTitle className="semiBold">{originalItem.name}</DialogTitle>
+                <DialogTitle className="semiBold">{originalProduct.name}</DialogTitle>
 
                 <DialogContent className="content-wrapper">
                   <div>
                     <span>Price:</span>
-                    <span className="semiBold"> {`${originalItem.price} $`}</span>
+                    <span className="semiBold"> {`${originalProduct.price} $`}</span>
                   </div>
 
                   <div>
                     <span>Colors: </span>
                     <FormRadio
                       name={"colors"}
-                      options={originalItem.colors}
+                      options={originalProduct.colors}
                       placeholder="Colors"
                       deleteGridTemplateColumns
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           padding: "0.1em 0.4em",
-                          width: "9em",
+                          width: "11em",
                         },
                       }}
                     />
@@ -184,20 +195,20 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
                     <span>Sizes: </span>
                     <FormRadio
                       name={"sizes"}
-                      options={originalItem.sizes}
+                      options={originalProduct.sizes}
                       placeholder="Size"
                       deleteGridTemplateColumns
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           padding: "0.1em 0.4em",
-                          width: "9em",
+                          width: "11em",
                         },
                       }}
                     />
                   </div>
                   <div>
                     <span>In Stock: </span>
-                    <span className="semiBold">{originalItem.amountInStock} </span>
+                    <span className="semiBold">{originalProduct.amountInStock} </span>
                   </div>
 
                   <div>
@@ -218,7 +229,7 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
 
                   <div>
                     <span>Delivery: </span>
-                    <span className="semiBold">{item.deliveryTime}</span>
+                    <span className="semiBold">{product.deliveryTime}</span>
                   </div>
 
                   <DialogActions className="dialog-actions">
@@ -236,7 +247,7 @@ const ModalItemInCart: React.FC<Props> = ({ item, children }) => {
   );
 };
 
-export default ModalItemInCart;
+export default ModalProductInCart;
 
 // -------------------
 // STYLED COMPONENT
