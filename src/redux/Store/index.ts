@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sellersDetailsReducer from "../features/sellers/SellerDetails/SellerDetailsSlice";
-import customersDetailsReducer from "../features/customers/CustomerDetails/CustomerDetailsSlice";
-import customersStateReducer from "../features/customers/CustomerState/CustomerStateSlice";
+import sellersDetailsReducer from "../features/sellers/SellerDetailsSlice";
+import customersDetailsReducer from "../features/customers/CustomerDetailsSlice";
 import CartReducer from "../features/Cart/CartSlice";
-import storeProductsReducer from "../features/items/ProductsSlice";
+import storeProductsReducer from "../features/Products/ProductsSlice";
 
 const Store = configureStore({
   reducer: {
-    customersLoggedIn: customersStateReducer,
     customersDetails: customersDetailsReducer,
     sellersDetails: sellersDetailsReducer,
     storeProducts: storeProductsReducer,

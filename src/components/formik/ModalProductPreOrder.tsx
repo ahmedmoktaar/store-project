@@ -20,7 +20,7 @@ import ImageRendering from "../shared/ImageRendering";
 import FormRadio from "./FormRadio";
 import ImageModal from "../shared/ImageModal";
 import styles from "../../styles";
-import { useDispatch } from "../../redux/Store/hooks";
+import { useDispatch, useSelector } from "../../redux/Store/hooks";
 import { addProductToCart } from "../../redux/features/Cart/CartSlice";
 
 // -------------------
@@ -45,6 +45,13 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
   // -------
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
+
+  // ----------------
+  // find active customer email
+  // ----------------
+  const activeCustomerEmail = useSelector((state) => state.customersDetails).find(
+    (customer) => customer.isActive
+  )?.email;
 
   // --------------------------
   // handel Modal open & close
@@ -84,10 +91,21 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
   const [buttonClicked, setButtonClicked] = useState("");
   const onSubmit = (values: ProductChangeableValues) => {
     if (buttonClicked === "buy-now") {
-      dispatch(addProductToCart({ ...product, ...values }));
+      dispatch(
+        addProductToCart({
+          product: { ...product, ...values,orderID: 0  },
+          customerEmail: activeCustomerEmail ?? null,
+        })
+      );
       navigateTo("/checkout");
     } else if (buttonClicked === "add-to-cart") {
-      dispatch(addProductToCart({ ...product, ...values }));
+      dispatch(
+        addProductToCart({
+          product: { ...product, ...values,orderID: 0  },
+          customerEmail: activeCustomerEmail ?? null,
+        })
+      );
+      setOpen(false);
     } else {
       null;
     }

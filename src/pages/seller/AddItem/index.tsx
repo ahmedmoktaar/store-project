@@ -20,7 +20,7 @@ import {
   StoreCategories,
 } from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
-import { addProduct } from "../../../redux/features/items/ProductsSlice";
+import { addProduct } from "../../../redux/features/Products/ProductsSlice";
 
 // ----------------
 // main component

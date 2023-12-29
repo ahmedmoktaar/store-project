@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import ProductStateSeller from "../../../components/ItemStateSeller";
+import ProductStateSeller from "../../../components/ProductStateSeller";
 
 // ------------------
 // main component

@@ -8,40 +8,41 @@ interface props {
   height?: string;
 }
 
+// ------------------------
+// Make Image Path Absolute
+// ------------------------
+const makeImagePathAbsolute = (relativePath: string) => {
+  return `${import.meta.env.BASE_URL}${relativePath}`;
+};
+
+// ----------------
+// Render Image
+// ----------------
+const renderImage = (
+  src: string,
+  alt: string,
+  key: string | number,
+  width: string,
+  height?: string
+) => (
+  <img
+    key={key}
+    src={src}
+    width={width}
+    alt={alt}
+    height={height}
+    style={{
+      border: "2px solid #ffffff",
+      borderRadius: "8px",
+      boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    }}
+  />
+);
+
 // ------------------
 // main component
 // ------------------
-const ImageRendering: React.FC<props> = ({
-  images,
-  multiple,
-  width,
-  height,
-}) => {
-  // ------------------------
-  // Make Image Path Absolute
-  // ------------------------
-  const makeImagePathAbsolute = (relativePath: string) => {
-    return `${import.meta.env.BASE_URL}${relativePath}`;
-  };
-
-  // ----------------
-  // Render Image
-  // ----------------
-  const renderImage = (src: string, alt: string, key: string | number) => (
-    <img
-      key={key}
-      src={src}
-      width={width}
-      alt={alt}
-      height={height}
-      style={{
-        border: "2px solid #ffffff",
-        borderRadius: "8px",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-      }}
-    />
-  );
-
+const ImageRendering: React.FC<props> = ({ images, multiple, width, height }) => {
   // --------------------------------------------
   // Render default product Images
   // --------------------------------------------
@@ -52,7 +53,9 @@ const ImageRendering: React.FC<props> = ({
           renderImage(
             makeImagePathAbsolute(image as string),
             `Image ${index}`,
-            images.length > 1 ? index : "Product Main Picture"
+            images.length > 1 ? index : "Product Main Picture",
+            width,
+            height
           )
         )}
       </>
@@ -61,10 +64,7 @@ const ImageRendering: React.FC<props> = ({
     // --------------------------------------------
     // Render seller product Images
     // --------------------------------------------
-  } else if (
-    images.every((item) => item instanceof FileList) &&
-    images.length > 0
-  ) {
+  } else if (images.every((item) => item instanceof FileList) && images.length > 0) {
     const imgArray = Array.from(images as FileList[]);
 
     const renderFileListImages = (fileList: FileList) => (
@@ -73,7 +73,9 @@ const ImageRendering: React.FC<props> = ({
           renderImage(
             URL.createObjectURL(file),
             `Image ${innerIndex}`,
-            images.length > 1 ? innerIndex : "Product Main Picture"
+            images.length > 1 ? innerIndex : "Product Main Picture",
+            width,
+            height
           )
         )}
       </>

@@ -8,7 +8,7 @@ import {
   trim_lowerCase,
 } from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
-import ModalProductPreOrder from "./formik/ModalItemPreOrder";
+import ModalProductPreOrder from "./formik/ModalProductPreOrder";
 
 // ------------------
 // props type
@@ -34,13 +34,11 @@ const Category: React.FC<Props> = ({ storeCategory }) => {
   // ------------------------------
   // storeCategory Products
   // ------------------------------
-  const storeCategoryProducts = useSelector((state) => {
-    const result: ProductValues[] = [];
-    state.storeProducts.sellersProducts.map((sellerProducts) =>
-      result.push(...sellerProducts.sellerProduct[storeCategory])
-    );
-    return result;
-  });
+  const sellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
+  const storeCategoryProducts: ProductValues[] = [];
+  sellersProducts.map((sellerProducts) =>
+    storeCategoryProducts.push(...sellerProducts.sellerProduct[storeCategory])
+  );
 
   return (
     <Holder>
@@ -54,7 +52,7 @@ const Category: React.FC<Props> = ({ storeCategory }) => {
                     <ul className="product-wrapper">
                       <li>
                         <ImageRendering
-                          images={product.mainPic ?? []}
+                          images={product.mainPic || []}
                           multiple={false}
                           width="auto"
                         />

@@ -27,7 +27,7 @@ const BabyCategoriesPage = () => {
   const lowerCaseCategoriesByGender = filterCategoriesByGender("Baby").map(
     (category) => trim_lowerCase(category)
   );
-  const correctPath = lowerCaseCategoriesByGender.includes(category ?? "");
+  const correctPath = lowerCaseCategoriesByGender.includes(category || "");
 
   // --------------------------------------------------
   // array of one product for each category in a gender redux-store
@@ -53,7 +53,7 @@ const BabyCategoriesPage = () => {
                       <Link to={`/baby/${trim_lowerCase(category.categories)}`}>
                         <li>
                           <ImageRendering
-                            images={category.mainPic ?? []}
+                            images={category.mainPic || []}
                             multiple={false}
                             width="auto"
                           />

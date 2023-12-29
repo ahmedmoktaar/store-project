@@ -14,7 +14,20 @@ const steps = ["Bag", "shipping", "Payment", "Confirmation"];
 
 const CheckoutPage: React.FC = () => {
   const cartProducts = useSelector((state) => state.cart);
-  const Loggedin = useSelector((state) => state.customersLoggedIn.customerState);
+  const customersDetails = useSelector((state) => state.customersDetails);
+
+  // -----------------------------------
+  // check if any customer is logged in
+  // -----------------------------------
+  const isLoggedIn = customersDetails.find((customerDetails) => customerDetails.isActive);
+  const activeCustomerIndex = customersDetails.findIndex(
+    (customerDetails) => customerDetails.isActive
+  );
+
+  const customerCartProducts =
+    activeCustomerIndex !== -1
+      ? cartProducts[activeCustomerIndex].customerCart
+      : cartProducts[0].customerCart;
 
   const [activeStep, setActiveStep] = useState(0);
   const handleNext = () => {
@@ -56,7 +69,7 @@ const CheckoutPage: React.FC = () => {
 
   return (
     <Holder>
-      {Loggedin ? (
+      {isLoggedIn ? (
         <>
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {
@@ -69,7 +82,7 @@ const CheckoutPage: React.FC = () => {
             })}
           </Stepper>
           <Components index={activeStep} />
-          {cartProducts.length === 1 ? null : (
+          {customerCartProducts.length === 1 ? null : (
             <>
               <Typography>Step {activeStep + 1}</Typography>
               <Outlet />
@@ -91,7 +104,7 @@ const CheckoutPage: React.FC = () => {
       ) : (
         <>
           <Typography> You need to be logged in to checkout</Typography>
-          <SignInCustomer hidden={true}/>
+          <SignInCustomer hidden={true} />
         </>
       )}
     </Holder>

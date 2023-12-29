@@ -5,12 +5,15 @@ import styles from "../styles";
 import { ProductValues, StoreCategories } from "../assets/data/GlobalVariables";
 
 // ------------------
-// props type
+// Category type
 // ------------------
 type CategoryType = {
   category: StoreCategories;
 };
 
+// ------------------
+// Product type
+// ------------------
 type ProductType = {
   product: ProductValues;
   index: number;

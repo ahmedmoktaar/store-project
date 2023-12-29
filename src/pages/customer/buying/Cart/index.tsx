@@ -6,9 +6,9 @@ import styled from "@emotion/styled";
 import ImageRendering from "../../../../components/shared/ImageRendering";
 import { useSelector } from "../../../../redux/Store/hooks";
 import styles from "../../../../styles";
-import ModalProductInCart from "../../../../components/formik/ModalItemInCart";
+import ModalProductInCart from "../../../../components/formik/ModalProductInCart";
 import MuiButton from "../../../../components/shared/MuiButton";
-import { ProductWithOrderID, promoCodes } from "../../../../assets/data/GlobalVariables";
+import { ProductInCartType, promoCodes } from "../../../../assets/data/GlobalVariables";
 import FormTextField from "../../../../components/formik/FormTextField";
 import Link from "../../../../components/shared/Link/Link";
 
@@ -18,10 +18,10 @@ import Link from "../../../../components/shared/Link/Link";
 const { fonts, colors } = styles;
 
 // -------------------
-// props type
+// Product type
 // -------------------
-interface Props {
-  product: ProductWithOrderID;
+interface ProductType {
+  product: ProductInCartType;
   index: number;
 }
 
@@ -29,21 +29,37 @@ interface Props {
 // main component
 // ------------------
 const CartPage = () => {
-  // // ------------------
-  // // Hooks
-  // // ------------------
+  // ------------------
+  // Hooks
+  // ------------------
   const location = useLocation();
   const cartProducts = useSelector((state) => state.cart);
+  const customersDetails = useSelector((state) => state.customersDetails);
   const [promoCodeValue, setPromoCodeValue] = useState(0);
 
-  // // --------------------------------
-  // // calculate in cart products price
-  // // --------------------------------
-  const subtotal = cartProducts.reduce((prev, current) => prev + current.price, 0);
+  // -----------------------------------
+  // customer cart
+  // -----------------------------------
+  const activeCustomerIndex = customersDetails.findIndex(
+    (customerDetails) => customerDetails.isActive
+  );
 
-  // // ------------------
-  // // Formik Values
-  // // ------------------
+  const customerCartProducts =
+    activeCustomerIndex !== -1
+      ? cartProducts[activeCustomerIndex].customerCart
+      : cartProducts[0].customerCart;
+
+  // --------------------------------
+  // calculate in cart products price
+  // --------------------------------
+  const subtotal = customerCartProducts.reduce(
+    (prev, current) => prev + current.price,
+    0
+  );
+
+  // ------------------
+  // Formik Values
+  // ------------------
   const handleValidation = (values: FormikValues) => {
     const errors: { code?: string } = {};
     if (!promoCodes.includes(values.code)) {
@@ -59,7 +75,7 @@ const CartPage = () => {
   // ------------------
   // one Product component
   // ------------------
-  const Product: React.FC<Props> = ({ product, index }) =>
+  const Product: React.FC<ProductType> = ({ product, index }) =>
     product.mainPic && product.media ? (
       <ModalProductInCart product={product}>
         <ul key={index}>
@@ -83,10 +99,10 @@ const CartPage = () => {
           </li>
         </ul>
       </ModalProductInCart>
-    ) : cartProducts[1] ? null : (
+    ) : customerCartProducts[1] ? null : (
       <div className="empty-cart">
         <span>THE CART IS EMPTY</span>
-        
+
         <Link to="/">
           <MuiButton color="success">Back TO HOME PAGE</MuiButton>
         </Link>
@@ -97,7 +113,7 @@ const CartPage = () => {
     <Holder>
       <div>
         <ul className="product-wrapper">
-          {cartProducts.map((product, index) => (
+          {customerCartProducts.map((product, index) => (
             <Product product={product} index={index} key={index} />
           ))}
         </ul>
@@ -178,7 +194,7 @@ const CartPage = () => {
             </div>
           </div>
         </>
-      ) : cartProducts[1] ? (
+      ) : customerCartProducts[1] ? (
         <>
           <div className="vl-cart" />
 

@@ -16,7 +16,9 @@ import UniqueProductCategoryArray from "../shared/UniqueCategoriesArray";
 import {
   arrangeCategories,
   initialCategories,
-} from "../../redux/features/items/ProductsSlice";
+} from "../../redux/features/Products/ProductsSlice";
+import MuiButton from "../shared/MuiButton";
+import { logout } from "../../redux/features/customers/CustomerDetailsSlice";
 
 // ----------------
 // style variables
@@ -27,14 +29,26 @@ const { colors, fonts } = styles;
 // main component
 // ---------------
 const NavCustomer = () => {
-  // ---------------
-  // hooks
-  // ---------------
-  const loggedin = useSelector((state) => state.customersLoggedIn.customerState);
-  const productNumInCart = useSelector((state) => state.cart).length - 1;
-  const customerName = useSelector(
-    (state) => state.customersLoggedIn.customerDetails.firstName
+  // -----------------------------------
+  // check if any customer is logged in
+  // -----------------------------------
+  const customersDetails = useSelector((state) => state.customersDetails);
+  const isLoggedIn = customersDetails.find((customerDetails) => customerDetails.isActive);
+  const customerName = isLoggedIn?.firstName;
+
+  // -----------------------------------
+  // customer cart index
+  // -----------------------------------
+  const activeCustomerIndex = customersDetails.findIndex(
+    (customerDetails) => customerDetails.isActive
   );
+
+  // ------------------------------
+  // products number in cart
+  // ------------------------------
+  const cartProducts = useSelector((state) => state.cart);
+  const productsNumInCart = cartProducts[activeCustomerIndex !== -1 ? activeCustomerIndex : 0].customerCart
+      .length - 1;
 
   // ------------------------------
   // handle dropdown category list
@@ -86,6 +100,17 @@ const NavCustomer = () => {
     });
   };
 
+  // ------------------------------
+  // handle logout
+  // ------------------------------
+  const handleLogOut = () => {
+    dispatch(logout(isLoggedIn?.email || ""));
+
+    window.scrollTo({
+      top: 0,
+    });
+  };
+
   // ----------------------------------------------------------------
   //  in-store Products categories array for every storeCategory
   // ----------------------------------------------------------------
@@ -124,7 +149,7 @@ const NavCustomer = () => {
         categories: babyCategories,
       })
     );
-  }, [babyCategories, menCategories, womenCategories]);
+  }, []);
 
   return (
     <Holder>
@@ -170,11 +195,13 @@ const NavCustomer = () => {
         <SearchBar />
       </div>
 
-      {loggedin ? (
-        <NavLink to="/profile" className="user-wrapper">
-          <AccountCircleOutlined />
-          <span>{customerName}</span>
-        </NavLink>
+      {isLoggedIn ? (
+        <>
+          <NavLink to="/profile" className="user-wrapper">
+            <AccountCircleOutlined />
+            <span>{customerName}</span>
+          </NavLink>
+        </>
       ) : (
         <NavLink className="user-wrapper" to="/signinuser">
           Login / Register
@@ -183,7 +210,7 @@ const NavCustomer = () => {
 
       <div className="cart-checkout-wrapper">
         <Link to="/cart" className="cart-button">
-          <Badge badgeContent={productNumInCart} color="warning">
+          <Badge badgeContent={productsNumInCart} color="warning">
             <ShoppingCartOutlined />
           </Badge>
         </Link>
@@ -196,6 +223,17 @@ const NavCustomer = () => {
       <NavLink className="sell" to="/addproduct">
         SELL
       </NavLink>
+      {isLoggedIn ? (
+        <MuiButton
+          className="logout"
+          color="error"
+          variant="contained"
+          size="small"
+          onClick={handleLogOut}
+        >
+          Log Out
+        </MuiButton>
+      ) : null}
     </Holder>
   );
 };
@@ -265,6 +303,14 @@ const Holder = styled.div`
       font-size: 0.8em;
       text-align: center;
     }
+  }
+
+  .logout {
+    border-radius: 2em;
+    padding: 0.5em;
+    ${fonts.semiBold}
+    color: ${colors.white};
+    margin: 1em;
   }
 
   .cart-checkout-wrapper {

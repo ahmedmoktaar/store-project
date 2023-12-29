@@ -7,12 +7,12 @@ import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
 import { SignUpInitialValues, SignUpValues } from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
-import { addSellerDetails } from "../../../redux/features/sellers/SellerDetails/SellerDetailsSlice";
+import { addSellerDetails } from "../../../redux/features/sellers/SellerDetailsSlice";
 import MuiButton from "../../../components/shared/MuiButton";
 import Logo from "../../../components/shared/Logo";
 import Link from "../../../components/shared/Link/Link";
 import styles from "../../../styles";
-import { addNewSellerProducts } from "../../../redux/features/items/ProductsSlice";
+import { addNewSellerProducts } from "../../../redux/features/Products/ProductsSlice";
 
 // ----------------
 // style variables

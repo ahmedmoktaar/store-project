@@ -11,10 +11,10 @@ import * as yup from "yup";
 import styled from "@emotion/styled";
 import {
   ProductChangeableValues,
-  ProductWithOrderID,
   StoreCategories,
   productChangeableInitialValues,
   productInitialValues,
+  ProductInCartType,
 } from "../../assets/data/GlobalVariables";
 import MuiButton from "../shared/MuiButton";
 import ImageRendering from "../shared/ImageRendering";
@@ -36,7 +36,7 @@ const { fonts, colors } = styles;
 // props type
 // ------------------
 interface Props {
-  product: ProductWithOrderID;
+  product: ProductInCartType;
   children: React.ReactElement;
 }
 
@@ -50,6 +50,13 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   const dispatch = useDispatch();
   const sellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
 
+  // ----------------
+  // find active customer email
+  // ----------------
+  const activeCustomerEmail = useSelector((state) => state.customersDetails).find(
+    (customer) => customer.isActive
+  )?.email;
+
   // -----------------------------------
   // get original Product details
   // -----------------------------------
@@ -59,9 +66,9 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
       .flat();
 
   const originalProduct =
-    storeCategoryProducts("men").find((OneProduct) => OneProduct.id === product.id) ??
-    storeCategoryProducts("women").find((OneProduct) => OneProduct.id === product.id) ??
-    storeCategoryProducts("baby").find((OneProduct) => OneProduct.id === product.id) ??
+    storeCategoryProducts("men").find((OneProduct) => OneProduct.id === product.id) ||
+    storeCategoryProducts("women").find((OneProduct) => OneProduct.id === product.id) ||
+    storeCategoryProducts("baby").find((OneProduct) => OneProduct.id === product.id) ||
     productInitialValues;
 
   // --------------------------
@@ -79,7 +86,12 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   // handel Product remove
   // --------------------------
   const handleRemove = () => {
-    dispatch(removeProductFromCart(product.orderID));
+    dispatch(
+      removeProductFromCart({
+        orderID: product.orderID,
+        customerEmail: activeCustomerEmail ?? null,
+      })
+    );
     handleClose();
   };
 
@@ -110,8 +122,18 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   });
 
   const onSubmit = (values: ProductChangeableValues) => {
-    dispatch(removeProductFromCart(product.orderID));
-    dispatch(addProductToCart({ ...originalProduct, ...values }));
+    dispatch(
+      removeProductFromCart({
+        orderID: product.orderID,
+        customerEmail: activeCustomerEmail || null,
+      })
+    );
+    dispatch(
+      addProductToCart({
+        product: { ...originalProduct, ...values, orderID: 0 },
+        customerEmail: activeCustomerEmail || null,
+      })
+    );
     handleClose();
   };
 

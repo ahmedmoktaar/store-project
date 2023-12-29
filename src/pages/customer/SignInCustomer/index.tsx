@@ -11,8 +11,7 @@ import Link from "../../../components/shared/Link/Link";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
 import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
-import { login } from "../../../redux/features/customers/CustomerState/CustomerStateSlice";
-import { SignUpInitialValues } from "../../../assets/data/GlobalVariables";
+import { login } from "../../../redux/features/customers/CustomerDetailsSlice";
 
 // -------------------
 // style variables
@@ -44,28 +43,12 @@ const SignInCustomer: React.FC<Props> = ({ hidden }) => {
   const navigateTo = useNavigate();
   const location = useLocation();
 
-  // --------------------
-  // reduex data
-  // --------------------
-  const customerDetails = useSelector((state) => state.customersDetails);
-  const LoggedIn = useSelector((state) => state.customersLoggedIn.customerState);
+  // -----------------------------------
+  // check if any customer is logged in
+  // -----------------------------------
   const dispatch = useDispatch();
-
-  // --------------------
-  // return customer details
-  // --------------------
-  const LoggedInUserDetails = (value: loginValues) => {
-    const validUser = customerDetails.find(
-      (customerDetail) =>
-        value.email === customerDetail.email && value.password === customerDetail.password
-    );
-
-    if (validUser) {
-      return { customerState: true, customerDetails: validUser };
-    } else {
-      return { customerState: true, customerDetails: SignUpInitialValues };
-    }
-  };
+  const customersDetails = useSelector((state) => state.customersDetails);
+  const isLoggedIn = customersDetails.find((customerDetails) => customerDetails.isActive);
 
   // --------------------
   // formik variables
@@ -80,21 +63,21 @@ const SignInCustomer: React.FC<Props> = ({ hidden }) => {
       .string()
       .required("Invalid email")
       .test("email-check", "Incorrect email", (value) => {
-        return customerDetails.some(
+        return customersDetails.some(
           (customerDetail) => value.toLowerCase() === customerDetail.email
         );
       }),
     password: yup.string().when("email", {
       is: (email: string) =>
         email &&
-        customerDetails.some(
+        customersDetails.some(
           (customerDetail) => email.toLowerCase() === customerDetail.email
         ),
       then: (schema) =>
         schema
           .required("Incorrect password")
           .test("password-check", "Incorrect password", (value) => {
-            return customerDetails.some(
+            return customersDetails.some(
               (customerDetail) => value === customerDetail.password
             );
           }),
@@ -104,16 +87,16 @@ const SignInCustomer: React.FC<Props> = ({ hidden }) => {
   const onSubmit = (value: loginValues) => {
     {
       location.pathname === "/checkout"
-        ? dispatch(login(LoggedInUserDetails(value)))
-        : (dispatch(login(LoggedInUserDetails(value))), navigateTo("/"));
+        ? dispatch(login(value.email))
+        : (dispatch(login(value.email)), navigateTo("/"));
     }
   };
 
   return (
     <>
-      {location.pathname === "/checkout" && LoggedIn ? (
+      {location.pathname === "/checkout" && isLoggedIn ? (
         <Navigate to="/checkout" />
-      ) : LoggedIn ? (
+      ) : isLoggedIn ? (
         <Navigate to="/profile" replace={true} />
       ) : (
         <Holder>

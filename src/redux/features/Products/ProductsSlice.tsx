@@ -47,8 +47,8 @@ interface InitialCategoriesPayload {
 // initialCategories payload actions type
 // ------------------------------------------
 interface ArrangeCategoriesPayload {
-  index: number;
   storeCategory: StoreCategories;
+  index: number;
 }
 
 // ------------------
@@ -80,7 +80,6 @@ const productsSlice = createSlice({
       const activeSellerIndex = state.sellersProducts.findIndex(
         (sellerProducts) => sellerProducts.sellerEmail === sellerEmail
       );
-
       product.id =
         state.sellersProducts[activeSellerIndex].sellerProduct[storeCategory][
           state.sellersProducts[activeSellerIndex].sellerProduct[storeCategory].length - 1
@@ -92,19 +91,17 @@ const productsSlice = createSlice({
     addNewSellerProducts: (state, action: PayloadAction<string>) => {
       const sellerEmail = action.payload;
       const sellerIndex = state.sellersProducts.length;
-      const sellerProducts = {
+      const sellerInitialProducts = {
         men: [productInitialValues],
         women: [productInitialValues],
         baby: [productInitialValues],
       };
-
-      sellerProducts.men[0].id = sellerIndex + 100000000;
-      sellerProducts.women[0].id = sellerIndex + 200000000;
-      sellerProducts.baby[0].id = sellerIndex + 300000000;
-
+      sellerInitialProducts.men[0].id = sellerIndex + 100000000;
+      sellerInitialProducts.women[0].id = sellerIndex + 200000000;
+      sellerInitialProducts.baby[0].id = sellerIndex + 300000000;
       const newSeller = {
         sellerEmail: sellerEmail,
-        sellerProduct: sellerProducts,
+        sellerProduct: sellerInitialProducts,
       };
 
       state.sellersProducts.push(newSeller);

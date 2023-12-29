@@ -7,11 +7,12 @@ import FormTextField from "../../../components/formik/FormTextField";
 import FormPassword from "../../../components/formik/FormPassword";
 import { SignUpInitialValues, SignUpValues } from "../../../assets/data/GlobalVariables";
 import { useDispatch, useSelector } from "../../../redux/Store/hooks";
-import { addCustomerDetails } from "../../../redux/features/customers/CustomerDetails/CustomerDetailsSlice";
+import { addCustomerDetails } from "../../../redux/features/customers/CustomerDetailsSlice";
 import MuiButton from "../../../components/shared/MuiButton";
 import Logo from "../../../components/shared/Logo";
 import Link from "../../../components/shared/Link/Link";
 import styles from "../../../styles";
+import { addProductToCart } from "../../../redux/features/Cart/CartSlice";
 
 // ----------------
 // style variables
@@ -27,7 +28,13 @@ const SignUpCustomer: React.FC = () => {
   // ------------------
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
-  const LoggedIn = useSelector((state) => state.customersLoggedIn.customerState);
+
+  // -----------------------------------
+  // check if any customer is logged in
+  // -----------------------------------
+  const customersDetails = useSelector((state) => state.customersDetails);
+  const cartProducts = useSelector((state) => state.cart);
+  const isLoggedIn = customersDetails.find((customerDetails) => customerDetails.isActive);
 
   // --------------------
   // formik variables
@@ -53,12 +60,20 @@ const SignUpCustomer: React.FC = () => {
 
   const onSubmit = (values: SignUpValues) => {
     dispatch(addCustomerDetails(values));
+
+    dispatch(
+      addProductToCart({
+        customerEmail: values.email,
+        products: cartProducts[0].customerCart,
+      })
+    );
+
     navigateTo(-1);
   };
 
   return (
     <>
-      {LoggedIn ? (
+      {isLoggedIn ? (
         <Navigate to="/profile" replace={true} />
       ) : (
         <Holder>

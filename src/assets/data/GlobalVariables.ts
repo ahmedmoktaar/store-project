@@ -106,9 +106,9 @@ export const productChangeableInitialValues: ProductChangeableValues = {
 };
 
 //-------------------------------------------------
-// Cart initial values
+// Product In Cart Type
 //-------------------------------------------------
-export interface cartInitialStateType {
+export interface ProductInCartType {
   name: string;
   brand: string;
   price: number;
@@ -123,9 +123,13 @@ export interface cartInitialStateType {
   deliveryTime: string;
   id: number;
   amount: string;
+  orderID: number;
 }
 
-export const cartInitialState: cartInitialStateType = {
+//-------------------------------------------------
+// Cart initial values
+//-------------------------------------------------
+export const cartInitialValue: ProductInCartType = {
   name: "",
   brand: "",
   price: 0,
@@ -140,11 +144,8 @@ export const cartInitialState: cartInitialStateType = {
   deliveryTime: "",
   id: 0,
   amount: "",
+  orderID: 0,
 };
-
-export interface ProductWithOrderID extends cartInitialStateType {
-  orderID: number;
-}
 
 //-------------------
 // Colors List

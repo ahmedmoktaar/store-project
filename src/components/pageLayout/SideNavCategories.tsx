@@ -8,7 +8,7 @@ import ActiveLink from "../shared/Link/ActiveLink";
 import styles from "../../styles";
 import { useDispatch, useSelector } from "../../redux/Store/hooks";
 import Link from "../shared/Link/Link";
-import { arrangeCategories } from "../../redux/features/items/ProductsSlice";
+import { arrangeCategories } from "../../redux/features/Products/ProductsSlice";
 
 // ------------------
 // props type
