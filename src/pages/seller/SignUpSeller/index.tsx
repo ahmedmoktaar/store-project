@@ -29,14 +29,21 @@ const SignUpSeller: React.FC = () => {
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const sellersDetails = useSelector((state) => state.sellersDetails);
-
+  const isEmailRegistered = (newEmail: string) =>
+    sellersDetails.find((sellerDetails) => sellerDetails.email === newEmail);
   // --------------------
   // formik variables
   // --------------------
   const validationSchema = yup.object({
     firstName: yup.string().required("Required"),
     lastName: yup.string(),
-    email: yup.string().email().required("Please Enter your email"),
+    email: yup
+      .string()
+      .email()
+      .required("Please Enter your email")
+      .test("email-exists", "Email already exists", function (newEmail) {
+        return !isEmailRegistered(newEmail);
+      }),
     password: yup
       .string()
       .required("Please Enter your password")

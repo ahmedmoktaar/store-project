@@ -112,12 +112,12 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   const validationSchema = yup.object({
     colors: yup
       .string()
-      .required("Please Choose Minimum One Color")
-      .min(1, "Please Choose Minimum One Color"),
+      .required("Please Choose  One Color")
+      .min(1, "Please Choose  One Color"),
     sizes: yup
       .string()
-      .required("Please Choose Minimum One Size")
-      .min(1, "Please Choose Minimum One Size"),
+      .required("Please Choose  One Size")
+      .min(1, "Please Choose  One Size"),
     amount: yup.string(),
   });
 
@@ -335,7 +335,7 @@ const ModalWrapper = styled.div`
       & > div {
         display: grid;
         grid-template-columns: 5em max-content;
-        margin: 1em;
+        margin: 0.5em;
         align-items: center;
       }
       span:first-of-type {

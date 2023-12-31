@@ -47,7 +47,8 @@ const NavCustomer = () => {
   // products number in cart
   // ------------------------------
   const cartProducts = useSelector((state) => state.cart);
-  const productsNumInCart = cartProducts[activeCustomerIndex !== -1 ? activeCustomerIndex : 0].customerCart
+  const productsNumInCart =
+    cartProducts[activeCustomerIndex !== -1 ? activeCustomerIndex : 0].customerCart
       .length - 1;
 
   // ------------------------------
@@ -310,7 +311,11 @@ const Holder = styled.div`
     padding: 0.5em;
     ${fonts.semiBold}
     color: ${colors.white};
+    opacity: 0.7;
     margin: 1em;
+    :hover {
+      opacity: 1;
+    }
   }
 
   .cart-checkout-wrapper {

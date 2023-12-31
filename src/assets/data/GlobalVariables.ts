@@ -1,5 +1,5 @@
 //-------------------------------------------------
-// Product details type
+// Product details values
 //-------------------------------------------------
 export interface ProductValues {
   name: string;
@@ -17,9 +17,6 @@ export interface ProductValues {
   id: number;
 }
 
-//-------------------------------------------------
-// Product details initial values
-//-------------------------------------------------
 export const productInitialValues: ProductValues = {
   name: "",
   brand: "",
@@ -37,7 +34,7 @@ export const productInitialValues: ProductValues = {
 };
 
 //-------------------------------------------------
-// Sellers details type
+// Sellers details values
 //-------------------------------------------------
 export interface SignUpValues {
   firstName: string;
@@ -50,9 +47,6 @@ export interface SignUpValues {
   isActive: boolean;
 }
 
-//-------------------------------------------------
-// Sign up initial values
-//-------------------------------------------------
 export const SignUpInitialValues: SignUpValues = {
   firstName: "",
   lastName: "",
@@ -79,16 +73,7 @@ export const AdminDetails: SignUpValues = {
 };
 
 //-------------------------------------------------
-// User State initial values
-//-------------------------------------------------
-const customerDetails = SignUpInitialValues; //customer//
-export const CustomerStateInitialValue = {
-  customerState: false,
-  customerDetails,
-};
-
-//-------------------------------------------------
-// Product changeable values type
+// Product changeable values in the modal
 //-------------------------------------------------
 export interface ProductChangeableValues {
   colors: string;
@@ -96,9 +81,6 @@ export interface ProductChangeableValues {
   amount: string;
 }
 
-//-------------------------------------------------
-// Product changeable values in the modal
-//-------------------------------------------------
 export const productChangeableInitialValues: ProductChangeableValues = {
   colors: "",
   sizes: "",
@@ -106,7 +88,7 @@ export const productChangeableInitialValues: ProductChangeableValues = {
 };
 
 //-------------------------------------------------
-// Product In Cart Type
+// Product In Cart values
 //-------------------------------------------------
 export interface ProductInCartType {
   name: string;
@@ -126,9 +108,6 @@ export interface ProductInCartType {
   orderID: number;
 }
 
-//-------------------------------------------------
-// Cart initial values
-//-------------------------------------------------
 export const cartInitialValue: ProductInCartType = {
   name: "",
   brand: "",
@@ -145,6 +124,50 @@ export const cartInitialValue: ProductInCartType = {
   id: 0,
   amount: "",
   orderID: 0,
+};
+
+//-------------------------------------------------
+// Shipping Info values
+//-------------------------------------------------
+export interface ShippingInfo {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  aptNum: string;
+  city: string;
+  zipCode: string;
+  phone: string;
+  email: string;
+}
+
+export const ShippingInfoInitial: ShippingInfo = {
+  firstName: "",
+  lastName: "",
+  address1: "",
+  aptNum: "",
+  city: "",
+  zipCode: "",
+  phone: "",
+  email: "",
+};
+
+//-------------------------------------------------
+// Payment Info values
+//-------------------------------------------------
+export interface PaymentInfo {
+  cardNumber: string;
+  securityCode: string;
+  expirationDate: string;
+}
+
+export const PaymentInfoInitial: PaymentInfo = {
+  cardNumber: "",
+  securityCode: "",
+  expirationDate: new Date("2032-1-14").toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }),
 };
 
 //-------------------

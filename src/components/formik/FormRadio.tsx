@@ -4,6 +4,7 @@ import {
   InputLabel,
   Radio,
   Autocomplete,
+  FormHelperText,
 } from "@mui/material";
 import styled from "@emotion/styled";
 import { useField } from "formik";
@@ -63,12 +64,14 @@ const FormRadio: React.FC<TextFieldProps> = ({
             variant="outlined"
             placeholder="Required"
             error={!!meta.error && meta.touched}
-            helperText={meta.error && meta.touched ? meta.error : undefined}
             {...props}
             {...params}
           />
         )}
       />
+      <FormHelperText error={!!meta.error && meta.touched} className="error-message">
+        {meta.error && meta.touched ? meta.error : null}
+      </FormHelperText>
     </Holder>
   );
 };
@@ -84,5 +87,8 @@ const Holder = styled.div`
   label {
     font-size: 1.2em;
     ${fonts.bold}
+  }
+  .error-message{
+    grid-column: 2 /3 ;
   }
 `;

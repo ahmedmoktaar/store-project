@@ -1,7 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   cartInitialValue,
+  PaymentInfo,
+  PaymentInfoInitial,
   ProductInCartType,
+  ShippingInfo,
+  ShippingInfoInitial,
 } from "../../../assets/data/GlobalVariables";
 
 // ------------------
@@ -10,6 +14,10 @@ import {
 interface CartType {
   customerEmail: string;
   customerCart: ProductInCartType[];
+  checkout: {
+    shippingInfo: ShippingInfo;
+    paymentInfo: PaymentInfo;
+  };
 }
 
 // ------------------------------------------
@@ -29,6 +37,22 @@ interface RemoveProductPayload {
   orderID: number;
 }
 
+// ------------------------------------------
+// SaveShipping payload actions type
+// ------------------------------------------
+interface SaveShippingPayload {
+  customerEmail: string;
+  ShippingInfo: ShippingInfo;
+}
+
+// ------------------------------------------
+// SavePayment payload actions type
+// ------------------------------------------
+interface SavePaymentPayload {
+  customerEmail: string;
+  PaymentInfo: PaymentInfo;
+}
+
 // ------------------
 // initial State
 // ------------------
@@ -36,6 +60,7 @@ const initialState: CartType[] = [
   {
     customerEmail: "admin@example.com",
     customerCart: [{ ...cartInitialValue }],
+    checkout: { shippingInfo: ShippingInfoInitial, paymentInfo: PaymentInfoInitial },
   },
 ];
 
@@ -48,7 +73,6 @@ const cart = createSlice({
   reducers: {
     addProductToCart: (state, action: PayloadAction<AddProductPayload>) => {
       const { product, customerEmail, products } = action.payload;
-
       if (customerEmail) {
         const activeSellerIndex = state.findIndex(
           (customer) => customer.customerEmail === customerEmail
@@ -57,6 +81,10 @@ const cart = createSlice({
           const newCustomer = {
             customerEmail: customerEmail,
             customerCart: products,
+            checkout: {
+              shippingInfo: ShippingInfoInitial,
+              paymentInfo: PaymentInfoInitial,
+            },
           };
 
           state.push(newCustomer);
@@ -74,7 +102,6 @@ const cart = createSlice({
 
     removeProductFromCart: (state, action: PayloadAction<RemoveProductPayload>) => {
       const { orderID, customerEmail } = action.payload;
-
       if (state.length > 1 && customerEmail) {
         const activeSellerIndex = state.findIndex(
           (customer) => customer.customerEmail === customerEmail
@@ -86,6 +113,10 @@ const cart = createSlice({
         state[activeSellerIndex] = {
           customerCart: customerProducts,
           customerEmail: customerEmail,
+          checkout: {
+            shippingInfo: ShippingInfoInitial,
+            paymentInfo: PaymentInfoInitial,
+          },
         };
       } else {
         const customerProducts = state[0].customerCart.filter(
@@ -95,11 +126,36 @@ const cart = createSlice({
         state[0] = {
           customerCart: customerProducts,
           customerEmail: customerEmail || initialState[0].customerEmail,
+          checkout: {
+            shippingInfo: ShippingInfoInitial,
+            paymentInfo: PaymentInfoInitial,
+          },
         };
       }
+    },
+    saveShippingInfo: (state, action: PayloadAction<SaveShippingPayload>) => {
+      const { ShippingInfo, customerEmail } = action.payload;
+      const activeSellerIndex = state.findIndex(
+        (customer) => customer.customerEmail === customerEmail
+      );
+
+      state[activeSellerIndex].checkout.shippingInfo = ShippingInfo;
+    },
+    savePaymentInfo: (state, action: PayloadAction<SavePaymentPayload>) => {
+      const { PaymentInfo, customerEmail } = action.payload;
+      const activeSellerIndex = state.findIndex(
+        (customer) => customer.customerEmail === customerEmail
+      );
+
+      state[activeSellerIndex].checkout.paymentInfo = PaymentInfo;
     },
   },
 });
 
 export default cart.reducer;
-export const { addProductToCart, removeProductFromCart } = cart.actions;
+export const {
+  addProductToCart,
+  removeProductFromCart,
+  savePaymentInfo,
+  saveShippingInfo,
+} = cart.actions;

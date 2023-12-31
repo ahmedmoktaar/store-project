@@ -3,6 +3,7 @@ import {
   TextField,
   TextFieldProps as MUITextFieldProps,
   InputLabel,
+  FormHelperText,
 } from "@mui/material";
 import { useField } from "formik";
 import styles from "../../styles";
@@ -22,11 +23,7 @@ const { fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const TextFormLabeled: React.FC<TextFieldProps> = ({
-  name,
-  label,
-  ...props
-}) => {
+const TextFormLabeled: React.FC<TextFieldProps> = ({ name, label, ...props }) => {
   const [field, meta] = useField(name);
 
   return (
@@ -36,12 +33,14 @@ const TextFormLabeled: React.FC<TextFieldProps> = ({
         id={name}
         variant="outlined"
         error={!!meta.error && meta.touched}
-        helperText={meta.error && meta.touched ? meta.error : null}
         fullWidth
         placeholder="Required"
         {...field}
         {...props}
       />
+      <FormHelperText error={!!meta.error && meta.touched} className="error-message">
+        {meta.error && meta.touched ? meta.error : null}
+      </FormHelperText>
     </Holder>
   );
 };
@@ -61,5 +60,8 @@ const Holder = styled.div`
     ::after {
       content: " :";
     }
+  }
+  .error-message{
+    grid-column: 2 /3 ;
   }
 `;
