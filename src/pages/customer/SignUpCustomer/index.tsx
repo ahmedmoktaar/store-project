@@ -70,7 +70,7 @@ const SignUpCustomer: React.FC = () => {
 
     dispatch(
       addProductToCart({
-        customerEmail: values.email,
+        customerID: values.id,
         products: cartProducts[0].customerCart,
       })
     );

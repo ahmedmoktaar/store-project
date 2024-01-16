@@ -51,11 +51,11 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   const sellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
 
   // ----------------
-  // find active customer email
+  // find active customer ID
   // ----------------
-  const activeCustomerEmail = useSelector((state) => state.customersDetails).find(
+  const activeCustomerID = useSelector((state) => state.customersDetails).find(
     (customer) => customer.isActive
-  )?.email;
+  )?.id;
 
   // -----------------------------------
   // get original Product details
@@ -89,7 +89,7 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
     dispatch(
       removeProductFromCart({
         orderID: product.orderID,
-        customerEmail: activeCustomerEmail ?? null,
+        customerID: activeCustomerID ?? null,
       })
     );
     handleClose();
@@ -125,13 +125,13 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
     dispatch(
       removeProductFromCart({
         orderID: product.orderID,
-        customerEmail: activeCustomerEmail || null,
+        customerID: activeCustomerID || null,
       })
     );
     dispatch(
       addProductToCart({
         product: { ...originalProduct, ...values, orderID: 0 },
-        customerEmail: activeCustomerEmail || null,
+        customerID: activeCustomerID || null,
       })
     );
     handleClose();

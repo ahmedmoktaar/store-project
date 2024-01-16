@@ -95,7 +95,7 @@ const CheckoutPage: React.FC = () => {
 
           <Components activeStep={activeStep} setActiveStep={setActiveStep} />
 
-          {customerCartProducts.length === 1 ? null : (
+          {customerCartProducts.length === 0 ? null : (
             <div className="navigation-buttons">
               <MuiButton
                 onClick={handleNext}
@@ -108,10 +108,10 @@ const CheckoutPage: React.FC = () => {
           )}
         </div>
       ) : (
-        <>
-          <Typography> You need to be logged in to checkout</Typography>
+        <div className="alert-massage">
+          <Typography variant="h5" > You need to be logged in to checkout</Typography>
           <SignInCustomer hidden={true} />
-        </>
+        </div>
       )}
     </Holder>
   );
@@ -133,5 +133,8 @@ const Holder = styled.div`
       width: min-content;
       justify-self: center;
     }
+  }
+  .alert-massage {
+    text-align: center;
   }
 `;

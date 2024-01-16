@@ -52,10 +52,7 @@ const CartPage = () => {
   // --------------------------------
   // calculate in cart products price
   // --------------------------------
-  const subtotal = customerCartProducts.reduce(
-    (prev, current) => prev + current.price,
-    0
-  );
+  const subtotal = customerCartProducts.reduce((prev, current) => prev + current.price, 0);
 
   // ------------------
   // Formik Values
@@ -99,23 +96,24 @@ const CartPage = () => {
           </li>
         </ul>
       </ModalProductInCart>
-    ) : customerCartProducts[1] ? null : (
-      <div className="empty-cart">
-        <span>THE CART IS EMPTY</span>
-
-        <Link to="/">
-          <MuiButton color="success">Back TO HOME PAGE</MuiButton>
-        </Link>
-      </div>
-    );
+    ) : null;
 
   return (
     <Holder>
       <div>
         <ul className="product-wrapper">
-          {customerCartProducts.map((product, index) => (
-            <Product product={product} index={index} key={index} />
-          ))}
+          {customerCartProducts.length === 0 ? (
+            <div className="empty-cart">
+              <span>THE CART IS EMPTY</span>
+              <Link to="/">
+                <MuiButton color="success">Back TO HOME PAGE</MuiButton>
+              </Link>
+            </div>
+          ) : (
+            customerCartProducts.map((product, index) => (
+              <Product product={product} index={index} key={index} />
+            ))
+          )}
         </ul>
       </div>
 
@@ -161,11 +159,7 @@ const CartPage = () => {
             </Formik>
 
             <div className="summary-wrapper">
-              <Typography
-                variant="h5"
-                component={"header"}
-                className="semi-bold summary-header"
-              >
+              <Typography variant="h5" component={"header"} className="semi-bold summary-header">
                 Order Summary
               </Typography>
 
@@ -194,7 +188,7 @@ const CartPage = () => {
             </div>
           </div>
         </>
-      ) : customerCartProducts[1] ? (
+      ) : customerCartProducts.length !== 0 ? (
         <>
           <div className="vl-cart" />
 

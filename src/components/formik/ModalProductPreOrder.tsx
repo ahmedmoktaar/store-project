@@ -47,11 +47,11 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
   const navigateTo = useNavigate();
 
   // ----------------
-  // find active customer email
+  // find active customer id
   // ----------------
-  const activeCustomerEmail = useSelector((state) => state.customersDetails).find(
+  const activeCustomerID = useSelector((state) => state.customersDetails).find(
     (customer) => customer.isActive
-  )?.email;
+  )?.id;
 
   // --------------------------
   // handel Modal open & close
@@ -77,14 +77,8 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
   const initialValues = productChangeableInitialValues;
 
   const validationSchema = yup.object({
-    colors: yup
-      .string()
-      .required("Please Choose  One Color")
-      .min(1, "Please Choose  One Color"),
-    sizes: yup
-      .string()
-      .required("Please Choose  One Size")
-      .min(1, "Please Choose  One Size"),
+    colors: yup.string().required("Please Choose  One Color").min(1, "Please Choose  One Color"),
+    sizes: yup.string().required("Please Choose  One Size").min(1, "Please Choose  One Size"),
     amount: yup.string(),
   });
 
@@ -93,16 +87,16 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
     if (buttonClicked === "buy-now") {
       dispatch(
         addProductToCart({
-          product: { ...product, ...values,orderID: 0  },
-          customerEmail: activeCustomerEmail ?? null,
+          product: { ...product, ...values, orderID: 0 },
+          customerID: activeCustomerID ?? null,
         })
       );
       navigateTo("/checkout");
     } else if (buttonClicked === "add-to-cart") {
       dispatch(
         addProductToCart({
-          product: { ...product, ...values,orderID: 0  },
-          customerEmail: activeCustomerEmail ?? null,
+          product: { ...product, ...values, orderID: 0 },
+          customerID: activeCustomerID ?? null,
         })
       );
       setOpen(false);
@@ -125,20 +119,14 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
             <ModalWrapper>
               <div className="left-side-wrapper">
                 <ImageModal multiple={false}>
-                  <ImageRendering
-                    width="230em"
-                    multiple={false}
-                    images={product.mainPic ?? []}
-                  />
+                  <ImageRendering width="230em" multiple={false} images={product.mainPic ?? []} />
                 </ImageModal>
 
                 <ImageModal multiple>
                   <ImageRendering width="50em" multiple images={product.media ?? []} />
                 </ImageModal>
 
-                <DialogContentText className="description">
-                  {product.description}
-                </DialogContentText>
+                <DialogContentText className="description">{product.description}</DialogContentText>
               </div>
 
               <div className="right-side-wrapper">

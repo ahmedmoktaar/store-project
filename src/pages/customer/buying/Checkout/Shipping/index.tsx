@@ -63,7 +63,7 @@ const Shipping: React.FC<Props> = ({ setActiveStep }) => {
     dispatch(
       saveShippingInfo({
         ShippingInfo: values,
-        customerEmail: activeCustomerDetails?.email || "",
+        customerID: activeCustomerDetails?.id || "",
       })
     );
     setSubmitted(true);

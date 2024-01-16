@@ -15,7 +15,7 @@ import {
 // ------------------
 interface InitialState {
   sellersProducts: {
-    sellerEmail: string;
+    sellerID: string;
     sellerProduct: {
       men: ProductValues[];
       women: ProductValues[];
@@ -32,7 +32,7 @@ interface InitialState {
 interface AddProductPayload {
   product: ProductValues;
   storeCategory: StoreCategories;
-  sellerEmail: string | undefined;
+  sellerID: string | undefined;
 }
 
 // ------------------------------------------
@@ -57,7 +57,7 @@ interface ArrangeCategoriesPayload {
 const initialState: InitialState = {
   sellersProducts: [
     {
-      sellerEmail: "admin@example.com",
+      sellerID: "admin",
       sellerProduct: {
         men: [...menDefaultProducts],
         women: [...womenDefaultProducts],
@@ -76,9 +76,9 @@ const productsSlice = createSlice({
   name: "storeProducts",
   reducers: {
     addProduct: (state, action: PayloadAction<AddProductPayload>) => {
-      const { storeCategory, product, sellerEmail } = action.payload;
+      const { storeCategory, product, sellerID } = action.payload;
       const activeSellerIndex = state.sellersProducts.findIndex(
-        (sellerProducts) => sellerProducts.sellerEmail === sellerEmail
+        (sellerProducts) => sellerProducts.sellerID === sellerID
       );
       product.id =
         state.sellersProducts[activeSellerIndex].sellerProduct[storeCategory][
@@ -89,7 +89,7 @@ const productsSlice = createSlice({
     },
 
     addNewSellerProducts: (state, action: PayloadAction<string>) => {
-      const sellerEmail = action.payload;
+      const sellerID = action.payload;
       const sellerIndex = state.sellersProducts.length;
       const sellerInitialProducts = {
         men: [productInitialValues],
@@ -100,7 +100,7 @@ const productsSlice = createSlice({
       sellerInitialProducts.women[0].id = sellerIndex + 200000000;
       sellerInitialProducts.baby[0].id = sellerIndex + 300000000;
       const newSeller = {
-        sellerEmail: sellerEmail,
+        sellerID: sellerID,
         sellerProduct: sellerInitialProducts,
       };
 

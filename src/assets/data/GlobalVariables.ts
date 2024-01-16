@@ -34,7 +34,7 @@ export const productInitialValues: ProductValues = {
 };
 
 //-------------------------------------------------
-// Sellers details values
+// User details values
 //-------------------------------------------------
 export interface SignUpValues {
   firstName: string;
@@ -45,6 +45,7 @@ export interface SignUpValues {
   paypal: string;
   socialMedia?: string;
   isActive: boolean;
+  id:string
 }
 
 export const SignUpInitialValues: SignUpValues = {
@@ -56,6 +57,7 @@ export const SignUpInitialValues: SignUpValues = {
   paypal: "",
   socialMedia: "",
   isActive: false,
+  id:''
 };
 
 //-------------------------------------------------
@@ -70,6 +72,7 @@ export const AdminDetails: SignUpValues = {
   paypal: "",
   socialMedia: "",
   isActive: false,
+  id:'admin'
 };
 
 //-------------------------------------------------

@@ -7,12 +7,12 @@ import {
   ShippingInfo,
   ShippingInfoInitial,
 } from "../../../assets/data/GlobalVariables";
-
+import { set as idbSet, del as idbDel } from "idb-keyval";
 // ------------------
 // initial State type
 // ------------------
 interface CartType {
-  customerEmail: string;
+  customerID: string;
   customerCart: ProductInCartType[];
   checkout: {
     shippingInfo: ShippingInfo;
@@ -24,16 +24,23 @@ interface CartType {
 // addProductToCart payload actions type
 // ------------------------------------------
 interface AddProductPayload {
-  customerEmail: string | null;
+  customerID: string | null;
   product?: ProductInCartType;
   products?: ProductInCartType[];
+}
+// ------------------------------------------
+// UpdateCartsFromIDB payload actions type
+// ------------------------------------------
+interface UpdateCartsFromIDBPayload {
+  customerID: string | null;
+  products: ProductInCartType[];
 }
 
 // ------------------------------------------
 // removeProductFromCart payload actions type
 // ------------------------------------------
 interface RemoveProductPayload {
-  customerEmail: string | null;
+  customerID: string | null;
   orderID: number;
 }
 
@@ -41,7 +48,7 @@ interface RemoveProductPayload {
 // SaveShipping payload actions type
 // ------------------------------------------
 interface SaveShippingPayload {
-  customerEmail: string;
+  customerID: string;
   ShippingInfo: ShippingInfo;
 }
 
@@ -49,7 +56,7 @@ interface SaveShippingPayload {
 // SavePayment payload actions type
 // ------------------------------------------
 interface SavePaymentPayload {
-  customerEmail: string;
+  customerID: string;
   PaymentInfo: PaymentInfo;
 }
 
@@ -58,7 +65,7 @@ interface SavePaymentPayload {
 // ------------------
 const initialState: CartType[] = [
   {
-    customerEmail: "admin@example.com",
+    customerID: "admin",
     customerCart: [{ ...cartInitialValue }],
     checkout: { shippingInfo: ShippingInfoInitial, paymentInfo: PaymentInfoInitial },
   },
@@ -72,14 +79,12 @@ const cart = createSlice({
   initialState,
   reducers: {
     addProductToCart: (state, action: PayloadAction<AddProductPayload>) => {
-      const { product, customerEmail, products } = action.payload;
-      if (customerEmail) {
-        const activeSellerIndex = state.findIndex(
-          (customer) => customer.customerEmail === customerEmail
-        );
+      const { product, customerID, products } = action.payload;
+      if (customerID) {
+        const activeSellerIndex = state.findIndex((customer) => customer.customerID === customerID);
         if (activeSellerIndex === -1 && products) {
           const newCustomer = {
-            customerEmail: customerEmail,
+            customerID: customerID,
             customerCart: products,
             checkout: {
               shippingInfo: ShippingInfoInitial,
@@ -89,30 +94,33 @@ const cart = createSlice({
 
           state.push(newCustomer);
         } else if (product) {
-          product.orderID = state[activeSellerIndex].customerCart.length;
+          product.orderID = state[activeSellerIndex].customerCart.length + 1;
 
           state[activeSellerIndex].customerCart.push(product);
+          idbSet(`${product.orderID}`, product);
         }
       } else if (product) {
-        product.orderID = state[0].customerCart.length;
+        product.orderID = state[0].customerCart.length + 1;
 
         state[0].customerCart.push(product);
+        idbSet(`${product.orderID}`, product);
       }
     },
 
     removeProductFromCart: (state, action: PayloadAction<RemoveProductPayload>) => {
-      const { orderID, customerEmail } = action.payload;
-      if (state.length > 1 && customerEmail) {
-        const activeSellerIndex = state.findIndex(
-          (customer) => customer.customerEmail === customerEmail
-        );
+      const { orderID, customerID } = action.payload;
+
+      idbDel(orderID.toString());
+
+      if (state.length > 1 && customerID) {
+        const activeSellerIndex = state.findIndex((customer) => customer.customerID === customerID);
         const customerProducts = state[activeSellerIndex].customerCart.filter(
           (editedProduct) => editedProduct.orderID != orderID
         );
 
         state[activeSellerIndex] = {
           customerCart: customerProducts,
-          customerEmail: customerEmail,
+          customerID: customerID,
           checkout: {
             shippingInfo: ShippingInfoInitial,
             paymentInfo: PaymentInfoInitial,
@@ -125,7 +133,7 @@ const cart = createSlice({
 
         state[0] = {
           customerCart: customerProducts,
-          customerEmail: customerEmail || initialState[0].customerEmail,
+          customerID: customerID || initialState[0].customerID,
           checkout: {
             shippingInfo: ShippingInfoInitial,
             paymentInfo: PaymentInfoInitial,
@@ -133,19 +141,29 @@ const cart = createSlice({
         };
       }
     },
+
+    updateCartFromIDB: (state, action: PayloadAction<UpdateCartsFromIDBPayload>) => {
+      const { customerID, products } = action.payload;
+
+      if (customerID) {
+        const activeSellerIndex = state.findIndex((customer) => customer.customerID === customerID);
+        if (activeSellerIndex === -1) {
+          state[0].customerCart = products;
+        } else {
+          state[activeSellerIndex].customerCart = products;
+        }
+      }
+    },
+
     saveShippingInfo: (state, action: PayloadAction<SaveShippingPayload>) => {
-      const { ShippingInfo, customerEmail } = action.payload;
-      const activeSellerIndex = state.findIndex(
-        (customer) => customer.customerEmail === customerEmail
-      );
+      const { ShippingInfo, customerID } = action.payload;
+      const activeSellerIndex = state.findIndex((customer) => customer.customerID === customerID);
 
       state[activeSellerIndex].checkout.shippingInfo = ShippingInfo;
     },
     savePaymentInfo: (state, action: PayloadAction<SavePaymentPayload>) => {
-      const { PaymentInfo, customerEmail } = action.payload;
-      const activeSellerIndex = state.findIndex(
-        (customer) => customer.customerEmail === customerEmail
-      );
+      const { PaymentInfo, customerID } = action.payload;
+      const activeSellerIndex = state.findIndex((customer) => customer.customerID === customerID);
 
       state[activeSellerIndex].checkout.paymentInfo = PaymentInfo;
     },
@@ -154,6 +172,7 @@ const cart = createSlice({
 
 export default cart.reducer;
 export const {
+  updateCartFromIDB,
   addProductToCart,
   removeProductFromCart,
   savePaymentInfo,

@@ -1,8 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {
-  AdminDetails,
-  SignUpValues,
-} from "../../../assets/data/GlobalVariables";
+import { AdminDetails, SignUpValues } from "../../../assets/data/GlobalVariables";
+import { v4 as uuid } from "uuid";
 
 const initialState = [AdminDetails];
 
@@ -15,6 +13,14 @@ const sellerDetailsSlice = createSlice({
   reducers: {
     addSellerDetails: (state, action: PayloadAction<SignUpValues>) => {
       const actionPayLoad = action.payload;
+      const newSellerID = uuid();
+      if (state.some((seller) => seller.id === newSellerID)) {
+        actionPayLoad.id = newSellerID + 1;
+      } else {
+        actionPayLoad.id = newSellerID;
+      }
+
+
       state.push(actionPayLoad);
     },
 
@@ -31,5 +37,4 @@ const sellerDetailsSlice = createSlice({
 });
 
 export default sellerDetailsSlice.reducer;
-export const { addSellerDetails, login, logout } =
-  sellerDetailsSlice.actions;
+export const { addSellerDetails, login, logout } = sellerDetailsSlice.actions;

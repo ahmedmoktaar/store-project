@@ -49,7 +49,7 @@ const NavCustomer = () => {
   const cartProducts = useSelector((state) => state.cart);
   const productsNumInCart =
     cartProducts[activeCustomerIndex !== -1 ? activeCustomerIndex : 0].customerCart
-      .length - 1;
+      .length;
 
   // ------------------------------
   // handle dropdown category list

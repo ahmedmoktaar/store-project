@@ -89,7 +89,7 @@ const Payment: React.FC<Props> = ({ setActiveStep }) => {
     dispatch(
       savePaymentInfo({
         PaymentInfo: values,
-        customerEmail: activeCustomerDetails?.email || "",
+        customerID: activeCustomerDetails?.id || "",
       })
     );
     setSubmitted(true);

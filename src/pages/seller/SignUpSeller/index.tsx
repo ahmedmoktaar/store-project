@@ -61,7 +61,7 @@ const SignUpSeller: React.FC = () => {
 
   const onSubmit = (values: SignUpValues) => {
     dispatch(addSellerDetails(values));
-    dispatch(addNewSellerProducts(values.email));
+    dispatch(addNewSellerProducts(values.id));
     navigateTo("/signinseller");
   };
 

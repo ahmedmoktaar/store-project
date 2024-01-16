@@ -33,11 +33,11 @@ const AddProduct: React.FC = () => {
   const dispatch = useDispatch();
 
   // ----------------
-  // find active seller email
+  // find active seller id
   // ----------------
-  const activeSellerEmail = useSelector((state) => state.sellersDetails).find(
+  const activeSellerID = useSelector((state) => state.sellersDetails).find(
     (seller) => seller.isActive
-  )?.email;
+  )?.id;
 
   // ----------------
   // formik variables
@@ -110,7 +110,7 @@ const AddProduct: React.FC = () => {
       addProduct({
         product: values,
         storeCategory: category,
-        sellerEmail: activeSellerEmail,
+        sellerID: activeSellerID,
       })
     );
 
