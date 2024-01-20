@@ -20,8 +20,8 @@ import ImageRendering from "../shared/ImageRendering";
 import FormRadio from "./FormRadio";
 import ImageModal from "../shared/ImageModal";
 import styles from "../../styles";
-import { useDispatch, useSelector } from "../../redux/Store/hooks";
-import { addProductToCart } from "../../redux/features/Cart/CartSlice";
+import useReduxCustomer from "../../hooks/useReduxCustomer";
+import useManageProduct from "../../hooks/useManageProduct";
 
 // -------------------
 // style variables
@@ -43,15 +43,9 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
   // -------
   // hooks
   // -------
-  const dispatch = useDispatch();
+  const { amountInStockArray } = useReduxCustomer(product);
+  const { addProduct } = useManageProduct(product);
   const navigateTo = useNavigate();
-
-  // ----------------
-  // find active customer id
-  // ----------------
-  const activeCustomerID = useSelector((state) => state.customersDetails).find(
-    (customer) => customer.isActive
-  )?.id;
 
   // --------------------------
   // handel Modal open & close
@@ -63,13 +57,6 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  // --------------------------------
-  // array to choose order quantity
-  // --------------------------------
-  const amountInStockArray = Array.from({ length: product.amountInStock }, (_, index) =>
-    (index + 1).toString()
-  );
 
   // --------------------------
   // Formik variables
@@ -84,21 +71,10 @@ const ModalProductPreOrder: React.FC<Props> = ({ product, children }) => {
 
   const [buttonClicked, setButtonClicked] = useState("");
   const onSubmit = (values: ProductChangeableValues) => {
+    addProduct(values);
     if (buttonClicked === "buy-now") {
-      dispatch(
-        addProductToCart({
-          product: { ...product, ...values, orderID: 0 },
-          customerID: activeCustomerID ?? null,
-        })
-      );
       navigateTo("/checkout");
     } else if (buttonClicked === "add-to-cart") {
-      dispatch(
-        addProductToCart({
-          product: { ...product, ...values, orderID: 0 },
-          customerID: activeCustomerID ?? null,
-        })
-      );
       setOpen(false);
     } else {
       null;

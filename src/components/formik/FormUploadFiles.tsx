@@ -35,10 +35,10 @@ const VisuallyHiddenInput = MUIstyled("input")({
   width: 1,
 });
 
-// ------------------ 
+// ------------------
 // main component
 // ------------------
-const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) => {
+const FormUploadFiles: React.FC<props> = ({ name, label, multiple, ...props }) => {
   const [, meta, form] = useField(name);
 
   // --------------------
@@ -58,13 +58,9 @@ const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) =>
 
   return (
     <Holder>
-      <InputLabel id={name}>{label}</InputLabel>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
 
-      <Button
-        component="label"
-        variant="contained"
-        startIcon={<CloudUploadIcon />}
-      >
+      <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
         Upload file
         <VisuallyHiddenInput
           type="file"
@@ -75,27 +71,14 @@ const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) =>
           onChange={handelChange}
         />
       </Button>
-        <FormHelperText error={!!meta.error && meta.touched} className="error-message">
-          {meta.error && meta.touched ? meta.error : null}
-        </FormHelperText>
+      <FormHelperText error={!!meta.error && meta.touched} className="error-message">
+        {meta.error && meta.touched ? meta.error : null}
+      </FormHelperText>
       <div className="imgList-wrapper">
-        {imgFileLists && multiple
-          ? imgFileLists.map((imgFileList, index) => (
-              <span key={index}>
-                {Array.from(imgFileList).map((file, innerIndex) => (
-                  <img
-                    key={innerIndex}
-                    src={URL.createObjectURL(file)}
-                    alt={`Image ${innerIndex}`}
-                    className="single-img"
-                  />
-                ))}
-              </span>
-            ))
-          : imgFileLists ? 
-          (
-            <span>
-              {Array.from(imgFileLists[0]).map((file, innerIndex) => (
+        {imgFileLists && multiple ? (
+          imgFileLists.map((imgFileList, index) => (
+            <span key={index}>
+              {Array.from(imgFileList).map((file, innerIndex) => (
                 <img
                   key={innerIndex}
                   src={URL.createObjectURL(file)}
@@ -104,7 +87,19 @@ const FormUploadFiles: React.FC<props> = ({ name, label,multiple, ...props }) =>
                 />
               ))}
             </span>
-          ):null}
+          ))
+        ) : imgFileLists ? (
+          <span>
+            {Array.from(imgFileLists[0]).map((file, innerIndex) => (
+              <img
+                key={innerIndex}
+                src={URL.createObjectURL(file)}
+                alt={`Image ${innerIndex}`}
+                className="single-img"
+              />
+            ))}
+          </span>
+        ) : null}
       </div>
     </Holder>
   );
@@ -119,7 +114,7 @@ const Holder = styled.div`
   display: grid;
   grid-template-columns: 11em 30em;
   align-items: center;
-  
+
   label:first-of-type {
     font-size: 1.2em;
     ${fonts.bold}
@@ -127,8 +122,8 @@ const Holder = styled.div`
       content: " :";
     }
   }
-  .error-message{
-    grid-column: 2 /3 ;
+  .error-message {
+    grid-column: 2 /3;
   }
   .imgList-wrapper {
     grid-column: 2 /3;

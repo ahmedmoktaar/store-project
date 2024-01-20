@@ -35,26 +35,25 @@ const FormRadio: React.FC<TextFieldProps> = ({
   ...props
 }) => {
   const [field, meta, form] = useField(name);
-
   return (
     <Holder style={deleteGridTemplateColumns ? {} : { gridTemplateColumns: "11em 30em" }}>
-      <InputLabel id={name}>{label}</InputLabel>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
       <Autocomplete
         fullWidth
         id={name}
         disablePortal
         blurOnSelect
         clearOnEscape
-        options={options}
+        options={options} 
         onChange={(_e, values) => form.setValue(values)}
         value={field.value || null}
-        renderOption={(props, option, { selected, index }) => (
+        renderOption={(props, option, { index,selected }) => (
           <li key={index} {...props}>
             <Radio
               style={{ marginRight: 8 }}
+              {...field} 
+              value={option} 
               checked={selected}
-              {...field}
-              value={option}
             />
             {option}
           </li>

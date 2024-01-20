@@ -11,9 +11,7 @@ import * as yup from "yup";
 import styled from "@emotion/styled";
 import {
   ProductChangeableValues,
-  StoreCategories,
   productChangeableInitialValues,
-  productInitialValues,
   ProductInCartType,
 } from "../../assets/data/GlobalVariables";
 import MuiButton from "../shared/MuiButton";
@@ -21,11 +19,8 @@ import ImageRendering from "../shared/ImageRendering";
 import FormRadio from "./FormRadio";
 import ImageModal from "../shared/ImageModal";
 import styles from "../../styles";
-import { useDispatch, useSelector } from "../../redux/Store/hooks";
-import {
-  addProductToCart,
-  removeProductFromCart,
-} from "../../redux/features/Cart/CartSlice";
+import useReduxCustomer from "../../hooks/useReduxCustomer";
+import useManageProduct from "../../hooks/useManageProduct";
 
 // -------------------
 // style variables
@@ -44,32 +39,11 @@ interface Props {
 // main component
 // ------------------
 const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
-  // -------
+  // ---------
   // hooks
-  // -------
-  const dispatch = useDispatch();
-  const sellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
-
-  // ----------------
-  // find active customer ID
-  // ----------------
-  const activeCustomerID = useSelector((state) => state.customersDetails).find(
-    (customer) => customer.isActive
-  )?.id;
-
-  // -----------------------------------
-  // get original Product details
-  // -----------------------------------
-  const storeCategoryProducts = (storeCategory: StoreCategories) =>
-    sellersProducts
-      .map((sellerProduct) => sellerProduct.sellerProduct[storeCategory])
-      .flat();
-
-  const originalProduct =
-    storeCategoryProducts("men").find((OneProduct) => OneProduct.id === product.id) ||
-    storeCategoryProducts("women").find((OneProduct) => OneProduct.id === product.id) ||
-    storeCategoryProducts("baby").find((OneProduct) => OneProduct.id === product.id) ||
-    productInitialValues;
+  // ---------
+  const { originalProduct, amountInStockArray} = useReduxCustomer(product);
+  const { addProduct, removeProduct} = useManageProduct(product);
 
   // --------------------------
   // handel Modal open & close
@@ -86,23 +60,9 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   // handel Product remove
   // --------------------------
   const handleRemove = () => {
-    dispatch(
-      removeProductFromCart({
-        orderID: product.orderID,
-        customerID: activeCustomerID ?? null,
-      })
-    );
+    removeProduct();
     handleClose();
   };
-
-  // --------------------------
-  // array to choose order quantity
-  // --------------------------
-  const amountInStockArray = originalProduct
-    ? Array.from({ length: originalProduct.amountInStock }, (_, index) =>
-        (index + 1).toString()
-      )
-    : [""];
 
   // --------------------------
   // Formik variables
@@ -110,30 +70,14 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
   const initialValues = productChangeableInitialValues;
 
   const validationSchema = yup.object({
-    colors: yup
-      .string()
-      .required("Please Choose  One Color")
-      .min(1, "Please Choose  One Color"),
-    sizes: yup
-      .string()
-      .required("Please Choose  One Size")
-      .min(1, "Please Choose  One Size"),
+    colors: yup.string().required("Please Choose  One Color").min(1, "Please Choose  One Color"),
+    sizes: yup.string().required("Please Choose  One Size").min(1, "Please Choose  One Size"),
     amount: yup.string(),
   });
 
   const onSubmit = (values: ProductChangeableValues) => {
-    dispatch(
-      removeProductFromCart({
-        orderID: product.orderID,
-        customerID: activeCustomerID || null,
-      })
-    );
-    dispatch(
-      addProductToCart({
-        product: { ...originalProduct, ...values, orderID: 0 },
-        customerID: activeCustomerID || null,
-      })
-    );
+    removeProduct();
+    addProduct(values);
     handleClose();
   };
 
@@ -168,11 +112,7 @@ const ModalProductInCart: React.FC<Props> = ({ product, children }) => {
                 </ImageModal>
 
                 <ImageModal multiple>
-                  <ImageRendering
-                    width="50em"
-                    multiple
-                    images={originalProduct.media ?? []}
-                  />
+                  <ImageRendering width="50em" multiple images={originalProduct.media ?? []} />
                 </ImageModal>
 
                 <DialogContentText className="description">

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
-import { List, ListItem, Collapse, Breadcrumbs } from "@mui/material";
+import { List, ListItem, Collapse } from "@mui/material";
 import { ArrowDropUpOutlined, ArrowDropDownOutlined } from "@mui/icons-material";
-import { useParams } from "react-router-dom";
-import { StoreCategories, trim_lowerCase } from "../../assets/data/GlobalVariables";
-import ActiveLink from "../shared/Link/ActiveLink";
-import styles from "../../styles";
-import { useDispatch, useSelector } from "../../redux/Store/hooks";
-import Link from "../shared/Link/Link";
-import { arrangeCategories } from "../../redux/features/Products/ProductsSlice";
+import { StoreCategories } from "../../../assets/data/GlobalVariables";
+import ActiveLink from "../../shared/Link/ActiveLink";
+import styles from "../../../styles";
+import { useDispatch, useSelector } from "../../../redux/Store/hooks";
+import { arrangeCategories } from "../../../redux/features/Products/ProductsSlice";
+import Breadcrumbs from "./Breadcrumbs";
+import trim_lowerCase from "../../../utils/trim_lowerCase";
 
 // ------------------
 // props type
@@ -26,8 +26,6 @@ const { colors, fonts } = styles;
 // main component
 // ------------------
 const SideNavCategories: React.FC<Props> = ({ storeCategory }) => {
-  const { category } = useParams();
-
   // ------------------------------
   // handle categories expanding
   // ------------------------------
@@ -57,34 +55,7 @@ const SideNavCategories: React.FC<Props> = ({ storeCategory }) => {
 
   return (
     <Holder>
-      <Breadcrumbs aria-label="breadcrumb" className="breadcrumb">
-        <Link underline="hover" color="inherit" to="/">
-          Home
-        </Link>
-
-        <Link
-          className="storeCategory"
-          underline="hover"
-          color="text.primary"
-          to={`/${storeCategory}`}
-        >
-          {storeCategory}
-        </Link>
-
-        {StoreCategoryProductsCategories.map((oneCategory) => {
-          return category && category === trim_lowerCase(oneCategory) ? (
-            <Link
-              underline="hover"
-              color="text.primary"
-              to={`/${storeCategory}/${category}`}
-              aria-current="page"
-              key={oneCategory}
-            >
-              {oneCategory}
-            </Link>
-          ) : null;
-        })}
-      </Breadcrumbs>
+      <Breadcrumbs storeCategory={storeCategory} />
 
       <List className="categories-toggle">
         <ListItem onClick={handleCategoriesOnClick}>
@@ -98,10 +69,7 @@ const SideNavCategories: React.FC<Props> = ({ storeCategory }) => {
           <List disablePadding className="categories-wrapper">
             {StoreCategoryProductsCategories.map((category, index) => (
               <ListItem key={category}>
-                <ActiveLink
-                  to={`${trim_lowerCase(category)}`}
-                  onClick={() => handleClick(index)}
-                >
+                <ActiveLink to={`${trim_lowerCase(category)}`} onClick={() => handleClick(index)}>
                   {category}
                 </ActiveLink>
               </ListItem>

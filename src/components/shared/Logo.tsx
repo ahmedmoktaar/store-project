@@ -2,23 +2,20 @@ import styled from "@emotion/styled";
 import SVG from "../../assets/SVG";
 import styles from "../../styles";
 import Link from "./Link/Link";
+import { useContext } from "react";
+import { HiddenContext } from "../../hooks/context";
 
 // ----------------
 // style variables
 // ----------------
 const { colors, fonts } = styles;
 
-// ------------------
-// props type
-// ------------------
-interface Props {
-  hidden?: boolean;
-}
-
 // ---------------
 // main component
 // ---------------
-const Logo: React.FC<Props> = ({ hidden }) => {
+const Logo = () => {
+  const hidden = useContext(HiddenContext);
+
   return (
     <Holder className="logo" hidden={hidden}>
       <Link to="/">

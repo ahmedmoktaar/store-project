@@ -14,7 +14,7 @@ import styles from "../../styles";
 // ------------------
 type TextFieldProps = MUITextFieldProps & {
   name: string;
-  options: { label: string; gender: string }[];
+  options: { label: string; gender: string; key: string }[];
 };
 
 // -------------------
@@ -25,16 +25,11 @@ const { fonts } = styles;
 // ------------------
 // main component
 // ------------------
-const FormAutoComplete: React.FC<TextFieldProps> = ({
-  name,
-  label,
-  options,
-  ...props
-}) => {
+const FormAutoComplete: React.FC<TextFieldProps> = ({ name, label, options, ...props }) => {
   const [field, meta, form] = useField(name);
   return (
     <Holder>
-      <InputLabel id={name}>{label}</InputLabel>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
       <Autocomplete
         blurOnSelect
         clearOnEscape
@@ -43,9 +38,9 @@ const FormAutoComplete: React.FC<TextFieldProps> = ({
         id={name}
         options={options}
         onChange={(_e, value) => form.setValue(value.label)}
-        value={field.value ? field.value : null}
+        value={field.value ?? ""}
         groupBy={(option) => option.gender}
-        isOptionEqualToValue={(option, value) => option.label === value}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
         renderOption={(props, option) => (
           <li {...props} {...field} key={option.key}>
             {option.label}

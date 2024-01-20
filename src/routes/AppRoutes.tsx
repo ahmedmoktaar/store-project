@@ -10,7 +10,7 @@ import AddProduct from "../pages/seller/AddItem";
 import TrackProducts from "../pages/seller/TrackItems";
 import SignInSeller from "../pages/seller/SignInSeller";
 import SignUpSeller from "../pages/seller/SignUpSeller";
-import RootLayout from "../layout/RootLayout";
+import RootLayout from "../layout/RootLayout/RootLayout";
 import SellerLayout from "../layout/SellerLayout";
 import SignInCustomer from "../pages/customer/SignInCustomer";
 import SignUpCustomer from "../pages/customer/SignUpCustomer";

@@ -1,15 +1,12 @@
+import { ProductValues } from "../../../assets/data/GlobalVariables";
+import ImageRendering from "../../../components/shared/ImageRendering";
+import styles from "../../../styles";
 import styled from "@emotion/styled";
-import { useSelector } from "../redux/Store/hooks";
-import ImageRendering from "./shared/ImageRendering";
-import styles from "../styles";
-import { ProductValues, StoreCategories } from "../assets/data/GlobalVariables";
 
-// ------------------
-// Category type
-// ------------------
-type CategoryType = {
-  category: StoreCategories;
-};
+// -------------------
+// style variables
+// -------------------
+const { fonts, colors } = styles;
 
 // ------------------
 // Product type
@@ -19,15 +16,7 @@ type ProductType = {
   index: number;
 };
 
-// -------------------
-// style variables
-// -------------------
-const { fonts, colors } = styles;
-
-// -------------------
-// one product component
-// -------------------
-const Product: React.FC<ProductType> = ({ product, index }) => {
+const ProductState: React.FC<ProductType> = ({ product, index }) => {
   return (
     <>
       {product.mainPic && product.media ? (
@@ -67,30 +56,7 @@ const Product: React.FC<ProductType> = ({ product, index }) => {
     </>
   );
 };
-
-// ------------------
-// main component
-// ------------------
-const ProductStateSeller: React.FC<CategoryType> = ({ category }) => {
-  // ------------------
-  // active seller Products
-  // ------------------
-  const sellersDetails = useSelector((state) => state.sellersDetails);
-  const SellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
-
-  const activeSeller = sellersDetails.findIndex((seller) => seller.isActive);
-  const activeSellerProduct = SellersProducts[activeSeller].sellerProduct[category];
-
-  return (
-    <>
-      {activeSellerProduct.map((product, index) => (
-        <Product product={product} index={index} />
-      ))}
-    </>
-  );
-};
-
-export default ProductStateSeller;
+export default ProductState;
 
 // -------------------
 // STYLED COMPONENT

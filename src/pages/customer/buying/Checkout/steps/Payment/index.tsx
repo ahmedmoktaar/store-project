@@ -3,31 +3,13 @@ import { Typography, Tabs, Tab } from "@mui/material";
 import { Form, Formik } from "formik";
 import styled from "@emotion/styled";
 import * as yup from "yup";
-import FormTextField from "../../../../../components/formik/FormTextField";
-import MuiButton from "../../../../../components/shared/MuiButton";
-import {
-  PaymentInfo,
-  PaymentInfoInitial,
-} from "../../../../../assets/data/GlobalVariables";
-import { useDispatch, useSelector } from "../../../../../redux/Store/hooks";
-import { savePaymentInfo } from "../../../../../redux/features/Cart/CartSlice";
-
-// ---------------------
-// TabPanel component
-// ---------------------
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-const TabPanel = ({ children, value, index }: TabPanelProps) => {
-  return (
-    <div hidden={value !== index}>
-      {value === index && <Typography>{children}</Typography>}
-    </div>
-  );
-};
+import FormTextField from "../../../../../../components/formik/FormTextField";
+import MuiButton from "../../../../../../components/shared/MuiButton";
+import { PaymentInfo, PaymentInfoInitial } from "../../../../../../assets/data/GlobalVariables";
+import { useDispatch } from "../../../../../../redux/Store/hooks";
+import { savePaymentInfo } from "../../../../../../redux/features/Cart/CartSlice";
+import useReduxCustomer from "../../../../../../hooks/useReduxCustomer";
+import TabPanel from "./TabPanel";
 
 // ---------------------
 // Props
@@ -45,14 +27,7 @@ const Payment: React.FC<Props> = ({ setActiveStep }) => {
   // ------------------
   const dispatch = useDispatch();
   const [isSubmitted, setSubmitted] = useState(false);
-
-  // --------------------
-  // customer details
-  // --------------------
-  const customersDetails = useSelector((state) => state.customersDetails);
-  const activeCustomerDetails = customersDetails.find(
-    (customerDetails) => customerDetails.isActive
-  );
+  const { activeCustomerDetails } = useReduxCustomer(null);
 
   // --------------------
   // handle tab change
@@ -102,11 +77,7 @@ const Payment: React.FC<Props> = ({ setActiveStep }) => {
         Choose Payment Method
       </Typography>
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
-      >
+      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
         <Form>
           <div className="tabs">
             <Tabs value={value} onChange={handleChange}>
@@ -136,12 +107,7 @@ const Payment: React.FC<Props> = ({ setActiveStep }) => {
           </TabPanel>
 
           <div className="confirming">
-            <MuiButton
-              type="submit"
-              variant="contained"
-              size="medium"
-              disabled={isSubmitted}
-            >
+            <MuiButton type="submit" variant="contained" size="medium" disabled={isSubmitted}>
               Next
             </MuiButton>
           </div>
@@ -160,8 +126,8 @@ const Holder = styled.div`
   display: grid;
   justify-content: center;
   text-align: center;
-  .tabs{
-  margin-top: 1em;
+  .tabs {
+    margin-top: 1em;
   }
   .form-wrapper {
     margin: 1em 1em 1em 0;

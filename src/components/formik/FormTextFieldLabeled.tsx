@@ -28,7 +28,7 @@ const TextFormLabeled: React.FC<TextFieldProps> = ({ name, label, ...props }) =>
 
   return (
     <Holder>
-      <InputLabel id={name}>{label}</InputLabel>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
       <TextField
         id={name}
         variant="outlined"

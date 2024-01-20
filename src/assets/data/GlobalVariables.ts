@@ -1,4 +1,46 @@
 //-------------------------------------------------
+// User details values
+//-------------------------------------------------
+export interface SignUpValues {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  paypal: string;
+  socialMedia?: string;
+  isActive: boolean;
+  id: string;
+}
+
+export const SignUpInitialValues: SignUpValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  paypal: "",
+  socialMedia: "",
+  isActive: false,
+  id: "",
+};
+
+//-------------------------------------------------
+// Admin account details
+//-------------------------------------------------
+export const AdminDetails: SignUpValues = {
+  firstName: "admin",
+  lastName: "",
+  email: "admin@example.com",
+  password: "123456zZ#",
+  confirmPassword: "123456zZ#",
+  paypal: "",
+  socialMedia: "",
+  isActive: false,
+  id: "admin",
+};
+
+//-------------------------------------------------
 // Product details values
 //-------------------------------------------------
 export interface ProductValues {
@@ -34,48 +76,6 @@ export const productInitialValues: ProductValues = {
 };
 
 //-------------------------------------------------
-// User details values
-//-------------------------------------------------
-export interface SignUpValues {
-  firstName: string;
-  lastName?: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  paypal: string;
-  socialMedia?: string;
-  isActive: boolean;
-  id:string
-}
-
-export const SignUpInitialValues: SignUpValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
-  paypal: "",
-  socialMedia: "",
-  isActive: false,
-  id:''
-};
-
-//-------------------------------------------------
-// Admin account details
-//-------------------------------------------------
-export const AdminDetails: SignUpValues = {
-  firstName: "admin",
-  lastName: "",
-  email: "admin@example.com",
-  password: "123456zZ#",
-  confirmPassword: "123456zZ#",
-  paypal: "",
-  socialMedia: "",
-  isActive: false,
-  id:'admin'
-};
-
-//-------------------------------------------------
 // Product changeable values in the modal
 //-------------------------------------------------
 export interface ProductChangeableValues {
@@ -93,39 +93,15 @@ export const productChangeableInitialValues: ProductChangeableValues = {
 //-------------------------------------------------
 // Product In Cart values
 //-------------------------------------------------
-export interface ProductInCartType {
-  name: string;
-  brand: string;
-  price: number;
-  colors: string;
-  sizes: sizeType | "";
-  categories: string;
-  description: string;
-  gender: Gender | "";
-  mainPic: FileList[] | string[] | null;
-  media: FileList[] | string[] | null;
-  amountInStock: number;
-  deliveryTime: string;
-  id: number;
-  amount: string;
+export interface ProductInCartType
+  extends Omit<ProductValues, "colors" | "sizes">,
+    ProductChangeableValues {
   orderID: number;
 }
 
 export const cartInitialValue: ProductInCartType = {
-  name: "",
-  brand: "",
-  price: 0,
-  colors: "",
-  sizes: "",
-  categories: "",
-  description: "",
-  gender: "",
-  mainPic: null,
-  media: null,
-  amountInStock: 0,
-  deliveryTime: "",
-  id: 0,
-  amount: "",
+  ...productInitialValues,
+  ...productChangeableInitialValues,
   orderID: 0,
 };
 
@@ -432,20 +408,6 @@ export const clothesCategoriesList = [
   },
   { gender: "Baby", label: "Beanies", key: "BabyBeanies" },
 ];
-
-//-------------------------------------------------
-// Function to Filter clothes categories by gender
-//--------------------------------------------------
-export const filterCategoriesByGender = (gender: Gender) => {
-  return clothesCategoriesList
-    .map((category) => (category.gender === gender ? category.label : null))
-    .filter((element): element is string => element !== null);
-};
-
-//-----------------------------------------------------------------
-// Function to transform string (lowerCase and remove whiteSpace)
-//-----------------------------------------------------------------
-export const trim_lowerCase = (para: string) => para.toLowerCase().replace(/ /g, "-");
 
 //-----------------------------------------------------------------
 // Promo Codes

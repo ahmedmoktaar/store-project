@@ -1,16 +1,17 @@
 import styled from "@emotion/styled";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
-import TextFormLabeled from "../../../../../components/formik/FormTextFieldLabeled";
-import MuiButton from "../../../../../components/shared/MuiButton";
+import TextFormLabeled from "../../../../../../components/formik/FormTextFieldLabeled";
+import MuiButton from "../../../../../../components/shared/MuiButton";
 import { useState } from "react";
 import {
   ShippingInfo,
   ShippingInfoInitial,
-} from "../../../../../assets/data/GlobalVariables";
-import styles from "../../../../../styles";
-import { useDispatch, useSelector } from "../../../../../redux/Store/hooks";
-import { saveShippingInfo } from "../../../../../redux/features/Cart/CartSlice";
+} from "../../../../../../assets/data/GlobalVariables";
+import styles from "../../../../../../styles";
+import { useDispatch } from "../../../../../../redux/Store/hooks";
+import { saveShippingInfo } from "../../../../../../redux/features/Cart/CartSlice";
+import useReduxCustomer from "../../../../../../hooks/useReduxCustomer";
 
 // -------------------
 // style variables
@@ -33,19 +34,12 @@ const Shipping: React.FC<Props> = ({ setActiveStep }) => {
   // ------------------
   const dispatch = useDispatch();
   const [isSubmitted, setSubmitted] = useState(false);
-
-  // --------------------
-  // customer details
-  // --------------------
-  const customersDetails = useSelector((state) => state.customersDetails);
-  const activeCustomerDetails = customersDetails.find(
-    (customerDetails) => customerDetails.isActive
-  );
+  const { activeCustomerDetails } = useReduxCustomer(null);
 
   // --------------------
   // formik variables
   // --------------------
-  const initialValues: ShippingInfo = ShippingInfoInitial;
+  const initialValues = ShippingInfoInitial;
   const phoneRegExp =
     /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/;
   const validationSchema = yup.object({

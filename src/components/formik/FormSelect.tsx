@@ -43,7 +43,7 @@ const FormSelect: React.FC<TextFieldProps> = ({
 
   return (
     <Holder>
-      <InputLabel id={name}>{label}</InputLabel>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
       <Autocomplete
         multiple
         fullWidth

@@ -2,13 +2,10 @@ import { useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import styles from "../styles";
 import ImageRendering from "./shared/ImageRendering";
-import {
-  ProductValues,
-  StoreCategories,
-  trim_lowerCase,
-} from "../assets/data/GlobalVariables";
+import { ProductValues, StoreCategories } from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
 import ModalProductPreOrder from "./formik/ModalProductPreOrder";
+import trim_lowerCase from "../utils/trim_lowerCase";
 
 // ------------------
 // props type
@@ -35,10 +32,9 @@ const Category: React.FC<Props> = ({ storeCategory }) => {
   // storeCategory Products
   // ------------------------------
   const sellersProducts = useSelector((state) => state.storeProducts.sellersProducts);
-  const storeCategoryProducts: ProductValues[] = [];
-  sellersProducts.map((sellerProducts) =>
-    storeCategoryProducts.push(...sellerProducts.sellerProduct[storeCategory])
-  );
+  const storeCategoryProducts: ProductValues[] = sellersProducts
+    .map((sellerProducts) => sellerProducts.sellerProduct[storeCategory])
+    .flat();
 
   return (
     <Holder>

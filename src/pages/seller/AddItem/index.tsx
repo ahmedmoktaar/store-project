@@ -19,8 +19,9 @@ import {
   genderList,
   StoreCategories,
 } from "../../../assets/data/GlobalVariables";
-import { useDispatch, useSelector } from "../../../redux/Store/hooks";
+import { useDispatch } from "../../../redux/Store/hooks";
 import { addProduct } from "../../../redux/features/Products/ProductsSlice";
+import useReduxSeller from "../../../hooks/useReduxSeller";
 
 // ----------------
 // main component
@@ -31,13 +32,7 @@ const AddProduct: React.FC = () => {
   // ----------------
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
-
-  // ----------------
-  // find active seller id
-  // ----------------
-  const activeSellerID = useSelector((state) => state.sellersDetails).find(
-    (seller) => seller.isActive
-  )?.id;
+  const { activeSellerID } = useReduxSeller();
 
   // ----------------
   // formik variables
@@ -66,10 +61,7 @@ const AddProduct: React.FC = () => {
             return fileList.every((file) => {
               const fileName = file.name.toLowerCase();
               const fileExtension = fileName.split(".").pop();
-              return (
-                fileExtension !== undefined &&
-                ["jpg", "jpeg", "png"].includes(fileExtension)
-              );
+              return fileExtension !== undefined && ["jpg", "jpeg", "png"].includes(fileExtension);
             });
           })
       )
@@ -89,23 +81,18 @@ const AddProduct: React.FC = () => {
             return fileList.every((file) => {
               const fileName = file.name.toLowerCase();
               const fileExtension = fileName.split(".").pop();
-              return (
-                fileExtension !== undefined &&
-                ["jpg", "jpeg", "png"].includes(fileExtension)
-              );
+              return fileExtension !== undefined && ["jpg", "jpeg", "png"].includes(fileExtension);
             });
           })
       )
       .required("At least one file required"),
-    amountInStock: yup
-      .number()
-      .moreThan(0, "Invalid Number")
-      .required("Required"),
+    amountInStock: yup.number().moreThan(0, "Invalid Number").required("Required"),
     deliveryTime: yup.string().required("Required"),
   });
 
   const onSubmit = (values: ProductValues) => {
     const category = values.gender.toLowerCase() as StoreCategories;
+    console.log(values);
     dispatch(
       addProduct({
         product: values,
@@ -140,11 +127,7 @@ const AddProduct: React.FC = () => {
 
           <FormSelect name="sizes" label="Sizes Available" options={sizeList} />
 
-          <FormAutoComplete
-            name="categories"
-            label="Categories"
-            options={clothesCategoriesList}
-          />
+          <FormAutoComplete name="categories" label="Categories" options={clothesCategoriesList} />
 
           <TextFormLabeled multiline name="description" label="Description" />
 

@@ -35,7 +35,7 @@ const FormPassword: React.FC<OutlinedInputProps> = ({
       fullWidth
       error={!!meta.error && meta.touched}
     >
-      <InputLabel>{label}</InputLabel>
+      <InputLabel htmlFor={name}>{label}</InputLabel>
       <OutlinedInput
         type={showPassword ? "text" : "password"}
         endAdornment={
@@ -50,6 +50,7 @@ const FormPassword: React.FC<OutlinedInputProps> = ({
           </InputAdornment>
         }
         label={label}
+        id={name}
         {...field}
         {...props}
       />

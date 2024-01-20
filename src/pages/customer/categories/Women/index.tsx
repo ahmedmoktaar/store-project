@@ -3,12 +3,10 @@ import { Typography } from "@mui/material";
 import { Outlet, useParams } from "react-router-dom";
 import ImageRendering from "../../../../components/shared/ImageRendering";
 import styles from "../../../../styles";
-import {
-  filterCategoriesByGender,
-  trim_lowerCase,
-} from "../../../../assets/data/GlobalVariables";
+import filterCategoriesByGender from "../../../../utils/filterCategoriesByGender";
+import trim_lowerCase from "../../../../utils/trim_lowerCase";
 import SideNavCategories from "../../../../components/pageLayout/SideNavCategories";
-import UniqueProductCategoryArray from "../../../../components/shared/UniqueCategoriesArray";
+import UniqueProductCategoryArray from "../../../../utils/uniqueCategoriesArray";
 import Link from "../../../../components/shared/Link/Link";
 
 // -------------------

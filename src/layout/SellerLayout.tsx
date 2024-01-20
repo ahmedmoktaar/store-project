@@ -4,7 +4,7 @@ import styles from "../styles";
 import NavSeller from "../components/pageLayout/NavSeller";
 import Footer from "../components/pageLayout/Footer";
 import Logo from "../components/shared/Logo";
-import { useSelector } from "../redux/Store/hooks";
+import useReduxSeller from "../hooks/useReduxSeller";
 
 // ----------------
 // style variables
@@ -18,12 +18,11 @@ const SellerLayout = () => {
   // ------------------------------
   // check if any seller is logged in
   // ------------------------------
-  const sellersDetails = useSelector((state) => state.sellersDetails);
-  const isLoggedIn = sellersDetails.find((sellerDetail) => sellerDetail.isActive);
+  const { activeSellersDetails } = useReduxSeller();
 
   return (
     <>
-      {isLoggedIn ? (
+      {activeSellersDetails ? (
         <Holder>
           <Logo />
           <>

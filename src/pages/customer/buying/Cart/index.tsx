@@ -1,29 +1,16 @@
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Alert, Typography } from "@mui/material";
-import { Form, Formik, FormikValues } from "formik";
 import styled from "@emotion/styled";
-import ImageRendering from "../../../../components/shared/ImageRendering";
-import { useSelector } from "../../../../redux/Store/hooks";
 import styles from "../../../../styles";
-import ModalProductInCart from "../../../../components/formik/ModalProductInCart";
-import MuiButton from "../../../../components/shared/MuiButton";
-import { ProductInCartType, promoCodes } from "../../../../assets/data/GlobalVariables";
-import FormTextField from "../../../../components/formik/FormTextField";
-import Link from "../../../../components/shared/Link/Link";
+import useReduxCustomer from "../../../../hooks/useReduxCustomer";
+import Product from "./Product";
+import { EmptyCart } from "./EmptyCart";
+import CheckoutCart from "./CheckoutCart";
+import PreCheckoutCart from "./PreCheckoutCart";
 
 // -------------------
 // style variables
 // -------------------
 const { fonts, colors } = styles;
-
-// -------------------
-// Product type
-// -------------------
-interface ProductType {
-  product: ProductInCartType;
-  index: number;
-}
 
 // ------------------
 // main component
@@ -33,84 +20,21 @@ const CartPage = () => {
   // Hooks
   // ------------------
   const location = useLocation();
-  const cartProducts = useSelector((state) => state.cart);
-  const customersDetails = useSelector((state) => state.customersDetails);
-  const [promoCodeValue, setPromoCodeValue] = useState(0);
-
-  // -----------------------------------
-  // customer cart
-  // -----------------------------------
-  const activeCustomerIndex = customersDetails.findIndex(
-    (customerDetails) => customerDetails.isActive
-  );
-
-  const customerCartProducts =
-    activeCustomerIndex !== -1
-      ? cartProducts[activeCustomerIndex].customerCart
-      : cartProducts[0].customerCart;
+  const { activeCustomerCart } = useReduxCustomer(null);
 
   // --------------------------------
   // calculate in cart products price
   // --------------------------------
-  const subtotal = customerCartProducts.reduce((prev, current) => prev + current.price, 0);
-
-  // ------------------
-  // Formik Values
-  // ------------------
-  const handleValidation = (values: FormikValues) => {
-    const errors: { code?: string } = {};
-    if (!promoCodes.includes(values.code)) {
-      errors.code = "Invalid code";
-    }
-    return errors;
-  };
-
-  const handleOnSubmit = () => {
-    setPromoCodeValue(10);
-  };
-
-  // ------------------
-  // one Product component
-  // ------------------
-  const Product: React.FC<ProductType> = ({ product, index }) =>
-    product.mainPic && product.media ? (
-      <ModalProductInCart product={product}>
-        <ul key={index}>
-          <li>
-            <ImageRendering images={product.mainPic} multiple={false} width="230em" />
-          </li>
-          <li>
-            <span>Name: </span> <span>{product.name}</span>
-          </li>
-          <li>
-            <span>Colors: </span> <span>{product.colors}</span>
-          </li>
-          <li>
-            <span>Sizes: </span> <span>{product.sizes}</span>
-          </li>
-          <li>
-            <span>Amount: </span> <span>{product.amount}</span>
-          </li>
-          <li>
-            <span>Price: </span> <span>{product.price} $ </span>
-          </li>
-        </ul>
-      </ModalProductInCart>
-    ) : null;
+  const subtotal = activeCustomerCart.reduce((prev, current) => prev + current.price, 0);
 
   return (
     <Holder>
       <div>
         <ul className="product-wrapper">
-          {customerCartProducts.length === 0 ? (
-            <div className="empty-cart">
-              <span>THE CART IS EMPTY</span>
-              <Link to="/">
-                <MuiButton color="success">Back TO HOME PAGE</MuiButton>
-              </Link>
-            </div>
+          {activeCustomerCart.length === 0 ? (
+            <EmptyCart />
           ) : (
-            customerCartProducts.map((product, index) => (
+            activeCustomerCart.map((product, index) => (
               <Product product={product} index={index} key={index} />
             ))
           )}
@@ -118,98 +42,9 @@ const CartPage = () => {
       </div>
 
       {location.pathname === "/checkout" ? (
-        <>
-          <div className="vl-checkout" />
-
-          <div className="order-wrapper">
-            <Formik
-              initialValues={{ code: "" }}
-              validate={handleValidation}
-              onSubmit={handleOnSubmit}
-              validateOnBlur={false}
-              validateOnChange={false}
-            >
-              <Form>
-                {promoCodeValue === 0 ? (
-                  <>
-                    <Typography variant="h5" component={"header"} className="semi-bold">
-                      Have a Promotional Code?
-                    </Typography>
-
-                    <div className="code-input">
-                      <FormTextField
-                        name="code"
-                        size="small"
-                        fullWidth={false}
-                        label="Promo Code"
-                        error={false}
-                      />
-
-                      <MuiButton color="secondary" type="submit">
-                        DONE
-                      </MuiButton>
-                    </div>
-                  </>
-                ) : (
-                  <Alert severity="success" variant="standard" className="valid-code">
-                    Valid Promotional Code
-                  </Alert>
-                )}
-              </Form>
-            </Formik>
-
-            <div className="summary-wrapper">
-              <Typography variant="h5" component={"header"} className="semi-bold summary-header">
-                Order Summary
-              </Typography>
-
-              <div className="receipt">
-                <Typography>Subtotal</Typography>
-                <Typography>+ {subtotal} $</Typography>
-              </div>
-
-              <div className="receipt">
-                <Typography>Promotional Code</Typography>
-                <Typography>- {promoCodeValue} $ </Typography>
-              </div>
-              <div className="receipt">
-                <Typography>Shipping</Typography>
-                <Typography> FREE</Typography>
-              </div>
-              <hr />
-              <div className="receipt">
-                <Typography variant="h6" component={"p"} className="semi-bold">
-                  ORDER TOTALS
-                </Typography>
-                <Typography variant="h6" component={"p"} className="semi-bold">
-                  {subtotal - promoCodeValue} $
-                </Typography>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : customerCartProducts.length !== 0 ? (
-        <>
-          <div className="vl-cart" />
-
-          <div className="order-wrapper">
-            <div className="summary-wrapper">
-              <div className="receipt">
-                <Typography variant="h6" component={"p"} className="semi-bold">
-                  ORDER TOTALS
-                </Typography>
-
-                <Typography variant="h6" component={"p"} className="semi-bold">
-                  {subtotal} $
-                </Typography>
-              </div>
-
-              <Link to="/checkout">
-                <MuiButton color="success">GO TO CHECKOUT</MuiButton>
-              </Link>
-            </div>
-          </div>
-        </>
+        <CheckoutCart subtotal={subtotal} />
+      ) : activeCustomerCart.length !== 0 ? (
+        <PreCheckoutCart subtotal={subtotal} />
       ) : null}
     </Holder>
   );

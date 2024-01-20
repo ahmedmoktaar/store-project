@@ -1,74 +1,21 @@
 import styled from "@emotion/styled";
-import { Stepper, Step, StepLabel, Typography, Alert } from "@mui/material";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import CartPage from "../Cart";
-import SignInCustomer from "../../SignInCustomer";
-import Payment from "./Payment";
-import Confirmation from "./Confirmation";
 import MuiButton from "../../../../components/shared/MuiButton";
-import NotFound from "../../../NotFound";
-import { useSelector } from "../../../../redux/Store/hooks";
-import Shipping from "./Shipping";
-
-// ---------------------
-// steps components
-// ---------------------
-interface Props {
-  activeStep: number;
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}
+import useReduxCustomer from "../../../../hooks/useReduxCustomer";
+import StepComponent from "./steps/StepComponent";
+import NotLoggedin from "./NotLoggedin";
+import Stepper from "./Stepper";
 
 const steps = ["Bag", "shipping", "Payment", "Confirmation"];
-const Components: React.FC<Props> = ({ activeStep, setActiveStep }) => {
-  switch (activeStep) {
-    case 0:
-      return <CartPage />;
-    case 1:
-      return <Shipping setActiveStep={setActiveStep} />;
-
-    case 2:
-      return <Payment setActiveStep={setActiveStep} />;
-
-    case 3:
-      return <Confirmation />;
-
-    case 4:
-      return (
-        <>
-          <Alert severity="success" variant="filled">
-            Your order is confirmed
-          </Alert>
-          <Outlet />
-        </>
-      );
-
-    default:
-      <NotFound />;
-      break;
-  }
-};
 
 // ----------------
-// main component
+// main component 
 // ----------------
 const CheckoutPage: React.FC = () => {
   // ----------------
-  // redux-store
+  // hooks
   // ----------------
-  const cartProducts = useSelector((state) => state.cart);
-  const customersDetails = useSelector((state) => state.customersDetails);
-  // -----------------------------------
-  // customer details
-  // -----------------------------------
-  const isLoggedIn = customersDetails.find((customerDetails) => customerDetails.isActive);
-  const activeCustomerIndex = customersDetails.findIndex(
-    (customerDetails) => customerDetails.isActive
-  );
-  const customerCartProducts =
-    activeCustomerIndex !== -1
-      ? cartProducts[activeCustomerIndex].customerCart
-      : cartProducts[0].customerCart;
+  const { activeCustomerDetails, activeCustomerCart } = useReduxCustomer(null);
 
   // ---------------------
   // handle step change
@@ -80,22 +27,13 @@ const CheckoutPage: React.FC = () => {
 
   return (
     <Holder>
-      {isLoggedIn ? (
+      {activeCustomerDetails ? (
         <div>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label) => {
-              const stepProps: { completed?: boolean } = {};
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
+          <Stepper steps={steps} activeStep={activeStep} />
 
-          <Components activeStep={activeStep} setActiveStep={setActiveStep} />
+          <StepComponent activeStep={activeStep} setActiveStep={setActiveStep} />
 
-          {customerCartProducts.length === 0 ? null : (
+          {activeCustomerCart.length === 0 ? null : (
             <div className="navigation-buttons">
               <MuiButton
                 onClick={handleNext}
@@ -108,10 +46,7 @@ const CheckoutPage: React.FC = () => {
           )}
         </div>
       ) : (
-        <div className="alert-massage">
-          <Typography variant="h5" > You need to be logged in to checkout</Typography>
-          <SignInCustomer hidden={true} />
-        </div>
+        <NotLoggedin />
       )}
     </Holder>
   );

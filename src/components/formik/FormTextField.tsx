@@ -16,6 +16,7 @@ const TextForm: React.FC<TextFieldProps> = ({ name, ...props }) => {
 
   return (
     <TextField
+      id={name}
       variant="outlined"
       error={!!meta.error && meta.touched}
       helperText={meta.error && meta.touched ? meta.error : null}

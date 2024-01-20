@@ -1,15 +1,39 @@
 import styled from "@emotion/styled";
-import ProductStateSeller from "../../../components/ProductStateSeller";
+import { StoreCategories } from "../../../assets/data/GlobalVariables";
+import useReduxSeller from "../../../hooks/useReduxSeller";
+import ProductState from "./productState";
+
+// ------------------
+// Category type
+// ------------------
+type StoreCategoryType = {
+  category: StoreCategories;
+};
 
 // ------------------
 // main component
 // ------------------
 const TrackProducts: React.FC = () => {
+  const { activeSellerProducts } = useReduxSeller();
+
+  // ------------------
+  // Category Products
+  // ------------------
+  const CategoryProducts: React.FC<StoreCategoryType> = ({ category }) => {
+    return (
+      <>
+        {activeSellerProducts[category].map((product, index) => (
+          <ProductState product={product} index={index} key={index} />
+        ))}
+      </>
+    );
+  };
+
   return (
     <Holder>
-      <ProductStateSeller category="baby" />
-      <ProductStateSeller category="men" />
-      <ProductStateSeller category="women" />
+      <CategoryProducts category="baby" />
+      <CategoryProducts category="men" />
+      <CategoryProducts category="women" />
     </Holder>
   );
 };
