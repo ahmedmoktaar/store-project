@@ -1,6 +1,7 @@
 import { StoreCategories, Gender, ProductValues } from "../assets/data/GlobalVariables";
 import { useSelector } from "../redux/Store/hooks";
 import filterCategoriesByGender from "./filterCategoriesByGender";
+import _ from "lodash";
 
 // ------------------
 // main component
@@ -20,11 +21,12 @@ const UniqueProductCategoryArray = (
   // --------------------------------------------------
   // array of one product for each category in a gender redux-store
   // --------------------------------------------------
-  const categoryAvailableProducts = filterCategoriesByGender(gender)
-    .map(
-      (category) => storeCategoryProducts.find((product) => product.categories === category) || null
+  const categoryAvailableProducts = _.compact(
+    filterCategoriesByGender(gender).map((category) =>
+      storeCategoryProducts.find((product) => product.categories === category)
     )
-    .filter((product): product is ProductValues => product !== null);
+  );
+  
 
   return categoryAvailableProducts;
 };
